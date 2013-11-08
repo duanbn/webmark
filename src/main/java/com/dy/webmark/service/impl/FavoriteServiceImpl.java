@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.dy.webmark.entity.Favorite;
 import com.dy.webmark.exception.ErrorCode;
@@ -21,16 +20,13 @@ public class FavoriteServiceImpl implements IFavoriteService {
     private FavoriteMapper favoriteMapper;
 
     @Override
-    @Transactional
-    public int addFavorite(Favorite favo) throws FavoriteException {
+    public void addFavorite(Favorite favo) throws FavoriteException {
         try {
-            int favoId = favoriteMapper.insertFavorite(favo);
+            favoriteMapper.insertFavorite(favo);
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("add favorite done, " + favo);
             }
-
-            return favoId;
         } catch (Exception e) {
             throw new FavoriteException(ErrorCode.FAVORITE_ADD_FAIL, e);
         }

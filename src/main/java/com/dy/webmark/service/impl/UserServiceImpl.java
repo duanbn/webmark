@@ -25,7 +25,6 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    @Transactional
     public void regUser(User user) throws UserException {
         // 判断用户名是否已经注册
         if (userMapper.getUserByName(user.getName()) != null) {
@@ -48,7 +47,7 @@ public class UserServiceImpl implements IUserService {
         } catch (Exception e) {
             throw new UserException(ErrorCode.USER_REG_FAIL, e);
         }
-        
+
         throw new RuntimeException();
     }
 

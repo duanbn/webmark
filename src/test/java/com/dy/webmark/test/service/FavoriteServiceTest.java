@@ -1,4 +1,4 @@
-package com.dy.webmark.service;
+package com.dy.webmark.test.service;
 
 import javax.annotation.Resource;
 
@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dy.webmark.entity.Favorite;
+import com.dy.webmark.service.IFavoriteService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/test/resources/applicationContext.xml" })
@@ -21,8 +22,6 @@ public class FavoriteServiceTest {
     @Resource
     private IFavoriteService favoService;
 
-    private int newId;
-
     @Test
     public void testAddFavorite() throws Exception {
         Favorite favo = new Favorite();
@@ -31,12 +30,12 @@ public class FavoriteServiceTest {
         favo.setDescription("收藏你喜欢的url");
         favo.setUrl("http://www.ishoucang.com");
         favo.setUserId(1);
-        this.newId = favoService.addFavorite(favo);
+        favoService.addFavorite(favo);
     }
 
     @Test
     public void testGetFavoriteById() throws Exception {
-        Favorite favo = favoService.getFavoriteById(this.newId);
+        Favorite favo = favoService.getFavoriteById(1);
         Assert.assertNotNull(favo);
         Assert.assertEquals("爱收藏", favo.getTitle());
     }

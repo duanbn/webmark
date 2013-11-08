@@ -1,4 +1,4 @@
-package com.dy.webmark.service;
+package com.dy.webmark.test.service;
 
 import javax.annotation.Resource;
 
@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.ErrorCode;
 import com.dy.webmark.exception.UserException;
+import com.dy.webmark.service.IUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:src/test/resources/applicationContext.xml" })

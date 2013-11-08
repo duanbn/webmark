@@ -2,14 +2,23 @@ package com.dy.webmark.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.duanbn.mydao.annotation.Field;
+import com.duanbn.mydao.annotation.PrimaryKey;
+import com.duanbn.mydao.annotation.Table;
+
+@Table
 public class User {
 
+    @PrimaryKey(autoIncrement = true)
     private int id;
 
+    @Field(isCanNull = false)
     private String name;
 
+    @Field(isCanNull = false)
     private String password;
 
+    @Field(isCanNull = false)
     private String email;
 
     public int getId() {

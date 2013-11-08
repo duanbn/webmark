@@ -21,7 +21,7 @@
 	</bean>
 
 	<!-- Mysql Config -->
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+	<bean id="webmark.rw" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="${webmark.datasource.url}" />
@@ -37,7 +37,12 @@
 		<property name="removeAbandonedTimeout" value="180" />
 	</bean>
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="webmark.rw" />
+	</bean>
+	<bean id="tableSyncBean" class="com.duanbn.mydao.db.TableSyncBean">
+		<property name="datasource" ref="webmark.rw" />
+		<property name="scanPackage" value="com.dy.webmark.entity" />
+		<property name="delete" value="true" />
 	</bean>
 
 	<!-- Freemarker Config -->

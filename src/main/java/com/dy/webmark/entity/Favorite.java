@@ -2,18 +2,29 @@ package com.dy.webmark.entity;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.duanbn.mydao.annotation.Field;
+import com.duanbn.mydao.annotation.PrimaryKey;
+import com.duanbn.mydao.annotation.Table;
+
+@Table
 public class Favorite {
 
+    @PrimaryKey(autoIncrement = true)
     private int id;
 
+    @Field(isCanNull = false, hasDefault = true)
     private int userId;
 
+    @Field(isCanNull = false, hasDefault = true)
     private String title;
 
+    @Field(isCanNull = false, hasDefault = true)
     private String description;
 
+    @Field(isCanNull = false, hasDefault = true)
     private String keyword;
 
+    @Field(isCanNull = false, hasDefault = true)
     private String url;
 
     public int getId() {

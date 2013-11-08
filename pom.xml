@@ -92,6 +92,12 @@
 			<artifactId>freemarker</artifactId>
 			<version>2.3.14</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.duanbn</groupId>
+			<artifactId>myutility</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>

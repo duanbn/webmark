@@ -5,7 +5,7 @@ import com.dy.webmark.exception.FavoriteException;
 
 public interface IFavoriteService {
 
-    public int addFavorite(Favorite favo) throws FavoriteException;
+    public void addFavorite(Favorite favo) throws FavoriteException;
 
     public Favorite getFavoriteById(int favoId) throws FavoriteException;
 
