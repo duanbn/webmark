@@ -4,30 +4,28 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import com.dy.webmark.entity.User;
 
 public interface UserMapper {
+    
+    @Select("select * from user where nickname=#{nickname}")
+    public User getUserByNickName(@Param("nickname") String nickname);
+    
+    @Select("select * from user where email=#{email}")
+    public User getUserByEmail(@Param("email") String email);
 
-    @Insert("INSERT INTO user(name, password, email) VALUES(#{name}, #{password}, #{email})")
+    @Insert("INSERT INTO user(password, email) VALUES(#{password}, #{email})")
     public int insertUser(User user);
 
     @Select("SELECT * FROM user where id=#{id}")
     public User getUserById(@Param("id") int id);
 
-    @Select("SELECT name FROM user where name=#{name}")
-    public User getUserByName(@Param("name") String name);
+    @Update("update user set nickname=#{nickname} where id=#{id}")
+    public void updateNickName(@Param("id") int id, @Param("nickname") String name);
 
-    @Select("SELECT * FROM user where name=#{name} AND password=#{password}")
-    public User getUserByNameWithPwd(@Param("name") String name, @Param("password") String password);
-
-    @Select("SELECT email FROM user where email=#{email}")
-    public User getUserByEmail(@Param("email") String email);
-
-    @Select("SELECT * FROM user where email=#{email} AND password=#{password}")
-    public User getUserByEmailWithPwd(@Param("email") String email, @Param("password") String password);
-
-    @Delete("DELETE FROM user where name=#{name} AND password=#{password}")
-    public void deleteUserByName(@Param("name") String name, @Param("password") String password);
+    @Delete("delete form user where id=#{id} and password=#{password}")
+    public void deleteUserById(@Param("id") int id, @Param("password") String password);
 
 }

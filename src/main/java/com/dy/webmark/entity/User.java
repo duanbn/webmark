@@ -12,8 +12,8 @@ public class User {
     @PrimaryKey(autoIncrement = true)
     private int id;
 
-    @Field(isCanNull = false)
-    private String name;
+    @Field(isCanNull = false, length=20, hasDefault = true)
+    private String nickname;
 
     @Field(isCanNull = false)
     private String password;
@@ -29,12 +29,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNickname() {
+        return nickname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPassword() {

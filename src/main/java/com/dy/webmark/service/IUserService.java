@@ -5,14 +5,32 @@ import com.dy.webmark.exception.UserException;
 
 public interface IUserService {
 
+    /**
+     * 用户注册. 只需要邮箱和密码就可以进行注册. 邮箱必须不存在.
+     * 
+     * @param user
+     * @throws UserException
+     */
     public void regUser(User user) throws UserException;
+
+    /**
+     * 登录
+     * 
+     * @param email
+     * @param password
+     */
+    public User login(String email, String password) throws UserException;
+
+    /**
+     * 设置用户昵称，此昵称必须是不存在的.
+     * 
+     * @param nickname
+     * @throws UserException
+     */
+    public void setNickName(int id, String nickname) throws UserException;
 
     public User getUserById(int id) throws UserException;
 
-    public User getUserByName(String name, String password) throws UserException;
-
-    public User getUserByEmail(String email, String password) throws UserException;
-
-    public void deleteUser(String name, String password);
+    public void deleteUser(int id, String password);
 
 }

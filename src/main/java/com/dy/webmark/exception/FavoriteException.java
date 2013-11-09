@@ -3,6 +3,7 @@ package com.dy.webmark.exception;
 
 public class FavoriteException extends Exception {
 
+
     public FavoriteException(ErrorCode sc) {
         super(sc.getCode() + ":" + sc.getValue());
     }

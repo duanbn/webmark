@@ -6,7 +6,7 @@ public enum ErrorCode {
      * 用户错误码
      */
     USER_REG_FAIL(1001, "用户注册失败"), USER_NOT_EXIST(1002, "找不到用户信息"), USER_EMAIL_EXIST(1003, "email已经存在"),
-    USER_NAME_EXIST(10004, "用户名已经存在"),
+    USER_NICKNAME_EXIST(1004, "用户昵称已经存在"), EMAIL_NOT_EXIST(1005, "email不存在"), USER_PASSWORD_ERROR(1006, "密码错误"),
 
     /**
      * “用户收藏”错误码
