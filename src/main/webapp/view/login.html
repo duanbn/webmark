@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>优藏夹 - 一个简洁的网页收藏夹</title>
+<meta name="keywords" content="优藏夹,网页收藏夹,网址收藏,设计" />
+<meta name="description" content="这是一个简洁的网页收藏夹，可以随时随地地点击您保存过的网址，再也不用担心更换浏览器啦！" />
+<link rel="shortcut icon" href="/img/icon.ico" />
+<link rel="icon" href="/img/icon.gif" type="/image/gif" />
+<link rel="stylesheet" href="/css/login-reg.css">
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/login-reg.js"></script>
+<script type="text/javascript" src="/js/webmark-1.0.js"></script>
+<!--[if lt IE 7]>
+    <script type="Text/Javascript" src="/js/pngfix.js"></script>
+    <script type="text/javascript">  
+		DD_belatedPNG.fix('img,a,div,span, li');
+	</script>
+<![endif]-->
+</head>
+
+<body>
+
+<div class="header">
+	<div class="header-1">
+    	<div class="header-left fleft">
+            <a class="logo"></a>
+        </div>
+    </div>
+</div>
+
+<div class="login">
+	<div class="login-nav">
+    	<ul>
+        	<li class="login-nav-1">登录</li>
+            <li><a class="a-word" href="/view/reg.html">注册</a></li>
+        </ul>
+    </div>
+    <form id="form-login" action="/user/dologin.do" method="post">
+	<div class="login-con">
+    	<ul>
+        	<li class="login-con-txt">
+        		<span class="span1">邮箱/账号</span>
+        		<input id="login-email" name="email" class="input1" type="text" value="${inputemail}" onblur="checkEmail(this.value, 'login')">
+        		<#if c1005??>
+        			<span id="email_tip" class="span2-error">${c1005}
+        		<#else>
+        			<span id="email_tip" class="span2"><#if inputemail??></span><#else>请输入您的注册邮箱</#if>
+        		</#if>
+        		</span>
+        	</li>
+            <li class="login-con-txt">
+            	<span class="span1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码</span>
+            	<input id="login-pwd" name="password" class="input1" type="password">
+        		<#if c1006??>
+        			<span id="password_tip" class="span2-error">${c1006}
+        		<#else>
+        			<span id="password_tip" class="span2">字母、数字或下划线</span>
+        		</#if>
+            	</span>
+            </li>
+            <li class="login-con-2">
+            	<input type="checkbox" id="forget" value="1" name="forget" class="remember" tabindex="4" checked="checked">下次自动登录
+                <a class="a-word foget" href="">忘记密码</a>
+            </li>
+            <li class="login-con-3">
+            	<input id="btn-login" class="btn-login" type="submit" value="登&nbsp;录">还没有账号？<a href="/view/reg.html" class="a-word">注册</a>
+            </li>
+        </ul>
+    </div>
+    </form>
+</div>
+
+<div class="footer">
+    <div class="f-nav"><a href="" target="_blank" class="a-word">关于我们</a><a href="" target="_blank" class="a-word">联系我们</a><a href="" target="_blank" class="a-word">使用帮助</a><a href="" target="_blank" class="a-word">友情链接</a></div>
+    <span>© 2012-2013 优藏夹 京ICP备13031298号 京公网安备11010802012179</span>
+</div>
+</body>
+</html>

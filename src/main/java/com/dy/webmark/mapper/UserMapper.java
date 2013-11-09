@@ -10,7 +10,7 @@ import com.dy.webmark.entity.User;
 
 public interface UserMapper {
 
-    @Select("select email from user where #{email}")
+    @Select("select email from user where email=#{email}")
     public String getEmail(@Param("email") String email);
 
     @Select("select * from user where nickname=#{nickname}")

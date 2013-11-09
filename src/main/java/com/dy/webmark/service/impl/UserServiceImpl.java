@@ -26,7 +26,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public boolean checkEmailExist(String email) {
         String s = userMapper.getEmail(email);
-        return StringUtils.isBlank(s);
+        return StringUtils.isNotBlank(s);
     }
 
     @Override

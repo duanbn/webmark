@@ -48,7 +48,7 @@
 	<!-- Freemarker Config -->
 	<bean id="freemarkerConfig"
 		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-		<property name="templateLoaderPath" value="/ftl/" />
+		<property name="templateLoaderPath" value="/view/" />
 		<property name="freemarkerSettings">
 			<props>
 				<prop key="template_update_delay">0</prop>

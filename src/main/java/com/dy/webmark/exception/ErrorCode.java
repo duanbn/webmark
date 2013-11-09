@@ -5,37 +5,37 @@ public enum ErrorCode {
     /**
      * 用户错误码
      */
-    USER_REG_FAIL(1001, "用户注册失败"), USER_NOT_EXIST(1002, "找不到用户信息"), USER_EMAIL_EXIST(1003, "email已经存在"),
-    USER_NICKNAME_EXIST(1004, "用户昵称已经存在"), EMAIL_NOT_EXIST(1005, "email不存在"), USER_PASSWORD_ERROR(1006, "密码错误"),
+    USER_REG_FAIL("c1001", "用户注册失败"), USER_NOT_EXIST("c1002", "找不到用户信息"), USER_EMAIL_EXIST("c1003", "email已经存在"),
+    USER_NICKNAME_EXIST("c1004", "用户昵称已经存在"), EMAIL_NOT_EXIST("c1005", "邮箱不存在哦"), USER_PASSWORD_ERROR("c1006", "密码不正确哦"),
 
     /**
      * “用户收藏”错误码
      */
-    FAVORITE_ADD_FAIL(2001, "添加用户收藏失败"), FAVORITE_NOT_EXIST(2002, "找不到用户收藏信息");
+    FAVORITE_ADD_FAIL("c2001", "添加用户收藏失败"), FAVORITE_NOT_EXIST("c2002", "找不到用户收藏信息");
 
-    private int code;
+    private String code;
 
     private String message;
 
-    ErrorCode(int code, String message) {
+    ErrorCode(String code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public static final ErrorCode getEnum(int code) {
-        for (ErrorCode sc : ErrorCode.values()) {
-            if (code == sc.getCode()) {
-                return sc;
+    public static final ErrorCode getEnum(String code) {
+        for (ErrorCode ec : ErrorCode.values()) {
+            if (code.equals(ec.getCode())) {
+                return ec;
             }
         }
         return null;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

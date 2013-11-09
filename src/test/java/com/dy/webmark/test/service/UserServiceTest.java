@@ -19,7 +19,7 @@ import com.dy.webmark.service.IUserService;
 @ContextConfiguration(locations = { "file:src/test/resources/applicationContext.xml" })
 public class UserServiceTest {
 
-    public static final Logger LOG = Logger.getLogger(FavoriteServiceTest.class);
+    public static final Logger LOG = Logger.getLogger(UserServiceTest.class);
 
     @Resource
     private IUserService userService;
@@ -27,6 +27,12 @@ public class UserServiceTest {
     private static final String NICKNAME = "duanbn";
     private static final String PASSWORD = "duanbn%1234";
     private static final String EMAIL = "duanbn@126.com";
+
+    @Test
+    public void testCheckEmail() {
+        boolean isExis = userService.checkEmailExist(EMAIL);
+        LOG.info(isExis);
+    }
 
     @Test
     public void testRegUser() throws UserException {

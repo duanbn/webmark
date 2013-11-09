@@ -13,7 +13,7 @@
         class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="cache" value="true" />
         <property name="prefix" value="" />
-        <property name="suffix" value=".ftl" />
+        <property name="suffix" value=".html" />
         <property name="contentType" value="text/html;charset=UTF-8"></property>
         <property name="requestContextAttribute" value="request" />
         <property name="exposeSpringMacroHelpers" value="true" />
