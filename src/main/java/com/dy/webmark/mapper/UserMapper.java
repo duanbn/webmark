@@ -9,10 +9,13 @@ import org.apache.ibatis.annotations.Update;
 import com.dy.webmark.entity.User;
 
 public interface UserMapper {
-    
+
+    @Select("select email from user where #{email}")
+    public String getEmail(@Param("email") String email);
+
     @Select("select * from user where nickname=#{nickname}")
     public User getUserByNickName(@Param("nickname") String nickname);
-    
+
     @Select("select * from user where email=#{email}")
     public User getUserByEmail(@Param("email") String email);
 

@@ -21,9 +21,6 @@
         <property name="exposeSessionAttributes" value="true" />
     </bean>
     
-    <!-- 添加注解驱动 -->  
-    <mvc:annotation-driven />  
-    
     <!-- 默认扫描的包路径 -->  
     <context:component-scan base-package="com.dy.webmark.controller" />  
 </beans>

@@ -15,11 +15,11 @@ public enum ErrorCode {
 
     private int code;
 
-    private String value;
+    private String message;
 
-    ErrorCode(int code, String value) {
+    ErrorCode(int code, String message) {
         this.code = code;
-        this.value = value;
+        this.message = message;
     }
 
     public static final ErrorCode getEnum(int code) {
@@ -39,12 +39,12 @@ public enum ErrorCode {
         this.code = code;
     }
 
-    public String getValue() {
-        return value;
+    public String getMessage() {
+        return message;
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
 }

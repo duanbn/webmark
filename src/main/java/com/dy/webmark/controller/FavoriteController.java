@@ -8,20 +8,21 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.Favorite;
 import com.dy.webmark.exception.FavoriteException;
 import com.dy.webmark.service.IFavoriteService;
 
 @Controller
 @RequestMapping("/favorite")
-public class FavoriteController {
+public class FavoriteController extends BaseController {
 
     public static final Logger LOG = Logger.getLogger(FavoriteController.class);
 
     @Resource
     private IFavoriteService favoService;
 
-    @RequestMapping("/add")
+    @RequestMapping("/add.do")
     public String addfavorite(HttpServletRequest req, HttpServletRequest resp) {
         int userId = Integer.parseInt(req.getParameter("userId"));
         String title = req.getParameter("title");
@@ -39,14 +40,14 @@ public class FavoriteController {
         try {
             favoService.addFavorite(favo);
         } catch (FavoriteException e) {
-            LOG.error(e);
+            req.setAttribute(WebConst.OUTPUT_MESSAGE, e.getEc().getMessage());
         }
 
         // TODO: 临时写的.
         return "done";
     }
 
-    @RequestMapping("/index")
+    @RequestMapping("/index.do")
     public String index(HttpServletRequest req, HttpServletResponse resp) {
         req.setAttribute("name", "spring freemarker");
         return "index";

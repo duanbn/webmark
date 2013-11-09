@@ -61,6 +61,9 @@
 		</property>
 	</bean>
 
+	<!-- json filter -->
+	<bean id="jsonFilter" class="com.dy.webmark.filter.JsonFilter" />
+
 	<context:component-scan base-package="com.dy.webmark" />
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.dy.webmark.mapper" />

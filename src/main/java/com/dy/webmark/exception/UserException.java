@@ -6,12 +6,12 @@ public class UserException extends Exception {
     private ErrorCode ec;
 
     public UserException(ErrorCode ec) {
-        super(ec.getCode() + ":" + ec.getValue());
+        super(ec.getCode() + ":" + ec.getMessage());
         this.ec = ec;
     }
 
     public UserException(ErrorCode ec, Exception e) {
-        super(ec.getCode() + ":" + ec.getValue(), e);
+        super(ec.getCode() + ":" + ec.getMessage(), e);
         this.ec = ec;
     }
 

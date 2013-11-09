@@ -4,6 +4,8 @@ import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.UserException;
 
 public interface IUserService {
+    
+    public boolean checkEmailExist(String email);
 
     /**
      * 用户注册. 只需要邮箱和密码就可以进行注册. 邮箱必须不存在.
@@ -29,8 +31,12 @@ public interface IUserService {
      */
     public void setNickName(int id, String nickname) throws UserException;
 
-    public User getUserById(int id) throws UserException;
-
+    /**
+     * 注销用户
+     * 
+     * @param id
+     * @param password
+     */
     public void deleteUser(int id, String password);
 
 }

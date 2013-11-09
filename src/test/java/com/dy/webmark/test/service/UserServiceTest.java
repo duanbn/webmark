@@ -61,14 +61,7 @@ public class UserServiceTest {
         }
 
         user = userService.login(EMAIL, PASSWORD);
-        userService.setNickName(user.getId(), "nickname1");
-    }
-
-    @Test
-    public void testGetUserById() throws UserException {
-        User user = userService.getUserById(1);
-        Assert.assertNotNull(user);
-        Assert.assertEquals("duanbn", user.getNickname());
+        userService.setNickName(user.getId(), NICKNAME);
     }
 
 }

@@ -24,6 +24,12 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
+    public boolean checkEmailExist(String email) {
+        String s = userMapper.getEmail(email);
+        return StringUtils.isBlank(s);
+    }
+
+    @Override
     public void regUser(User user) throws UserException {
         // 判断邮箱是否已经注册
         if (userMapper.getUserByEmail(user.getEmail()) != null) {
@@ -66,18 +72,6 @@ public class UserServiceImpl implements IUserService {
         }
 
         userMapper.updateNickName(id, nickname);
-    }
-
-
-    @Override
-    public User getUserById(int id) throws UserException {
-        User user = userMapper.getUserById(id);
-
-        if (user == null) {
-            throw new UserException(ErrorCode.USER_NOT_EXIST);
-        }
-
-        return user;
     }
 
     @Override
