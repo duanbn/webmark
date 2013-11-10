@@ -1,6 +1,5 @@
 // 收录框文本框变色
 $(document).ready(function(){
-	$('.input-url').val("http://veromoda.tmall.com/campaign.htm?spm=3.68707it7m/campaign.htm?spm=3.68707it7");
 	$('.input-url').focus(function(){
 		$(this).addClass('input-url-on');
 	});
@@ -10,7 +9,6 @@ $(document).ready(function(){
 }); 
 
 $(document).ready(function(){
-	$('.input-tit').val("FAN你的时尚顾问-YOKA时尚网");
 	$('.input-tit').focus(function(){
 		$(this).addClass('input-tit-on');
 	});
