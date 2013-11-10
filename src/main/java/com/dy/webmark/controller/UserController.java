@@ -35,8 +35,9 @@ public class UserController extends BaseController {
 
     public static final String LOGIN = "login";
     public static final String REG = "reg";
-    public static final String INDEX = "index";
+    public static final String MAIN = "main";
     public static final String RESULT = "result";
+    public static final String SUCCESS = "success";
 
     @Resource
     private IUserService userService;
@@ -92,7 +93,7 @@ public class UserController extends BaseController {
         HttpSession session = req.getSession();
         session.setAttribute(WebConst.SESSION_USER, user);
 
-        return INDEX;
+        return SUCCESS;
     }
 
     @RequestMapping("/dologin.do")
@@ -136,7 +137,7 @@ public class UserController extends BaseController {
                 LOG.error(e.getMessage(), e);
             }
         }
-        return INDEX;
+        return MAIN;
     }
 
     /**
