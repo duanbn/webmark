@@ -72,6 +72,9 @@ public class AuthFilter implements Filter {
                             return;
                         }
                         session.setAttribute(WebConst.SESSION_USER, user);
+                    } else {
+                        resp.sendRedirect(req.getContextPath() + WebConst.PAGE_LOGIN);
+                        return;
                     }
                 } else {
                     resp.sendRedirect(req.getContextPath() + WebConst.PAGE_LOGIN);

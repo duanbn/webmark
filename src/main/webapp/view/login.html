@@ -42,8 +42,8 @@
         	<li class="login-con-txt">
         		<span class="span1">邮箱/账号</span>
         		<input id="login-email" name="email" class="input1" type="text" value="${inputemail}" onblur="checkEmail(this.value, 'login')">
-        		<#if c1005??>
-        			<span id="email_tip" class="span2-error">${c1005}
+        		<#if b1005??>
+        			<span id="email_tip" class="span2-error">${b1005}
         		<#else>
         			<span id="email_tip" class="span2"><#if inputemail??></span><#else>请输入您的注册邮箱</#if>
         		</#if>
@@ -52,8 +52,8 @@
             <li class="login-con-txt">
             	<span class="span1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码</span>
             	<input id="login-pwd" name="password" class="input1" type="password">
-        		<#if c1006??>
-        			<span id="password_tip" class="span2-error">${c1006}
+        		<#if b1006??>
+        			<span id="password_tip" class="span2-error">${b1006}
         		<#else>
         			<span id="password_tip" class="span2">字母、数字或下划线</span>
         		</#if>
