@@ -1,17 +1,20 @@
-package com.dy.webmark.exception;
+package com.dy.webmark.common;
 
 public enum ErrorCode {
 
-    /**
-     * 用户错误码
-     */
-    USER_REG_FAIL("c1001", "用户注册失败"), USER_NOT_EXIST("c1002", "找不到用户信息"), USER_EMAIL_EXIST("c1003", "email已经存在"),
-    USER_NICKNAME_EXIST("c1004", "用户昵称已经存在"), EMAIL_NOT_EXIST("c1005", "邮箱不存在哦"), USER_PASSWORD_ERROR("c1006", "密码不正确哦"),
+    BIZ3001("b3001", "保存用户登录信息失败"),
 
     /**
      * “用户收藏”错误码
      */
-    FAVORITE_ADD_FAIL("c2001", "添加用户收藏失败"), FAVORITE_NOT_EXIST("c2002", "找不到用户收藏信息");
+    BIZ2001("b2001", "添加用户收藏失败"), BIZ2002("b2002", "找不到用户收藏信息"),
+
+    /**
+     * 用户错误码
+     */
+    USER_REG_FAIL("b1001", "用户注册失败"), USER_NOT_EXIST("b1002", "找不到用户信息"), USER_EMAIL_EXIST("b1003", "email已经存在"),
+    USER_NICKNAME_EXIST("b1004", "用户昵称已经存在"), EMAIL_NOT_EXIST("b1005", "邮箱不存在哦"),
+    USER_PASSWORD_ERROR("b1006", "密码不正确哦");
 
     private String code;
 

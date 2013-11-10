@@ -5,9 +5,9 @@ import javax.annotation.Resource;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.Favorite;
-import com.dy.webmark.exception.ErrorCode;
-import com.dy.webmark.exception.FavoriteException;
+import com.dy.webmark.exception.BizException;
 import com.dy.webmark.mapper.FavoriteMapper;
 import com.dy.webmark.service.IFavoriteService;
 
@@ -20,7 +20,7 @@ public class FavoriteServiceImpl implements IFavoriteService {
     private FavoriteMapper favoriteMapper;
 
     @Override
-    public void addFavorite(Favorite favo) throws FavoriteException {
+    public void addFavorite(Favorite favo) throws BizException {
         try {
             favoriteMapper.insertFavorite(favo);
 
@@ -28,16 +28,16 @@ public class FavoriteServiceImpl implements IFavoriteService {
                 LOG.debug("add favorite done, " + favo);
             }
         } catch (Exception e) {
-            throw new FavoriteException(ErrorCode.FAVORITE_ADD_FAIL, e);
+            throw new BizException(ErrorCode.BIZ2001, e);
         }
     }
 
     @Override
-    public Favorite getFavoriteById(int favoId) throws FavoriteException {
+    public Favorite getFavoriteById(int favoId) throws BizException {
         Favorite favo = favoriteMapper.getFavoriteById(favoId);
 
         if (favo == null) {
-            throw new FavoriteException(ErrorCode.FAVORITE_NOT_EXIST);
+            throw new BizException(ErrorCode.BIZ2002);
         }
 
         return favo;

@@ -9,9 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.User;
-import com.dy.webmark.exception.ErrorCode;
-import com.dy.webmark.exception.UserException;
+import com.dy.webmark.exception.BizException;
 import com.dy.webmark.mapper.UserMapper;
 import com.dy.webmark.service.IUserService;
 
@@ -24,16 +24,26 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
+    public User get(String email) throws BizException {
+        User user = userMapper.getUserByEmail(email);
+        if (user == null) {
+            throw new BizException(ErrorCode.USER_NOT_EXIST);
+        }
+
+        return user;
+    }
+
+    @Override
     public boolean checkEmailExist(String email) {
         String s = userMapper.getEmail(email);
         return StringUtils.isNotBlank(s);
     }
 
     @Override
-    public void regUser(User user) throws UserException {
+    public void regUser(User user) throws BizException {
         // 判断邮箱是否已经注册
         if (userMapper.getUserByEmail(user.getEmail()) != null) {
-            throw new UserException(ErrorCode.USER_EMAIL_EXIST);
+            throw new BizException(ErrorCode.USER_EMAIL_EXIST);
         }
 
         try {
@@ -46,29 +56,29 @@ public class UserServiceImpl implements IUserService {
                 LOG.debug("register user done, " + user);
             }
         } catch (Exception e) {
-            throw new UserException(ErrorCode.USER_REG_FAIL, e);
+            throw new BizException(ErrorCode.USER_REG_FAIL, e);
         }
     }
 
     @Override
-    public User login(String email, String password) throws UserException {
+    public User login(String email, String password) throws BizException {
         User user = userMapper.getUserByEmail(email);
         if (user == null) {
-            throw new UserException(ErrorCode.EMAIL_NOT_EXIST);
+            throw new BizException(ErrorCode.EMAIL_NOT_EXIST);
         }
 
         if (!user.getPassword().equals(_md5(password))) {
-            throw new UserException(ErrorCode.USER_PASSWORD_ERROR);
+            throw new BizException(ErrorCode.USER_PASSWORD_ERROR);
         }
 
         return user;
     }
 
     @Override
-    public void setNickName(int id, String nickname) throws UserException {
+    public void setNickName(int id, String nickname) throws BizException {
         User user = userMapper.getUserByNickName(nickname);
         if (user != null) {
-            throw new UserException(ErrorCode.USER_NICKNAME_EXIST);
+            throw new BizException(ErrorCode.USER_NICKNAME_EXIST);
         }
 
         userMapper.updateNickName(id, nickname);

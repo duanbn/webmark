@@ -1,4 +1,4 @@
-
+// 显示信息
 var email_tip = "请填写邮箱";
 var email_tip1 = "邮箱不存在";
 var email_tip2 = "邮箱已经存在";

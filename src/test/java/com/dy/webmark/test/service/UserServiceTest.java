@@ -10,9 +10,9 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.User;
-import com.dy.webmark.exception.ErrorCode;
-import com.dy.webmark.exception.UserException;
+import com.dy.webmark.exception.BizException;
 import com.dy.webmark.service.IUserService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,7 +35,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testRegUser() throws UserException {
+    public void testRegUser() throws BizException {
         User user = new User();
         user.setEmail(EMAIL);
         user.setPassword(PASSWORD);
@@ -43,7 +43,7 @@ public class UserServiceTest {
 
         try {
             userService.regUser(user);
-        } catch (UserException e) {
+        } catch (BizException e) {
             Assert.assertEquals(ErrorCode.USER_EMAIL_EXIST, e.getEc());
         }
 
@@ -52,17 +52,17 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testLogin() throws UserException {
+    public void testLogin() throws BizException {
         User user = null;
         try {
             user = userService.login("aa", PASSWORD);
-        } catch (UserException e) {
+        } catch (BizException e) {
             Assert.assertEquals(ErrorCode.EMAIL_NOT_EXIST, e.getEc());
         }
 
         try {
             user = userService.login(EMAIL, "1111");
-        } catch (UserException e) {
+        } catch (BizException e) {
             Assert.assertEquals(ErrorCode.USER_PASSWORD_ERROR, e.getEc());
         }
 

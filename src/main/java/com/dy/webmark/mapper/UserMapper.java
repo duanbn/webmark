@@ -19,7 +19,7 @@ public interface UserMapper {
     @Select("select * from user where email=#{email}")
     public User getUserByEmail(@Param("email") String email);
 
-    @Insert("INSERT INTO user(password, email) VALUES(#{password}, #{email})")
+    @Insert("INSERT INTO user(password, email, regTime) VALUES(#{password}, #{email}, #{regTime})")
     public int insertUser(User user);
 
     @Select("SELECT * FROM user where id=#{id}")

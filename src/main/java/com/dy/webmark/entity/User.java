@@ -5,6 +5,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import com.duanbn.mydao.annotation.Field;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
+import com.duanbn.mydao.annotation.Timestamp;
 import com.duanbn.validation.annotation.CheckPOJO;
 import com.duanbn.validation.annotation.CheckString;
 
@@ -26,6 +27,9 @@ public class User {
     @Field(isCanNull = false)
     @CheckString(isNull = false)
     private String email;
+
+    @Timestamp(isCanNull = false)
+    private java.sql.Timestamp regTime;
 
     public int getId() {
         return id;
@@ -57,6 +61,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public java.sql.Timestamp getRegTime() {
+        return regTime;
+    }
+
+    public void setRegTime(java.sql.Timestamp regTime) {
+        this.regTime = regTime;
     }
 
     @Override

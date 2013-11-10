@@ -63,6 +63,7 @@
 
 	<!-- json filter -->
 	<bean id="jsonFilter" class="com.dy.webmark.filter.JsonFilter" />
+	<bean id="authFilter" class="com.dy.webmark.filter.AuthFilter" />
 
 	<context:component-scan base-package="com.dy.webmark" />
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

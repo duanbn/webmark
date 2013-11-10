@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.Favorite;
-import com.dy.webmark.exception.FavoriteException;
+import com.dy.webmark.exception.BizException;
 import com.dy.webmark.service.IFavoriteService;
 
 @Controller
@@ -39,7 +39,7 @@ public class FavoriteController extends BaseController {
 
         try {
             favoService.addFavorite(favo);
-        } catch (FavoriteException e) {
+        } catch (BizException e) {
             req.setAttribute(WebConst.OUTPUT_MESSAGE, e.getEc().getMessage());
         }
 
