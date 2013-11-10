@@ -1,0 +1,62 @@
+@charset "utf-8";
+
+/* index */
+* { font-family:'Microsoft YaHei',Arial; padding:0; margin:0; border:0; color:#494949;}
+.fleft { float:left;}
+.fright { float:right;}
+.clear { clear:both; font-size:0; line-height:0; height:0; overflow:hidden;}
+ul,li { list-style:none;}
+img { vertical-align:top;}
+
+a.a-word { color:#df5e2c; text-decoration:none;}
+a.a-word:hover { color:#fff; background:#df5e2c; text-decoration:none;}
+
+/* 收录工具 - 登录&注册 */
+.main-shoulu { width:563px; margin:0 auto; padding-top:18px;}
+.nav { width:563px; height:40px; padding-top:10px; background:url(../img/logo.gif) right top no-repeat;}
+.nav li { float:left; width:102px; height:40px; line-height:40px; text-align:center; font-size:16px; font-weight:bold;}
+.nav-1 { background:#f6f6f6; color:#494949;}
+.con { width:563px; background:#f6f6f6; padding-bottom:43px;}
+.con ul { padding-left:48px; padding-top:49px;}
+.login-con-txt { padding-bottom:18px; height:39px;}
+.span1 { color:#464646; font-size:14px; height:37px; line-height:37px;}
+.input1 { width:267px; height:37px; line-height:37px; background:#fff; border:#e0e0e0 1px solid; margin-left:14px; margin-right:8px; color:#464646; font-weight:bold; font-size:16px; padding-left:8px;}
+.input1-on { background:#f3f9fe;}
+.span2 { font-size:12px; color:#8f8f8f; height:37px; line-height:37px;}
+.span2-error { color:#689aca;}
+.correct { padding-top:11px;}
+.login-con-2 { font-size:12px; color:#494949; height:15px; line-height:15px; margin-bottom:24px;}
+.remember { margin-left:74px; margin-right:7px;}
+.foget { margin-left:135px;} 
+.login-con-3 { padding-left:74px; height:43px; line-height:43px; font-size:14px;}
+.btn-login { cursor:pointer; width:106px; margin-right:16px; height:43px; line-height:43px; background:#689aca; font-size:18px; color:#fff;}
+.btn-login:hover { background:#df5e2c;}
+
+/* 收录工具 */
+.shoulu { width:614px; height:368px; background:#f6f6f6; margin:0 auto; position:relative;}
+.shoulu1 { padding-left:38px; padding-top:35px;}
+.record1 { height:39px; margin-bottom:18px;}
+.p-name { float:left; padding-right:14px; color:#494949; font-size:14px; height:39px; line-height:39px;}
+.input-youjia { float:left; width:457px; height:37px; line-height:37px; color:#494949; font-size:14px; padding-left:8px; padding-right:27px; background:#f8f8f8; border:#e0e0e0 1px solid; overflow:hidden; position:relative; cursor:pointer;} /* 收录工具 */
+.input-youjia:hover { background:#f2f2f2;}
+.arrow { width:11px; height:6px; position:absolute; background:url(../img/sanjiao.gif) no-repeat; top:16px; right:8px;}
+.input-url { float:left; width:476px; height:37px; line-height:37px; color:#8f8f8f; font-size:14px; padding-left:8px; padding-right:8px; border:#e0e0e0 1px solid; overflow:hidden;}
+.input-url-on { background:#f3f9fe;}
+.input-tit { float:left; width:476px; height:37px; line-height:37px; color:#494949; font-size:14px; padding-left:8px; padding-right:8px; border:#e0e0e0 1px solid; overflow:hidden;}
+.input-tit-on { background:#f3f9fe;}
+.record2 { height:67px; margin-bottom:18px;}
+.input-des { float:left; width:476px; height:60px; padding-top:5px; line-height:28px; color:#8f8f8f; font-size:14px; padding-left:8px; padding-right:8px; border:#e0e0e0 1px solid; overflow:hidden; overflow:hidden; resize:none;}
+.input-des-on { background:#f3f9fe;}
+.record3 { height:43px; padding-left:42px;}
+.btn-shoulu { cursor:pointer; width:106px; margin-right:16px; height:43px; line-height:43px; background:#689aca; font-size:18px; color:#fff;}
+.btn-shoulu:hover { background:#df5e2c;}
+
+/* 优夹弹层 */
+.youjiabox { position:absolute; width:492px; height:236px; background:#f8f8f8; border:#e0e0e0 1px solid; top:35px; left:80px;}
+.youjia-list { width:492px; height:181px; overflow:auto; overflow-x:hidden; max-height:181px;}
+.youjia-li { height:37px; line-height:37px; font-size:14px; padding-left:8px; cursor:pointer;}
+.youjia-li-on { background:#f3f3f3;}
+.youjia-li:hover { background:#f3f3f3;}
+.youjia-add { width:476px; height:39px; background:#eeeeee; padding:8px;}
+.input-add { float:left; width:429px; height:37px; line-height:37px; font-size:14px; border:#e0e0e0 1px solid; padding-left:7px; color:#b6b6b6;}
+.btn-add { float:left; background:url(../img/box-add.gif) no-repeat; width:31px; height:30px; cursor:pointer; margin-top:4px; margin-left:6px;}
