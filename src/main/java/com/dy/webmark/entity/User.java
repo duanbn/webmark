@@ -1,11 +1,14 @@
 package com.dy.webmark.entity;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.duanbn.mydao.annotation.DateTime;
 import com.duanbn.mydao.annotation.Field;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
-import com.duanbn.mydao.annotation.Timestamp;
 import com.duanbn.validation.annotation.CheckPOJO;
 import com.duanbn.validation.annotation.CheckString;
 
@@ -28,8 +31,11 @@ public class User {
     @CheckString(isNull = false)
     private String email;
 
-    @Timestamp(isCanNull = false)
-    private java.sql.Timestamp regTime;
+    @DateTime(isCanNull = false, hasDefault = true)
+    private Date regTime;
+
+    @com.duanbn.mydao.annotation.Timestamp
+    private Timestamp updateTime;
 
     public int getId() {
         return id;
@@ -63,12 +69,20 @@ public class User {
         this.email = email;
     }
 
-    public java.sql.Timestamp getRegTime() {
+    public Date getRegTime() {
         return regTime;
     }
 
-    public void setRegTime(java.sql.Timestamp regTime) {
+    public void setRegTime(Date regTime) {
         this.regTime = regTime;
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override

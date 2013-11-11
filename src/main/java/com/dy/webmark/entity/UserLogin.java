@@ -1,9 +1,14 @@
 package com.dy.webmark.entity;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
+import com.duanbn.mydao.annotation.DateTime;
 import com.duanbn.mydao.annotation.Field;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
-import com.duanbn.mydao.annotation.Timestamp;
 
 @Table
 public class UserLogin {
@@ -14,11 +19,14 @@ public class UserLogin {
     @Field(isCanNull = false, hasDefault = false)
     private String sessionId;
 
-    @Timestamp(isCanNull = false)
-    private java.sql.Timestamp loginTime = new java.sql.Timestamp(System.currentTimeMillis());
+    @DateTime(isCanNull = false, hasDefault = true)
+    private Date loginTime = new Date();
 
     @Field(hasDefault = true)
     private boolean isAutoLogin;
+
+    @com.duanbn.mydao.annotation.Timestamp
+    private Timestamp updateTime;
 
     public String getEmail() {
         return email;
@@ -36,11 +44,11 @@ public class UserLogin {
         this.sessionId = sessionId;
     }
 
-    public java.sql.Timestamp getLoginTime() {
+    public Date getLoginTime() {
         return loginTime;
     }
 
-    public void setLoginTime(java.sql.Timestamp loginTime) {
+    public void setLoginTime(Date loginTime) {
         this.loginTime = loginTime;
     }
 
@@ -50,6 +58,19 @@ public class UserLogin {
 
     public void setAutoLogin(boolean isAutoLogin) {
         this.isAutoLogin = isAutoLogin;
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

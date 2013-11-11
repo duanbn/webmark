@@ -1,5 +1,7 @@
 package com.dy.webmark.entity;
 
+import java.sql.Timestamp;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.duanbn.mydao.annotation.Field;
@@ -26,6 +28,9 @@ public class Favorite {
 
     @Field(isCanNull = false, hasDefault = true)
     private String url;
+
+    @com.duanbn.mydao.annotation.Timestamp
+    private Timestamp updateTime;
 
     public int getId() {
         return id;
@@ -73,6 +78,14 @@ public class Favorite {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 
     @Override
