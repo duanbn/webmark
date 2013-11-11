@@ -2,6 +2,11 @@ package com.dy.webmark.common;
 
 public enum ErrorCode {
 
+    BIZ4001("b4001", "保存收藏夹失败"),
+
+    /**
+     * 登录相关
+     */
     BIZ3001("b3001", "保存用户登录信息失败"),
 
     /**

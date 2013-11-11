@@ -1,4 +1,4 @@
-package com.dy.webmark.service;
+package com.dy.webmark.service.impl;
 
 import java.sql.Timestamp;
 
@@ -11,6 +11,7 @@ import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.UserLogin;
 import com.dy.webmark.exception.BizException;
 import com.dy.webmark.mapper.UserLoginMapper;
+import com.dy.webmark.service.IUserLoginService;
 
 @Service
 public class UserLoginServiceImpl implements IUserLoginService {

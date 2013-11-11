@@ -6,38 +6,28 @@ $(document).ready(function(){
 	$('.input-url').blur(function(){
 		$(this).removeClass('input-url-on');
 	});
-}); 
 
-$(document).ready(function(){
-	$('.input-tit').focus(function(){
+    $('.input-tit').focus(function(){
 		$(this).addClass('input-tit-on');
 	});
 	$('.input-tit').blur(function(){
 		$(this).removeClass('input-tit-on');
 	});
-}); 
 
-$(document).ready(function(){
-	$('.input-des').focus(function(){
+    $('.input-des').focus(function(){
 		$(this).addClass('input-des-on');
 	});
 	$('.input-des').blur(function(){
 		$(this).removeClass('input-des-on');
 	});
-}); 
 
-$(document).ready(function(){
-	$('.youjiabox').hide();
+    $('.youjiabox').hide();
 	$('.input-youjia').click(function(){
 		$('.youjiabox').show();
 	});
-	$('.youjiabox').mouseout(function(){
+	$('.youjiabox').mouseleave(function(){
 		$('.youjiabox').hide();
 	});
+
+    $('.input-add').val("快速筛选/创建优夹");
 }); 
-
-
-$(document).ready(function(){
-	$('.input-add').val("快速筛选/创建优夹");
-}); 
-

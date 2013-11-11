@@ -1,14 +1,19 @@
 package com.dy.webmark.entity;
 
 import java.sql.Timestamp;
+import java.util.Date;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.duanbn.mydao.annotation.DateTime;
 import com.duanbn.mydao.annotation.Field;
+import com.duanbn.mydao.annotation.Index;
+import com.duanbn.mydao.annotation.Indexes;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 
 @Table
+@Indexes({@Index(field="userId")})
 public class Favorite {
 
     @PrimaryKey(autoIncrement = true)
@@ -28,6 +33,9 @@ public class Favorite {
 
     @Field(isCanNull = false, hasDefault = true)
     private String url;
+
+    @DateTime
+    private Date createTime;
 
     @com.duanbn.mydao.annotation.Timestamp
     private Timestamp updateTime;
