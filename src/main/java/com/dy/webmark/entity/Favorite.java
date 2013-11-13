@@ -37,8 +37,14 @@ public class Favorite {
     @Field(isCanNull = false)
     private int clipId; // 优夹id
 
+    @Field(hasDefault = true)
+    private boolean highLight;
+
+    @Field(hasDefault = true)
+    private boolean isTop;
+
     @DateTime
-    private Date createTime;
+    private Date createTime = new Date();
 
     @com.duanbn.mydao.annotation.Timestamp
     private Timestamp updateTime;

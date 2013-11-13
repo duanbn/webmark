@@ -3,14 +3,17 @@ package com.dy.webmark.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.duanbn.mydao.util.StringUtil;
 import com.duanbn.validation.Validate;
+import com.dy.webmark.common.ErrorCode;
+import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.FavoriteClip;
+import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
 import com.dy.webmark.service.IFavoriteClipService;
 
@@ -23,10 +26,15 @@ public class FavoriteClipController extends BaseController {
     @Resource
     private IFavoriteClipService favoriteClipService;
 
-    @RequestMapping("/add.do")
+    @RequestMapping("/add.json")
     public void addFavoriteClip(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         String name = req.getParameter("name");
-        int userId = StringUtil.converToInt(req.getParameter("userId"), 0);
+        HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(WebConst.SESSION_USER);
+        if (user == null) {
+            throw new BizException(ErrorCode.USER_NOT_EXIST);
+        }
+        int userId = user.getId();
 
         FavoriteClip clip = new FavoriteClip();
         clip.setName(name);
@@ -35,6 +43,8 @@ public class FavoriteClipController extends BaseController {
         Validate.check(clip);
 
         favoriteClipService.addFavoriteClip(clip);
+
+        setOutput(req, "OK");
     }
 
     @RequestMapping("/getFavoriteClipWithJson.json")
