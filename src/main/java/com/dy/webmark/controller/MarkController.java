@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.*;
 import org.apache.log4j.*;
 
+import com.dy.webmark.exception.BizException;
+
 @Controller
 @RequestMapping("/mark")
 public class MarkController extends BaseController {
@@ -14,7 +16,7 @@ public class MarkController extends BaseController {
     public static final String SHOULU = "shoulu";
 
     @RequestMapping("/showdlg.do")
-    public String showMarkDialog(HttpServletRequest req, HttpServletResponse resp) {
+    public String showMarkDialog(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         String title = req.getParameter("title");
         String url = req.getParameter("url");
         String keywords = req.getParameter("keywords");

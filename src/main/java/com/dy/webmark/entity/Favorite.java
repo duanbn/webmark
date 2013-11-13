@@ -13,7 +13,7 @@ import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 
 @Table
-@Indexes({@Index(field="userId")})
+@Indexes({ @Index(field = "userId,clipId"), @Index(field = "clipId") })
 public class Favorite {
 
     @PrimaryKey(autoIncrement = true)
@@ -33,6 +33,9 @@ public class Favorite {
 
     @Field(isCanNull = false, hasDefault = true)
     private String url;
+
+    @Field(isCanNull = false)
+    private int clipId; // 优夹id
 
     @DateTime
     private Date createTime;
@@ -80,12 +83,28 @@ public class Favorite {
         this.keyword = keyword;
     }
 
+    public int getClipId() {
+        return clipId;
+    }
+
+    public void setClipId(int clipId) {
+        this.clipId = clipId;
+    }
+
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Timestamp getUpdateTime() {

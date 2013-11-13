@@ -5,6 +5,8 @@ import com.duanbn.mydao.annotation.Index;
 import com.duanbn.mydao.annotation.Indexes;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
+import com.duanbn.validation.annotation.CheckNumber;
+import com.duanbn.validation.annotation.CheckString;
 
 @Table
 @Indexes({ @Index(field = "userId") })
@@ -14,9 +16,11 @@ public class FavoriteClip {
     private int id;
 
     @Field(isCanNull = false, hasDefault = true, length = 45)
+    @CheckString(isNull = false, message = "优夹名称不能为空")
     private String name;
 
     @Field(isCanNull = false)
+    @CheckNumber(isNull = false, range = "(0,*]")
     private int userId;
 
     public int getId() {

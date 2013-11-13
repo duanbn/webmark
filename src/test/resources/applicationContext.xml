@@ -39,7 +39,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="webmark.rw" />
 	</bean>
-	<bean id="tableSyncBean" class="com.duanbn.mydao.db.TableSyncBean">
+	<bean id="tableSyncBean" class="com.duanbn.support.spring.mydao.TableSyncBean">
 		<property name="datasource" ref="webmark.rw" />
 		<property name="scanPackage" value="com.dy.webmark.entity" />
 		<property name="delete" value="true" />
@@ -63,6 +63,7 @@
 
 	<!-- json filter -->
 	<bean id="jsonFilter" class="com.dy.webmark.filter.JsonFilter" />
+	<bean id="authFilter" class="com.dy.webmark.filter.AuthFilter" />
 
 	<context:component-scan base-package="com.dy.webmark" />
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

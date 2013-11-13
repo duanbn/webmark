@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.duanbn.validation.Rule;
 import com.duanbn.validation.RuleBuilder;
 import com.duanbn.validation.Validate;
-import com.duanbn.validation.exception.CheckFailureException;
 import com.duanbn.validation.validator.impl.StringValidator;
-import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
@@ -50,25 +48,20 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("/checkemail.json")
-    public void checkEmail(HttpServletRequest req, HttpServletResponse resp) {
+    public void checkEmail(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         String email = req.getParameter("email");
 
         boolean isExist = false;
-        try {
-            Rule r = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
-            r.setErrorMessage("请填写邮件地址");
-            Validate.check(email, "email", r);
-        } catch (CheckFailureException e) {
-            setOutput(req, e.getMessage());
-            return;
-        }
+        Rule r = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
+        r.setErrorMessage("请填写邮件地址");
+        Validate.check(email, "email", r);
 
         isExist = userService.checkEmailExist(email);
         setOutput(req, isExist);
     }
 
     @RequestMapping("/reg.do")
-    public String reg(HttpServletRequest req, HttpServletResponse resp) {
+    public String reg(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         User user = new User();
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -76,19 +69,9 @@ public class UserController extends BaseController {
         user.setPassword(password);
         user.setRegTime(new Timestamp(System.currentTimeMillis()));
 
-        try {
-            Validate.check(user);
-        } catch (CheckFailureException e) {
-            req.setAttribute(WebConst.OUTPUT_MESSAGE, e.getMessage());
-        }
+        Validate.check(user);
 
-        try {
-            userService.regUser(user);
-        } catch (BizException e) {
-            ErrorCode ec = e.getEc();
-            req.setAttribute(ec.getCode(), ec.getMessage());
-            return REG;
-        }
+        userService.regUser(user);
 
         HttpSession session = req.getSession();
         session.setAttribute(WebConst.SESSION_USER, user);
@@ -97,21 +80,12 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping("/dologin.do")
-    public String doLogin(HttpServletRequest req, HttpServletResponse resp) {
+    public String doLogin(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String autoLogin = req.getParameter("autologin");
 
-        User user = null;
-        try {
-            user = userService.login(email, password);
-        } catch (BizException e) {
-            req.setAttribute(WebConst.REQ_INPUTEMAIL, email);
-            ErrorCode ec = e.getEc();
-            req.setAttribute(ec.getCode(), ec.getMessage());
-            return LOGIN;
-        }
-
+        User user = userService.login(email, password);
 
         HttpSession session = req.getSession();
         session.setAttribute(WebConst.SESSION_USER, user);
@@ -125,17 +99,9 @@ public class UserController extends BaseController {
             cookieSessionId.setMaxAge(AUTOLOGIN);
             resp.addCookie(cookieSessionId);
 
-            try {
-                userLoginService.saveUserLogin(email, session.getId(), true);
-            } catch (BizException e) {
-                LOG.error(e.getMessage(), e);
-            }
+            userLoginService.saveUserLogin(email, session.getId(), true);
         } else {
-            try {
-                userLoginService.saveUserLogin(email, session.getId(), false);
-            } catch (BizException e) {
-                LOG.error(e.getMessage(), e);
-            }
+            userLoginService.saveUserLogin(email, session.getId(), false);
         }
         return MAIN;
     }
@@ -147,7 +113,7 @@ public class UserController extends BaseController {
      * @param resp
      */
     @RequestMapping("/delete.do")
-    public void delete(HttpServletResponse req, HttpServletResponse resp) {
+    public void delete(HttpServletResponse req, HttpServletResponse resp) throws BizException {
         // TODO: no implements
     }
 
