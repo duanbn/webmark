@@ -27,7 +27,7 @@ public class UserServiceImpl implements IUserService {
     public User get(String email) throws BizException {
         User user = userMapper.getUserByEmail(email);
         if (user == null) {
-            throw new BizException(ErrorCode.USER_NOT_EXIST);
+            throw new BizException(ErrorCode.BIZ1002);
         }
 
         return user;
@@ -43,7 +43,7 @@ public class UserServiceImpl implements IUserService {
     public void regUser(User user) throws BizException {
         // 判断邮箱是否已经注册
         if (userMapper.getUserByEmail(user.getEmail()) != null) {
-            throw new BizException(ErrorCode.USER_EMAIL_EXIST);
+            throw new BizException(ErrorCode.BIZ1003);
         }
 
         try {
@@ -56,7 +56,7 @@ public class UserServiceImpl implements IUserService {
                 LOG.debug("register user done, " + user);
             }
         } catch (Exception e) {
-            throw new BizException(ErrorCode.USER_REG_FAIL, e);
+            throw new BizException(ErrorCode.BIZ1001, e);
         }
     }
 
@@ -64,11 +64,11 @@ public class UserServiceImpl implements IUserService {
     public User login(String email, String password) throws BizException {
         User user = userMapper.getUserByEmail(email);
         if (user == null) {
-            throw new BizException(ErrorCode.EMAIL_NOT_EXIST);
+            throw new BizException(ErrorCode.BIZ1005);
         }
 
         if (!user.getPassword().equals(_md5(password))) {
-            throw new BizException(ErrorCode.USER_PASSWORD_ERROR);
+            throw new BizException(ErrorCode.BIZ1006);
         }
 
         return user;
@@ -78,7 +78,7 @@ public class UserServiceImpl implements IUserService {
     public void setNickName(int id, String nickname) throws BizException {
         User user = userMapper.getUserByNickName(nickname);
         if (user != null) {
-            throw new BizException(ErrorCode.USER_NICKNAME_EXIST);
+            throw new BizException(ErrorCode.BIZ1004);
         }
 
         userMapper.updateNickName(id, nickname);

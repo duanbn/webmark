@@ -1,11 +1,11 @@
 package com.dy.webmark.controller;
 
-import javax.servlet.http.*;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.*;
-import org.apache.log4j.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import com.dy.webmark.exception.BizException;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/mark")
@@ -16,7 +16,7 @@ public class MarkController extends BaseController {
     public static final String SHOULU = "shoulu";
 
     @RequestMapping("/showdlg.do")
-    public String showMarkDialog(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+    public String showMarkDialog(HttpServletRequest req, HttpServletResponse resp) {
         String title = req.getParameter("title");
         String url = req.getParameter("url");
         String keywords = req.getParameter("keywords");

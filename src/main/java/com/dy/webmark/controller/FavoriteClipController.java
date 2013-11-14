@@ -1,5 +1,7 @@
 package com.dy.webmark.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,8 +11,10 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.duanbn.mydao.util.StringUtil;
 import com.duanbn.validation.Validate;
 import com.dy.webmark.common.ErrorCode;
+import com.dy.webmark.common.ValidateRule;
 import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
@@ -32,7 +36,7 @@ public class FavoriteClipController extends BaseController {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute(WebConst.SESSION_USER);
         if (user == null) {
-            throw new BizException(ErrorCode.USER_NOT_EXIST);
+            throw new BizException(ErrorCode.BIZ1002);
         }
         int userId = user.getId();
 
@@ -49,7 +53,13 @@ public class FavoriteClipController extends BaseController {
 
     @RequestMapping("/getFavoriteClipWithJson.json")
     public void getFavoriteClipWithJson(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        int userId = StringUtil.converToInt(req.getParameter("userId"), 0);
 
+        Validate.check(userId, ValidateRule.userIdRule);
+
+        List<FavoriteClip> clips = favoriteClipService.getFavoriteClip(userId);
+
+        setOutput(req, clips);
     }
 
 }

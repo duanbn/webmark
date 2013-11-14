@@ -12,11 +12,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.WebUtils;
 
-import com.duanbn.validation.Rule;
-import com.duanbn.validation.RuleBuilder;
 import com.duanbn.validation.Validate;
-import com.duanbn.validation.validator.impl.StringValidator;
+import com.dy.webmark.common.ValidateRule;
 import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
@@ -31,12 +30,6 @@ public class UserController extends BaseController {
 
     public static final int AUTOLOGIN = 60 * 60 * 24 * 14;
 
-    public static final String LOGIN = "login";
-    public static final String REG = "reg";
-    public static final String MAIN = "main";
-    public static final String RESULT = "result";
-    public static final String SUCCESS = "success";
-
     @Resource
     private IUserService userService;
     @Resource
@@ -44,24 +37,22 @@ public class UserController extends BaseController {
 
     @RequestMapping("/login.do")
     public String login() {
-        return LOGIN;
+        return "login";
     }
 
     @RequestMapping("/checkemail.json")
-    public void checkEmail(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+    public void checkEmail(HttpServletRequest req, HttpServletResponse resp) {
         String email = req.getParameter("email");
 
         boolean isExist = false;
-        Rule r = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
-        r.setErrorMessage("请填写邮件地址");
-        Validate.check(email, "email", r);
+        Validate.check(email, "email", ValidateRule.emailRule);
 
         isExist = userService.checkEmailExist(email);
         setOutput(req, isExist);
     }
 
-    @RequestMapping("/reg.do")
-    public String reg(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+    @RequestMapping("/reg.json")
+    public void reg(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         User user = new User();
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -75,12 +66,10 @@ public class UserController extends BaseController {
 
         HttpSession session = req.getSession();
         session.setAttribute(WebConst.SESSION_USER, user);
-
-        return SUCCESS;
     }
 
-    @RequestMapping("/dologin.do")
-    public String doLogin(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+    @RequestMapping("/dologin.json")
+    public void doLogin(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String autoLogin = req.getParameter("autologin");
@@ -103,7 +92,25 @@ public class UserController extends BaseController {
         } else {
             userLoginService.saveUserLogin(email, session.getId(), false);
         }
-        return MAIN;
+    }
+
+    @RequestMapping("/dologout.json")
+    public void doLogout(HttpServletRequest req, HttpServletResponse resp) {
+        HttpSession session = getSession(req);
+
+        session.removeAttribute(WebConst.SESSION_USER);
+
+        // 清理cookie
+        Cookie emailCookie = WebUtils.getCookie(req, WebConst.COOKIE_EMAIL);
+        if (emailCookie != null) {
+            emailCookie.setMaxAge(0);
+            resp.addCookie(emailCookie);
+        }
+        Cookie sessionsIdCookie = WebUtils.getCookie(req, WebConst.COOKIE_SESSIONID);
+        if (sessionsIdCookie != null) {
+            sessionsIdCookie.setMaxAge(0);
+            resp.addCookie(sessionsIdCookie);
+        }
     }
 
     /**

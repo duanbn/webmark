@@ -36,39 +36,27 @@
             <li><a class="a-word" href="/view/reg.html">注册</a></li>
         </ul>
     </div>
-    <form id="form-login" action="/user/dologin.do" method="post">
 	<div class="login-con">
     	<ul>
         	<li class="login-con-txt">
         		<span class="span1">邮箱/账号</span>
-        		<input id="login-email" name="email" class="input1" type="text" value="${inputemail}" onblur="checkEmail(this.value, 'login')">
-        		<#if b1005??>
-        			<span id="email_tip" class="span2-error">${b1005}
-        		<#else>
-        			<span id="email_tip" class="span2"><#if inputemail??></span><#else>请输入您的注册邮箱</#if>
-        		</#if>
-        		</span>
+        		<input id="login-email" name="email" class="input1" type="text" onblur="checkEmail(this.value, 'login')">
+                <span id="email_tip" class="span2">请输入您的注册邮箱</span>
         	</li>
             <li class="login-con-txt">
             	<span class="span1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码</span>
             	<input id="login-pwd" name="password" class="input1" type="password">
-        		<#if b1006??>
-        			<span id="password_tip" class="span2-error">${b1006}
-        		<#else>
-        			<span id="password_tip" class="span2">字母、数字或下划线</span>
-        		</#if>
-            	</span>
+                <span id="password_tip" class="span2">字母、数字或下划线</span>
             </li>
             <li class="login-con-2">
             	<input type="checkbox" id="autologin" value="on" name="autologin" class="remember" tabindex="4" checked="checked"/>两周内自动登录
                 <a class="a-word foget" href="">忘记密码</a>
             </li>
             <li class="login-con-3">
-            	<input id="btn-login" class="btn-login" type="submit" value="登&nbsp;录">还没有账号？<a href="/view/reg.html" class="a-word">注册</a>
+            	<input id="btn-login" class="btn-login" type="button" value="登&nbsp;录" onclick="doLogin()">还没有账号？<a href="/view/reg.html" class="a-word">注册</a>
             </li>
         </ul>
     </div>
-    </form>
 </div>
 
 <div class="footer">

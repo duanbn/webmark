@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.duanbn.validation.exception.CheckFailureException;
@@ -20,6 +21,8 @@ import com.dy.webmark.common.WebConst;
 import com.dy.webmark.exception.BizException;
 
 public class JsonFilter implements Filter {
+
+    public static final Logger LOG = Logger.getLogger(JsonFilter.class);
 
     private static final ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -32,23 +35,30 @@ public class JsonFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
             ServletException {
-        String json = "";
-
+        Map<String, Object> map = new HashMap<String, Object>();
         try {
             chain.doFilter(request, response);
-            Object output = request.getAttribute(WebConst.OUTPUT_JSON);
-            json = jsonMapper.writeValueAsString(output);
-        } catch (CheckFailureException e) {
-            json = jsonMapper.writeValueAsString(e.getMessage());
+
+            Object output = request.getAttribute(WebConst.OUTPUT_DATA);
+            map.put("status", "ok");
+            if (output != null)
+                map.put("data", output);
+
         } catch (Exception e) {
-            Map<String, String> errorMap = new HashMap<String, String>();
-            if (e instanceof BizException) {
-                ErrorCode ec = ((BizException) e).getEc();
-                errorMap.put(ec.getCode(), ec.getMessage());
-                json = jsonMapper.writeValueAsString(errorMap);
+            LOG.error(e);
+            ErrorCode ec = null;
+            if (e.getCause() instanceof CheckFailureException) {
+                ec = ErrorCode.BIZ5001;
+                ec.setMessage(e.getMessage());
+            } else if (e.getCause() instanceof BizException) {
+                ec = ((BizException) e.getCause()).getEc();
             }
+            map.put("status", "error");
+            map.put("code", ec.getCode());
+            map.put("message", ec.getMessage());
         }
 
+        String json = jsonMapper.writeValueAsString(map);
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
         writer.write(json);

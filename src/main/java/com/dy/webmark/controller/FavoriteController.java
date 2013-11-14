@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.Favorite;
 import com.dy.webmark.exception.BizException;
 import com.dy.webmark.service.IFavoriteService;
@@ -22,7 +23,7 @@ public class FavoriteController extends BaseController {
     private IFavoriteService favoService;
 
     @RequestMapping("/add.do")
-    public String addfavorite(HttpServletRequest req, HttpServletRequest resp) throws BizException {
+    public String addfavorite(HttpServletRequest req, HttpServletRequest resp) {
         int userId = Integer.parseInt(req.getParameter("userId"));
         String title = req.getParameter("title");
         String desc = req.getParameter("desc");
@@ -36,16 +37,22 @@ public class FavoriteController extends BaseController {
         favo.setTitle(title);
         favo.setUrl(url);
 
-        favoService.addFavorite(favo);
+        try {
+            favoService.addFavorite(favo);
+        } catch (BizException e) {
+            LOG.error(e);
+            req.setAttribute(WebConst.OUTPUT_ERROR, e.getEc());
+            // TODO: 如果添加失败去哪？？？
+        }
 
-        // TODO: 临时写的.
-        return "done";
+        return WebConst.VIEW_MAIN;
     }
 
-    @RequestMapping("/index.do")
+    @RequestMapping("/main.do")
     public String index(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         req.setAttribute("name", "spring freemarker");
-        return "index";
+
+        return WebConst.VIEW_MAIN;
     }
 
 }

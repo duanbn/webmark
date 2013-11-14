@@ -9,8 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.util.NestedServletException;
@@ -35,11 +33,6 @@ public class CommonFilter implements Filter {
             ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
-        HttpServletResponse resp = (HttpServletResponse) response;
-
-        String inputUrl = req.getRequestURL().toString();
-        HttpSession session = req.getSession();
-        session.removeAttribute(WebConst.SESSION_ERRORINFO);
 
         try {
             chain.doFilter(request, response);
@@ -49,17 +42,13 @@ public class CommonFilter implements Filter {
                 if (e.getCause() instanceof CheckFailureException) {
                     ErrorCode ec = ErrorCode.BIZ5001;
                     ec.setMessage(e.getMessage());
-                    session.setAttribute(WebConst.SESSION_ERRORINFO, ec);
+                    req.setAttribute(WebConst.SESSION_ERRORINFO, ec);
+                } else if (e instanceof BizException) {
+                    ErrorCode ec = ((BizException) e).getEc();
+                    req.setAttribute(WebConst.SESSION_ERRORINFO, ec);
                 }
-            } else if (e instanceof BizException) {
-                ErrorCode ec = ((BizException) e).getEc();
-                session.setAttribute(WebConst.SESSION_ERRORINFO, ec);
-                LOG.error(e.getMessage(), e);
-            } else {
-                session.setAttribute(WebConst.SESSION_ERRORINFO, ErrorCode.BIZ5002);
-                LOG.error(e.getMessage(), e);
             }
-            resp.sendRedirect(inputUrl);
+            req.getRequestDispatcher("failure").forward(request, response);
         }
 
     }

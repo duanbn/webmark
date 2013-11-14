@@ -25,9 +25,8 @@ public enum ErrorCode {
     /**
      * 用户错误码
      */
-    USER_REG_FAIL("b1001", "用户注册失败"), USER_NOT_EXIST("b1002", "找不到用户信息"), USER_EMAIL_EXIST("b1003", "email已经存在"),
-    USER_NICKNAME_EXIST("b1004", "用户昵称已经存在"), EMAIL_NOT_EXIST("b1005", "邮箱不存在哦"),
-    USER_PASSWORD_ERROR("b1006", "密码不正确哦");
+    BIZ1001("b1001", "用户注册失败"), BIZ1002("b1002", "找不到用户信息"), BIZ1003("b1003", "email已经存在"),
+    BIZ1004("b1004", "用户昵称已经存在"), BIZ1005("b1005", "邮箱不存在哦"), BIZ1006("b1006", "密码不正确哦");
 
     private String code;
 

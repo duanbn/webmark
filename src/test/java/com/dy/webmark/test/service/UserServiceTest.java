@@ -44,7 +44,7 @@ public class UserServiceTest {
         try {
             userService.regUser(user);
         } catch (BizException e) {
-            Assert.assertEquals(ErrorCode.USER_EMAIL_EXIST, e.getEc());
+            Assert.assertEquals(ErrorCode.BIZ1002, e.getEc());
         }
 
         user.setEmail("duanbn1@126.com");
@@ -57,13 +57,13 @@ public class UserServiceTest {
         try {
             user = userService.login("aa", PASSWORD);
         } catch (BizException e) {
-            Assert.assertEquals(ErrorCode.EMAIL_NOT_EXIST, e.getEc());
+            Assert.assertEquals(ErrorCode.BIZ1002, e.getEc());
         }
 
         try {
             user = userService.login(EMAIL, "1111");
         } catch (BizException e) {
-            Assert.assertEquals(ErrorCode.USER_PASSWORD_ERROR, e.getEc());
+            Assert.assertEquals(ErrorCode.BIZ1006, e.getEc());
         }
 
         user = userService.login(EMAIL, PASSWORD);

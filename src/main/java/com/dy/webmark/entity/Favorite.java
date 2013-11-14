@@ -11,6 +11,8 @@ import com.duanbn.mydao.annotation.Index;
 import com.duanbn.mydao.annotation.Indexes;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
+import com.duanbn.validation.annotation.CheckNumber;
+import com.duanbn.validation.annotation.CheckURL;
 
 @Table
 @Indexes({ @Index(field = "userId,clipId"), @Index(field = "clipId") })
@@ -20,6 +22,7 @@ public class Favorite {
     private int id;
 
     @Field(isCanNull = false, hasDefault = true)
+    @CheckNumber(isNull = false, range = "(0,*]")
     private int userId;
 
     @Field(isCanNull = false, hasDefault = true)
@@ -32,9 +35,11 @@ public class Favorite {
     private String keyword;
 
     @Field(isCanNull = false, hasDefault = true)
+    @CheckURL(isNull = false, message = "请填写有效的url地址")
     private String url;
 
     @Field(isCanNull = false)
+    @CheckNumber(isNull = false, range = "(0,*]")
     private int clipId; // 优夹id
 
     @Field(hasDefault = true)
