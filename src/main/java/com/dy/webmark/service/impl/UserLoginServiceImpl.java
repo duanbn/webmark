@@ -22,7 +22,14 @@ public class UserLoginServiceImpl implements IUserLoginService {
     private UserLoginMapper userLoginMapper;
 
     @Override
-    public void saveUserLogin(String email, String sessionId, boolean isAutoLogin) throws BizException {
+    public UserLogin getUserLogin(String email, String sessionId) {
+        UserLogin userLogin = userLoginMapper.getByEmailSessionId(email, sessionId);
+
+        return userLogin;
+    }
+
+    @Override
+    public void updateUserLogin(String email, String sessionId, boolean isAutoLogin) throws BizException {
         try {
             UserLogin login = userLoginMapper.getByEmail(email);
             if (login == null) {

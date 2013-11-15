@@ -35,10 +35,10 @@ public class UserController extends BaseController {
     @Resource
     private IUserLoginService userLoginService;
 
-    @RequestMapping("/login.do")
-    public String login() {
-        return "login";
-    }
+    // @RequestMapping("/login.do")
+    // public String login() {
+    // return "login";
+    // }
 
     @RequestMapping("/checkemail.json")
     public void checkEmail(HttpServletRequest req, HttpServletResponse resp) {
@@ -76,41 +76,46 @@ public class UserController extends BaseController {
 
         User user = userService.login(email, password);
 
-        HttpSession session = req.getSession();
+        HttpSession session = getSession(req);
         session.setAttribute(WebConst.SESSION_USER, user);
 
         // 自动登录
         if (StringUtils.isNotBlank(autoLogin) && autoLogin.equals("on")) {
             Cookie cookieAutoLogin = new Cookie(WebConst.COOKIE_EMAIL, email);
+            cookieAutoLogin.setPath("/");
             cookieAutoLogin.setMaxAge(AUTOLOGIN);
             resp.addCookie(cookieAutoLogin);
+
             Cookie cookieSessionId = new Cookie(WebConst.COOKIE_SESSIONID, session.getId());
+            cookieSessionId.setPath("/");
             cookieSessionId.setMaxAge(AUTOLOGIN);
             resp.addCookie(cookieSessionId);
 
-            userLoginService.saveUserLogin(email, session.getId(), true);
+            userLoginService.updateUserLogin(email, session.getId(), true);
         } else {
-            userLoginService.saveUserLogin(email, session.getId(), false);
+            userLoginService.updateUserLogin(email, session.getId(), false);
         }
     }
 
     @RequestMapping("/dologout.json")
     public void doLogout(HttpServletRequest req, HttpServletResponse resp) {
         HttpSession session = getSession(req);
-
         session.removeAttribute(WebConst.SESSION_USER);
 
         // 清理cookie
         Cookie emailCookie = WebUtils.getCookie(req, WebConst.COOKIE_EMAIL);
         if (emailCookie != null) {
+            emailCookie.setPath("/");
             emailCookie.setMaxAge(0);
             resp.addCookie(emailCookie);
         }
         Cookie sessionsIdCookie = WebUtils.getCookie(req, WebConst.COOKIE_SESSIONID);
         if (sessionsIdCookie != null) {
+            sessionsIdCookie.setPath("/");
             sessionsIdCookie.setMaxAge(0);
             resp.addCookie(sessionsIdCookie);
         }
+
     }
 
     /**

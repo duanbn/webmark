@@ -23,7 +23,7 @@ import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.entity.UserLogin;
 import com.dy.webmark.exception.BizException;
-import com.dy.webmark.mapper.UserLoginMapper;
+import com.dy.webmark.service.IUserLoginService;
 import com.dy.webmark.service.IUserService;
 
 public class AuthFilter implements Filter {
@@ -31,10 +31,9 @@ public class AuthFilter implements Filter {
     private boolean isEnableDebug = PropertiesUtil.getBoolean("enable.debug");
 
     @Resource
-    private UserLoginMapper userLoginMapper;
-
-    @Resource
     private IUserService userService;
+
+    private IUserLoginService userLoginService;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -53,8 +52,7 @@ public class AuthFilter implements Filter {
 
             String uri = ((HttpServletRequest) request).getRequestURI();
 
-            if (!uri.endsWith("/user/login.do") && !uri.endsWith("dologin.do") && uri.endsWith(".do")
-                    && !uri.endsWith("/checkemail.json")) {
+            if (!uri.endsWith("view/login.html") && !uri.endsWith("dologin.json")) {
                 User user = (User) session.getAttribute(WebConst.SESSION_USER);
                 if (user == null) {
                     Cookie emailCookie = WebUtils.getCookie(req, WebConst.COOKIE_EMAIL);
@@ -62,27 +60,27 @@ public class AuthFilter implements Filter {
                     if (emailCookie != null && sessionsIdCookie != null) {
                         String email = emailCookie.getValue();
                         String sessionId = sessionsIdCookie.getValue();
-                        UserLogin userLogin = userLoginMapper.getByEmailSessionId(email, sessionId);
+                        UserLogin userLogin = userLoginService.getUserLogin(email, sessionId);
 
                         if (userLogin != null) {
                             if (!userLogin.isAutoLogin() || isExpired(userLogin.getLoginTime())) {
-                                resp.sendRedirect(req.getContextPath() + "/user/login.do");
+                                resp.sendRedirect(req.getContextPath() + "/view/login.html");
                                 return;
                             }
 
                             try {
                                 user = userService.get(email);
                             } catch (BizException e) {
-                                resp.sendRedirect(req.getContextPath() + "/user/login.do");
+                                resp.sendRedirect(req.getContextPath() + "/view/login.html");
                                 return;
                             }
                             session.setAttribute(WebConst.SESSION_USER, user);
                         } else {
-                            resp.sendRedirect(req.getContextPath() + "/user/login.do");
+                            resp.sendRedirect(req.getContextPath() + "/view/login.html");
                             return;
                         }
                     } else {
-                        resp.sendRedirect(req.getContextPath() + "/user/login.do");
+                        resp.sendRedirect(req.getContextPath() + "/view/login.html");
                         return;
                     }
                 }

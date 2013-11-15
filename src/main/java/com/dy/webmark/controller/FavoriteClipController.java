@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.duanbn.validation.Validate;
 import com.dy.webmark.common.ErrorCode;
+import com.dy.webmark.common.ValidateRule;
 import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
@@ -29,6 +30,8 @@ public class FavoriteClipController extends BaseController {
     @RequestMapping("/add.json")
     public void addFavoriteClip(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         String name = req.getParameter("name");
+        Validate.check(name, ValidateRule.clipNameRule);
+
         User user = getUserInSession(req);
         if (user == null) {
             throw new BizException(ErrorCode.BIZ1002);
@@ -44,8 +47,20 @@ public class FavoriteClipController extends BaseController {
         favoriteClipService.addFavoriteClip(clip);
     }
 
+    @RequestMapping("/getFavoriteClipByNamePrefix.json")
+    public void getFavoriteClipByNamePrefix(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        String name = req.getParameter("name");
+        Validate.check(name, ValidateRule.clipNameRule);
+
+        User user = getUserInSession(req);
+
+        List<FavoriteClip> clips = favoriteClipService.getByNamePrefix(user.getId(), name);
+
+        returnData(req, clips);
+    }
+
     @RequestMapping("/getFavoriteClip.json")
-    public void getFavoriteClipWithJson(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+    public void getFavoriteClip(HttpServletRequest req, HttpServletResponse resp) throws BizException {
 
         User user = getUserInSession(req);
 

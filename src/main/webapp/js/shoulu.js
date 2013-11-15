@@ -26,6 +26,7 @@ $(document).ready(function(){
         $('.youjiabox').show();
         $.post('/favoriteclip/getFavoriteClip.json', function(resp) {
             if (resp.status == 'ok') {
+                $('#youjia-list-item').empty();
                 $.each(resp.data, function(i, clip) {
                     var item = '<li class="youjia-li';
                     if (clip.default) {
@@ -45,7 +46,6 @@ $(document).ready(function(){
     });
     $('.youjiabox').mouseleave(function(){
         $('.youjiabox').hide();
-        $('#youjia-list-item').empty();
     });
 
     var inputAdd = $('.input-add');
@@ -62,6 +62,53 @@ $(document).ready(function(){
         }
     });
 
+    $('#input-add').keyup(function() {
+        var input = $('#input-add').val();
+        if ($.trim(input) != '') {
+            $.post('/favoriteclip/getFavoriteClipByNamePrefix.json', {"name":input}, function(resp) {
+                if (resp.status == 'ok') {
+                    $('#youjia-list-item').empty();
+                    $.each(resp.data, function(i, clip) {
+                        var item = '<li class="youjia-li';
+                        if (clip.default) {
+                            item += ' youjia-li-on">';
+                        } else {
+                            item += '">';
+                        }
+                        item += clip.name + '</li>';
+                        $('#youjia-list-item').append(item);
+                    });
+                    $('#youjia-list-item li').click(function() {
+                        $('.input-youjia').html(this.innerHTML + '<div class="arrow"></div>');
+                        $('.youjiabox').hide();
+                    });
+                } else {
+                    alert(resp.message);
+                }
+            }, 'json');
+        } else {
+            $('#youjia-list-item').empty();
+            $.post('/favoriteclip/getFavoriteClip.json', function(resp) {
+            if (resp.status == 'ok') {
+                $.each(resp.data, function(i, clip) {
+                    var item = '<li class="youjia-li';
+                    if (clip.default) {
+                        item += ' youjia-li-on">';
+                    } else {
+                        item += '">';
+                    }
+                    item += clip.name + '</li>';
+                    $('#youjia-list-item').append(item);
+                });
+                $('#youjia-list-item li').click(function() {
+                    $('.input-youjia').html(this.innerHTML + '<div class="arrow"></div>');
+                    $('.youjiabox').hide();
+                });
+            }
+        }, 'json');
+        }
+    });
+
     $('#btn-add').click(function() {
         var clipName = $('#input-add').val();
         $.post("/favoriteclip/add.json", {"name":clipName}, function(resp) {
@@ -69,6 +116,8 @@ $(document).ready(function(){
                 $('.input-youjia').html(clipName + '<div class="arrow"></div>');
                 $('.youjiabox').hide();
                 inputAdd.val(displayVal);
+            } else {
+                alert(resp.message);
             }
         }, "json");
     });
@@ -93,7 +142,7 @@ $(document).ready(function(){
             if (resp.status == 'ok') {
                 window.close();
             } else {
-                alert(resp);
+                alert(resp.message);
             }
         }, 'json');
     });

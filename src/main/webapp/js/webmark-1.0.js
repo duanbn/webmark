@@ -29,7 +29,7 @@ function doLogin() {
         return;
     }
 
-    var autoLogin = $('#autologin').val();
+    var autoLogin = $('#autologin').attr("checked") ? "on" : "off";
     $.post('/user/dologin.json', {"email":email, "password":pwd, "autologin":autoLogin}, function(data) {
         if (data.status == 'ok') {
             window.location.href="/favorite/main.do";

@@ -1,5 +1,7 @@
 package com.dy.webmark.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.duanbn.mydao.annotation.Field;
 import com.duanbn.mydao.annotation.Index;
 import com.duanbn.mydao.annotation.Indexes;
@@ -24,7 +26,7 @@ public class FavoriteClip {
     @Field(isCanNull = false)
     @CheckNumber(isNull = false, range = "(0,*]")
     private int userId;
-    
+
     @Field
     private boolean isDefault;
 
@@ -58,6 +60,11 @@ public class FavoriteClip {
 
     public void setDefault(boolean isDefault) {
         this.isDefault = isDefault;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }

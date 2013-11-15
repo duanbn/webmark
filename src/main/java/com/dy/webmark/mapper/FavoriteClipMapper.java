@@ -12,6 +12,9 @@ import com.dy.webmark.entity.FavoriteClip;
 
 public interface FavoriteClipMapper {
 
+    @Select("select * from favoriteclip where userId=#{userId} and name like '${name}%'")
+    public List<FavoriteClip> selectByNamePrefix(@Param("userId") int userId, @Param("name") String name);
+
     @Insert("insert into favoriteclip(name, userId, isDefault) values(#{name}, #{userId}, #{isDefault})")
     public void insert(FavoriteClip clip);
 

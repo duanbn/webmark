@@ -43,6 +43,7 @@
 		<property name="datasource" ref="webmark.rw" />
 		<property name="scanPackage" value="com.dy.webmark.entity" />
 		<property name="delete" value="true" />
+		<property name="enable" value="true" />
 	</bean>
 
 	<!-- Freemarker Config -->
