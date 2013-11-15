@@ -2,6 +2,7 @@ package com.dy.webmark.mapper;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -20,7 +21,8 @@ public interface UserMapper {
     public User getUserByEmail(@Param("email") String email);
 
     @Insert("INSERT INTO user(password, email, regTime) VALUES(#{password}, #{email}, #{regTime})")
-    public int insertUser(User user);
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    public void insertUser(User user);
 
     @Select("SELECT * FROM user where id=#{id}")
     public User getUserById(@Param("id") int id);

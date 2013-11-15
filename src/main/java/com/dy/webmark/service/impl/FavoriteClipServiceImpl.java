@@ -22,6 +22,17 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
     private static final List<FavoriteClip> EMPTY = new ArrayList<FavoriteClip>();
 
     @Override
+    public FavoriteClip getByName(int userId, String clipName) throws BizException {
+        FavoriteClip clip = favoriteClipMapper.selectByName(userId, clipName);
+
+        if (clip == null) {
+            throw new BizException(ErrorCode.BIZ4002);
+        }
+
+        return clip;
+    }
+
+    @Override
     public void addFavoriteClip(FavoriteClip clip) throws BizException {
         try {
             favoriteClipMapper.insert(clip);

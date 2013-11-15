@@ -45,7 +45,7 @@ public class JsonFilter implements Filter {
                 map.put("data", output);
 
         } catch (Exception e) {
-            LOG.error(e);
+            LOG.error(e.getMessage(), e);
             ErrorCode ec = null;
             if (e.getCause() instanceof CheckFailureException) {
                 ec = ErrorCode.BIZ5001;

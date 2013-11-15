@@ -15,9 +15,4 @@ public class WebConst {
     public static final String COOKIE_EMAIL = "email";
     public static final String COOKIE_SESSIONID = "sessionid";
 
-    public static final String ACTION_LOGIN = "/user/login.do";
-    public static final String ACTION_MAIN = "redirect:/favorite/main.do";
-    public static final String VIEW_LOGIN = "redirect:/user/login.do";
-    public static final String VIEW_SUCCESS = "redirect:success";
-    public static final String VIEW_MAIN = "main";
 }

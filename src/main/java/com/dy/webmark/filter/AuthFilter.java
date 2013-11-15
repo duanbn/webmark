@@ -53,7 +53,7 @@ public class AuthFilter implements Filter {
 
             String uri = ((HttpServletRequest) request).getRequestURI();
 
-            if (!uri.endsWith(WebConst.ACTION_LOGIN) && !uri.endsWith("dologin.do") && uri.endsWith(".do")
+            if (!uri.endsWith("/user/login.do") && !uri.endsWith("dologin.do") && uri.endsWith(".do")
                     && !uri.endsWith("/checkemail.json")) {
                 User user = (User) session.getAttribute(WebConst.SESSION_USER);
                 if (user == null) {
@@ -66,23 +66,23 @@ public class AuthFilter implements Filter {
 
                         if (userLogin != null) {
                             if (!userLogin.isAutoLogin() || isExpired(userLogin.getLoginTime())) {
-                                resp.sendRedirect(req.getContextPath() + WebConst.ACTION_LOGIN);
+                                resp.sendRedirect(req.getContextPath() + "/user/login.do");
                                 return;
                             }
 
                             try {
                                 user = userService.get(email);
                             } catch (BizException e) {
-                                resp.sendRedirect(req.getContextPath() + WebConst.ACTION_LOGIN);
+                                resp.sendRedirect(req.getContextPath() + "/user/login.do");
                                 return;
                             }
                             session.setAttribute(WebConst.SESSION_USER, user);
                         } else {
-                            resp.sendRedirect(req.getContextPath() + WebConst.ACTION_LOGIN);
+                            resp.sendRedirect(req.getContextPath() + "/user/login.do");
                             return;
                         }
                     } else {
-                        resp.sendRedirect(req.getContextPath() + WebConst.ACTION_LOGIN);
+                        resp.sendRedirect(req.getContextPath() + "/user/login.do");
                         return;
                     }
                 }

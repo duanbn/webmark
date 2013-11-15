@@ -12,10 +12,12 @@ import com.duanbn.mydao.annotation.Indexes;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 import com.duanbn.validation.annotation.CheckNumber;
+import com.duanbn.validation.annotation.CheckPOJO;
 import com.duanbn.validation.annotation.CheckURL;
 
 @Table
 @Indexes({ @Index(field = "userId,clipId"), @Index(field = "clipId") })
+@CheckPOJO
 public class Favorite {
 
     @PrimaryKey(autoIncrement = true)
@@ -25,13 +27,13 @@ public class Favorite {
     @CheckNumber(isNull = false, range = "(0,*]")
     private int userId;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field(hasDefault = true)
     private String title;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field(hasDefault = true)
     private String description;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field(hasDefault = true)
     private String keyword;
 
     @Field(isCanNull = false, hasDefault = true)

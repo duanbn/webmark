@@ -6,10 +6,12 @@ import com.duanbn.mydao.annotation.Indexes;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 import com.duanbn.validation.annotation.CheckNumber;
+import com.duanbn.validation.annotation.CheckPOJO;
 import com.duanbn.validation.annotation.CheckString;
 
 @Table
 @Indexes({ @Index(field = "userId") })
+@CheckPOJO
 public class FavoriteClip {
 
     @PrimaryKey(autoIncrement = true)
@@ -22,6 +24,9 @@ public class FavoriteClip {
     @Field(isCanNull = false)
     @CheckNumber(isNull = false, range = "(0,*]")
     private int userId;
+    
+    @Field
+    private boolean isDefault;
 
     public int getId() {
         return id;
@@ -45,6 +50,14 @@ public class FavoriteClip {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+
+    public void setDefault(boolean isDefault) {
+        this.isDefault = isDefault;
     }
 
 }

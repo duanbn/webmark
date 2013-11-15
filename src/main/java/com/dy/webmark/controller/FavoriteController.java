@@ -8,9 +8,12 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.dy.webmark.common.WebConst;
+import com.duanbn.validation.Validate;
 import com.dy.webmark.entity.Favorite;
+import com.dy.webmark.entity.FavoriteClip;
+import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
+import com.dy.webmark.service.IFavoriteClipService;
 import com.dy.webmark.service.IFavoriteService;
 
 @Controller
@@ -22,37 +25,39 @@ public class FavoriteController extends BaseController {
     @Resource
     private IFavoriteService favoService;
 
-    @RequestMapping("/add.do")
-    public String addfavorite(HttpServletRequest req, HttpServletRequest resp) {
-        int userId = Integer.parseInt(req.getParameter("userId"));
+    @Resource
+    private IFavoriteClipService clipService;
+
+    @RequestMapping("/add.json")
+    public void handleAddFavorite(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        User user = getUserInSession(req);
+
+        String clipName = req.getParameter("clipName");
+        FavoriteClip clip = clipService.getByName(user.getId(), clipName);
+
         String title = req.getParameter("title");
         String desc = req.getParameter("desc");
         String keyword = req.getParameter("keyword");
         String url = req.getParameter("url");
 
         Favorite favo = new Favorite();
-        favo.setUserId(userId);
+        favo.setUserId(user.getId());
         favo.setDescription(desc);
         favo.setKeyword(keyword);
         favo.setTitle(title);
         favo.setUrl(url);
+        favo.setClipId(clip.getId());
 
-        try {
-            favoService.addFavorite(favo);
-        } catch (BizException e) {
-            LOG.error(e);
-            req.setAttribute(WebConst.OUTPUT_ERROR, e.getEc());
-            // TODO: 如果添加失败去哪？？？
-        }
+        Validate.check(favo);
 
-        return WebConst.VIEW_MAIN;
+        favoService.addFavorite(favo);
     }
 
     @RequestMapping("/main.do")
     public String index(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         req.setAttribute("name", "spring freemarker");
 
-        return WebConst.VIEW_MAIN;
+        return "main";
     }
 
 }

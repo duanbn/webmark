@@ -10,9 +10,11 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.dy.webmark.common.ErrorCode;
+import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
 import com.dy.webmark.mapper.UserMapper;
+import com.dy.webmark.service.IFavoriteClipService;
 import com.dy.webmark.service.IUserService;
 
 @Service
@@ -22,6 +24,9 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private IFavoriteClipService clipService;
 
     @Override
     public User get(String email) throws BizException {
@@ -51,6 +56,12 @@ public class UserServiceImpl implements IUserService {
             user.setPassword(_md5(user.getPassword()));
 
             userMapper.insertUser(user);
+            // 创建默认的优夹
+            FavoriteClip defaultClip = new FavoriteClip();
+            defaultClip.setName("默认");
+            defaultClip.setUserId(user.getId());
+            defaultClip.setDefault(true);
+            clipService.addFavoriteClip(defaultClip);
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("register user done, " + user);

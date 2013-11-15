@@ -48,7 +48,7 @@ public class UserController extends BaseController {
         Validate.check(email, "email", ValidateRule.emailRule);
 
         isExist = userService.checkEmailExist(email);
-        setOutput(req, isExist);
+        returnData(req, isExist);
     }
 
     @RequestMapping("/reg.json")

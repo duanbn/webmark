@@ -12,7 +12,7 @@ public class BaseController {
 
     public static final Logger LOG = Logger.getLogger(BaseController.class);
 
-    protected void setOutput(HttpServletRequest req, Object output) {
+    protected void returnData(HttpServletRequest req, Object output) {
         req.setAttribute(WebConst.OUTPUT_DATA, output);
     }
 
