@@ -34,9 +34,14 @@ public class IndexController extends BaseController {
 
     @RequestMapping("/")
     public String login(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        User user = getUserInSession(req);
+        if (user != null) {
+            return "redirect:/favorite/main.do";
+        }
+        
         Cookie emailCookie = WebUtils.getCookie(req, WebConst.COOKIE_EMAIL);
         Cookie sessionsIdCookie = WebUtils.getCookie(req, WebConst.COOKIE_SESSIONID);
-        if (emailCookie != null && sessionsIdCookie != null) {
+        if (user == null && emailCookie != null && sessionsIdCookie != null) {
             String email = emailCookie.getValue();
             String sessionId = sessionsIdCookie.getValue();
             UserLogin userLogin = userLoginService.getUserLogin(email, sessionId);
@@ -47,14 +52,13 @@ public class IndexController extends BaseController {
                     return "login";
                 }
 
-                User user = null;
                 try {
                     user = userService.get(email);
                 } catch (BizException e) {
                     return "login";
                 }
                 session.setAttribute(WebConst.SESSION_USER, user);
-                
+
                 return "redirect:/favorite/main.do";
             } else {
                 return "login";

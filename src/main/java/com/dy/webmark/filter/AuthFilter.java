@@ -33,6 +33,7 @@ public class AuthFilter implements Filter {
     @Resource
     private IUserService userService;
 
+    @Resource
     private IUserLoginService userLoginService;
 
     @Override
@@ -48,41 +49,17 @@ public class AuthFilter implements Filter {
         if (!isEnableDebug) {
             HttpServletRequest req = (HttpServletRequest) request;
             HttpServletResponse resp = (HttpServletResponse) response;
-            HttpSession session = req.getSession(true);
 
-            String uri = ((HttpServletRequest) request).getRequestURI();
+            String uri = req.getRequestURI();
 
-            if (!uri.endsWith("view/login.html") && !uri.endsWith("dologin.json")) {
-                User user = (User) session.getAttribute(WebConst.SESSION_USER);
-                if (user == null) {
-                    Cookie emailCookie = WebUtils.getCookie(req, WebConst.COOKIE_EMAIL);
-                    Cookie sessionsIdCookie = WebUtils.getCookie(req, WebConst.COOKIE_SESSIONID);
-                    if (emailCookie != null && sessionsIdCookie != null) {
-                        String email = emailCookie.getValue();
-                        String sessionId = sessionsIdCookie.getValue();
-                        UserLogin userLogin = userLoginService.getUserLogin(email, sessionId);
-
-                        if (userLogin != null) {
-                            if (!userLogin.isAutoLogin() || isExpired(userLogin.getLoginTime())) {
-                                resp.sendRedirect(req.getContextPath() + "/view/login.html");
-                                return;
-                            }
-
-                            try {
-                                user = userService.get(email);
-                            } catch (BizException e) {
-                                resp.sendRedirect(req.getContextPath() + "/view/login.html");
-                                return;
-                            }
-                            session.setAttribute(WebConst.SESSION_USER, user);
-                        } else {
-                            resp.sendRedirect(req.getContextPath() + "/view/login.html");
-                            return;
-                        }
-                    } else {
-                        resp.sendRedirect(req.getContextPath() + "/view/login.html");
-                        return;
-                    }
+            if (!auth(req)) {
+                if (uri.endsWith("showdlg.do")) {
+                    WebConst.saveFavoriteInSession(req);
+                    resp.sendRedirect(req.getContextPath() + "/view/shoulu-login.html");
+                    return;
+                } else {
+                    resp.sendRedirect(req.getContextPath() + "/view/login.html");
+                    return;
                 }
             }
         }
@@ -94,6 +71,49 @@ public class AuthFilter implements Filter {
     public void destroy() {
         // TODO Auto-generated method stub
 
+    }
+
+    private boolean auth(HttpServletRequest req) {
+        HttpSession session = req.getSession(true);
+
+        String uri = req.getRequestURI();
+
+        if (!uri.endsWith("view/login.html") && !uri.endsWith("dologin.json")
+                && (uri.endsWith(".json") || uri.endsWith(".do"))) {
+            User user = (User) session.getAttribute(WebConst.SESSION_USER);
+            if (user == null) {
+                Cookie emailCookie = WebUtils.getCookie(req, WebConst.COOKIE_EMAIL);
+                Cookie sessionsIdCookie = WebUtils.getCookie(req, WebConst.COOKIE_SESSIONID);
+                if (emailCookie == null || sessionsIdCookie == null) {
+                    return false;
+                    // resp.sendRedirect(req.getContextPath() +
+                    // "/view/login.html");
+                    // return;
+                }
+
+                String email = emailCookie.getValue();
+                String sessionId = sessionsIdCookie.getValue();
+                UserLogin userLogin = userLoginService.getUserLogin(email, sessionId);
+                if (userLogin == null || !userLogin.isAutoLogin() || isExpired(userLogin.getLoginTime())) {
+                    return false;
+                    // resp.sendRedirect(req.getContextPath() +
+                    // "/view/login.html");
+                    // return;
+                }
+
+                try {
+                    user = userService.get(email);
+                } catch (BizException e) {
+                    return false;
+                    // resp.sendRedirect(req.getContextPath() +
+                    // "/view/login.html");
+                    // return;
+                }
+                session.setAttribute(WebConst.SESSION_USER, user);
+            }
+        }
+
+        return true;
     }
 
     private boolean isExpired(Date lastLoginDate) {

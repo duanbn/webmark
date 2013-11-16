@@ -28,8 +28,6 @@ public class UserController extends BaseController {
 
     public static final Logger LOG = Logger.getLogger(UserController.class);
 
-    public static final int AUTOLOGIN = 60 * 60 * 24 * 14;
-
     @Resource
     private IUserService userService;
     @Resource
@@ -83,12 +81,12 @@ public class UserController extends BaseController {
         if (StringUtils.isNotBlank(autoLogin) && autoLogin.equals("on")) {
             Cookie cookieAutoLogin = new Cookie(WebConst.COOKIE_EMAIL, email);
             cookieAutoLogin.setPath("/");
-            cookieAutoLogin.setMaxAge(AUTOLOGIN);
+            cookieAutoLogin.setMaxAge(WebConst.AUTOLOGIN);
             resp.addCookie(cookieAutoLogin);
 
             Cookie cookieSessionId = new Cookie(WebConst.COOKIE_SESSIONID, session.getId());
             cookieSessionId.setPath("/");
-            cookieSessionId.setMaxAge(AUTOLOGIN);
+            cookieSessionId.setMaxAge(WebConst.AUTOLOGIN);
             resp.addCookie(cookieSessionId);
 
             userLoginService.updateUserLogin(email, session.getId(), true);

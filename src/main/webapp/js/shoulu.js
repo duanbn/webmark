@@ -1,3 +1,12 @@
+// 显示信息
+var email_tip = "请填写邮箱";
+var email_tip1 = "邮箱不存在";
+var email_tip2 = "邮箱已经存在";
+var email_tip3 = "请输入正确的邮箱地址";
+var pwd1_tip = "请填写密码";
+var pwd2_tip = "两次密码输入不一致哦";
+var pwd2_tip1 = "请填写确认密码";
+
 // 收录框文本框变色
 $(document).ready(function(){
     $('.input-url').focus(function(){
@@ -21,6 +30,9 @@ $(document).ready(function(){
         $(this).removeClass('input-des-on');
     });
 
+    /**
+	 * 显示优夹里表
+	 */
     $('.youjiabox').hide();
     $('.input-youjia').click(function(){
         $('.youjiabox').show();
@@ -48,6 +60,9 @@ $(document).ready(function(){
         $('.youjiabox').hide();
     });
 
+    /**
+	 * 输入优夹名称显示
+	 */
     var inputAdd = $('.input-add');
     var displayVal = '快速筛选/创建优夹';
     inputAdd.val(displayVal);
@@ -62,6 +77,9 @@ $(document).ready(function(){
         }
     });
 
+    /**
+	 * 输入优夹名称自动筛选.
+	 */
     $('#input-add').keyup(function() {
         var input = $('#input-add').val();
         if ($.trim(input) != '') {
@@ -109,6 +127,9 @@ $(document).ready(function(){
         }
     });
 
+    /**
+	 * 添加优夹
+	 */
     $('#btn-add').click(function() {
         var clipName = $('#input-add').val();
         $.post("/favoriteclip/add.json", {"name":clipName}, function(resp) {
@@ -122,6 +143,9 @@ $(document).ready(function(){
         }, "json");
     });
 
+    /**
+	 * 添加收录
+	 */
     $('#btn-shoulu').click(function() {
         var clipName = $('.input-youjia').text();
         var url = $('#input-url').val();
@@ -143,6 +167,38 @@ $(document).ready(function(){
                 window.close();
             } else {
                 alert(resp.message);
+            }
+        }, 'json');
+    });
+    
+    /**
+	 * 收录工具登录操作.
+	 */
+    $('#btn-login').click(function () {
+        var email = $('#login-email').val();
+        if ($.trim(email) == '') {
+            $('#email_tip').addClass('span2-error').html(email_tip);
+            return;
+        }
+        var pwd = $('#login-pwd').val();
+        if ($.trim(pwd) == '') {
+            $('#password_tip').addClass('span2-error').html(pwd1_tip);
+            return;
+        }
+        var autoLogin = $('#autologin').attr("checked") ? "on" : "off";
+        $.post('/mark/dologin.json', {"email":email, "password":pwd, "autologin":autoLogin}, function(resp) {
+            if (resp.status == 'ok') {
+            	var title = resp.data.title;
+            	var url = resp.data.url;
+            	var desc = resp.data.desc;
+            	var keywords = resp.data.keywords;
+            	document.location.href = "http://localhost:8080/mark/showdlg.do?title=" + title + "&url=" + url + "&keyword=" + keywords + "&desc=" + desc;
+            } else {
+                if (data.code == 'b1006') {
+                    $('#password_tip').addClass('span2-error').html(data.message);
+                } else if (data.code == 'b1005') {
+                    $('#email_tip').addClass('span2-error').html(data.message);
+                }
             }
         }, 'json');
     });
