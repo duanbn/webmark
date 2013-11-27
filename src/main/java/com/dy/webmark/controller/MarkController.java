@@ -1,5 +1,6 @@
 package com.dy.webmark.controller;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.duanbn.validation.Validate;
 import com.dy.webmark.common.Const;
 import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.User;
@@ -74,6 +76,32 @@ public class MarkController extends BaseController {
         } else {
             userLoginService.updateUserLogin(email, session.getId(), false);
         }
+
+        Map<String, String> data = new HashMap<String, String>();
+        data.put(Const.TITLE, (String) session.getAttribute(Const.TITLE));
+        data.put(Const.URL, (String) session.getAttribute(Const.URL));
+        data.put(Const.DESC, (String) session.getAttribute(Const.DESC));
+        data.put(Const.KEYWORDS, (String) session.getAttribute(Const.KEYWORDS));
+        WebConst.removeFavoriteFromSession(req);
+
+        returnData(req, data);
+    }
+
+    @RequestMapping("/reg.json")
+    public void reg(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        User user = new User();
+        String email = req.getParameter("email");
+        String password = req.getParameter("password");
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setRegTime(new Timestamp(System.currentTimeMillis()));
+
+        Validate.check(user);
+
+        userService.regUser(user);
+
+        HttpSession session = req.getSession();
+        session.setAttribute(WebConst.SESSION_USER, user);
 
         Map<String, String> data = new HashMap<String, String>();
         data.put(Const.TITLE, (String) session.getAttribute(Const.TITLE));

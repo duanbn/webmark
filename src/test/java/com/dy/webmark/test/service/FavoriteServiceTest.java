@@ -29,8 +29,36 @@ public class FavoriteServiceTest {
         favo.setKeyword("收藏，最爱");
         favo.setDescription("收藏你喜欢的url");
         favo.setUrl("http://www.ishoucang.com");
+        favo.setClipId(1);
         favo.setUserId(1);
         favoService.addFavorite(favo);
+    }
+
+    @Test
+    public void testIncrLike() throws Exception {
+        int favoId = 1;
+        Favorite favo = favoService.getFavoriteById(favoId);
+        favoService.incrLike(favoId);
+        Favorite favo1 = favoService.getFavoriteById(favoId);
+        Assert.assertEquals(favo.getHowManyLike() + 1, favo1.getHowManyLike());
+    }
+
+    @Test
+    public void testIncrReprint() throws Exception {
+        int favoId = 1;
+        Favorite favo = favoService.getFavoriteById(favoId);
+        favoService.incrReprint(favoId);
+        Favorite favo1 = favoService.getFavoriteById(favoId);
+        Assert.assertEquals(favo.getHowManyReprint() + 1, favo1.getHowManyReprint());
+    }
+
+    @Test
+    public void testIncrPopluar() throws Exception {
+        int favoId = 1;
+        Favorite favo = favoService.getFavoriteById(favoId);
+        favoService.incrPopluar(favoId);
+        Favorite favo1 = favoService.getFavoriteById(favoId);
+        Assert.assertEquals(favo.getHowManyPopularity() + 1, favo1.getHowManyPopularity());
     }
 
     @Test

@@ -164,6 +164,7 @@ $(document).ready(function(){
         var param = {"clipName":clipName, "title":title, "url":url, "desc":desc};
         $.post('/favorite/add.json', param, function(resp) {
             if (resp.status == 'ok') {
+                alert("收录成功 :)");
                 window.close();
             } else {
                 alert(resp.message);
@@ -194,11 +195,57 @@ $(document).ready(function(){
             	var keywords = resp.data.keywords;
             	document.location.href = "http://localhost:8080/mark/showdlg.do?title=" + title + "&url=" + url + "&keyword=" + keywords + "&desc=" + desc;
             } else {
-                if (data.code == 'b1006') {
-                    $('#password_tip').addClass('span2-error').html(data.message);
-                } else if (data.code == 'b1005') {
-                    $('#email_tip').addClass('span2-error').html(data.message);
+                if (resp.code == 'b1006') {
+                    $('#password_tip').addClass('span2-error').html(resp.message);
+                } else if (resp.code == 'b1005') {
+                    $('#email_tip').addClass('span2-error').html(resp.message);
                 }
+            }
+        }, 'json');
+    });
+
+    $('#btn-reg').click(function() {
+        var email = $.trim($("#reg-email").val());
+        if (email == "") {
+            $("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip);
+            return;
+        } else {
+            var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+            if (!reg.test(email)) {
+                $("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip3);
+                return;
+            }
+
+        }
+        var password = $('#reg-pwd1').val();
+        if ($.trim($("#reg-pwd1").val()) == "") {
+            $("#pwd1_tip").removeClass("span2").addClass("span2-error").text(pwd1_tip).show().show();
+            return;
+        }
+        if ($.trim($("#reg-pwd2").val()) == "") {
+            $("#pwd2_tip").removeClass("span2").addClass("span2-error").text(pwd2_tip1).show();
+            return;
+        }
+
+        if ($.trim($("#reg-pwd1").val()) != $.trim($("#reg-pwd2").val())) {
+            $("#pwd2_tip").text(pwd2_tip);
+            return;
+        }
+
+        $.post('/mark/reg.json', {"email":email, "password":password}, function(resp) {
+            if (resp.status == 'ok') {
+                var title = resp.data.title;
+            	var url = resp.data.url;
+            	var desc = resp.data.desc;
+            	var keywords = resp.data.keywords;
+            	document.location.href = "http://localhost:8080/mark/showdlg.do?title=" + title + "&url=" + url + "&keyword=" + keywords + "&desc=" + desc;
+            } else if (resp.code == 'b1003') {
+                $("#corrent_img").hide();
+                $("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip2).show();
+            } else if (resp.code == 'b1001') {
+                alert(resp.message);
+            } else if (resp.code == 'b5001') {
+                alert(resp.message);
             }
         }, 'json');
     });

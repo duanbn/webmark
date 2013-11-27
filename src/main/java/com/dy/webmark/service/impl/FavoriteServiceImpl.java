@@ -20,6 +20,33 @@ public class FavoriteServiceImpl implements IFavoriteService {
     private FavoriteMapper favoriteMapper;
 
     @Override
+    public void incrPopluar(int favoId) throws BizException {
+        try {
+            favoriteMapper.incrPopluar(favoId);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.BIZ2004, e);
+        }
+    }
+
+    @Override
+    public void incrLike(int favoId) throws BizException {
+        try {
+            favoriteMapper.incrLike(favoId);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.BIZ2003, e);
+        }
+    }
+
+    @Override
+    public void incrReprint(int favoId) throws BizException {
+        try {
+            favoriteMapper.incrReprint(favoId);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.BIZ2005, e);
+        }
+    }
+
+    @Override
     public void addFavorite(Favorite favo) throws BizException {
         try {
             favoriteMapper.insertFavorite(favo);

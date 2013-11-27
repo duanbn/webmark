@@ -1,12 +1,16 @@
 package com.dy.webmark.service;
 
+import java.util.List;
+
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
 
 public interface IUserService {
-    
+
     public User get(String email) throws BizException;
-    
+
+    public List<User> getUserByIds(List<Integer> ids);
+
     public boolean checkEmailExist(String email);
 
     /**

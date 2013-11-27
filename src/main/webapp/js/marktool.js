@@ -24,7 +24,7 @@
     var iLeft = (window.screen.availWidth - 10 - width)/2;
     var url = "http://localhost:8080/mark/showdlg.do?title=" + document.title + "&url=" + document.location.href + "&keyword=" + keywords + "&desc=" + desc;
     var args = "height=" + height + ", width=" + width + ", toolbar=no, menubar=no, top=" + iTop + ", left=" + iLeft + ", scrollbars=no, resizable=no, location=no, status=no";
-    window.open(url, "test", args);
+    window.open(url, "收录工具", args);
 
     /*
     var xmlHttp = new XMLHttpRequest();

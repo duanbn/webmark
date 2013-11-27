@@ -1,6 +1,8 @@
 package com.dy.webmark.service.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -36,6 +38,17 @@ public class UserServiceImpl implements IUserService {
         }
 
         return user;
+    }
+
+    @Override
+    public List<User> getUserByIds(List<Integer> ids) {
+        List<User> users = userMapper.getUserByIds(ids);
+
+        if (users == null) {
+            return Collections.emptyList();
+        }
+
+        return users;
     }
 
     @Override

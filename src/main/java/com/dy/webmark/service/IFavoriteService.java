@@ -9,4 +9,10 @@ public interface IFavoriteService {
 
     public Favorite getFavoriteById(int favoId) throws BizException;
 
+    public void incrPopluar(int favoId) throws BizException;
+
+    public void incrLike(int favoId) throws BizException;
+
+    public void incrReprint(int favoId) throws BizException;
+
 }

@@ -60,8 +60,8 @@ function checkEmail(email, opt) {
 
 	$.post("/user/checkemail.json", {
 		"email" : email
-	}, function(data) {
-		if (data.status == 'ok' && !data.data) {
+	}, function(resp) {
+		if (resp.status == 'ok' && !resp.data) {
 			if (opt == 'login') {
 				$("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip1);
 			}

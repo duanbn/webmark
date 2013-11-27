@@ -11,6 +11,7 @@
 <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="/js/login-reg.js"></script>
 <script type="text/javascript" src="/js/shoulu.js"></script>
+<script type="text/javascript" src="/js/webmark-1.0.js"></script>
 <!--[if lt IE 7]>
     <script type="Text/Javascript" src="/js/pngfix.js"></script>
     <script type="text/javascript">  
@@ -31,7 +32,7 @@
     <div class="con">
     <form method="post">
     	<ul>
-        	<li class="login-con-txt"><span class="span1">邮箱/账号</span><input id="login-email" class="input1" type="text">
+        	<li class="login-con-txt"><span class="span1">邮箱/账号</span><input id="login-email" class="input1" type="text" onblur="checkEmail(this.value, 'login')">
         	<span id="email_tip" class="span2">请输入您的注册邮箱</span>
             <li class="login-con-txt"><span class="span1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;密码</span><input id="login-pwd" class="input1" type="password">
             <span id="password_tip" class="span2">字母、数字或下划线</span>
