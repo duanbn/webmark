@@ -41,7 +41,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<User> getUserByIds(List<Integer> ids) {
+    public List<User> getUserByIds(int[] ids) {
         List<User> users = userMapper.getUserByIds(ids);
 
         if (users == null) {

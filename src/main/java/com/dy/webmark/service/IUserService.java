@@ -7,10 +7,29 @@ import com.dy.webmark.exception.BizException;
 
 public interface IUserService {
 
+    /**
+     * 根据邮箱查找用户
+     * 
+     * @param email
+     * @return
+     * @throws BizException
+     */
     public User get(String email) throws BizException;
 
-    public List<User> getUserByIds(List<Integer> ids);
+    /**
+     * 根据用户id查找用户
+     * 
+     * @param ids
+     * @return
+     */
+    public List<User> getUserByIds(int[] ids);
 
+    /**
+     * 检查邮箱是否已经存在
+     * 
+     * @param email
+     * @return
+     */
     public boolean checkEmailExist(String email);
 
     /**

@@ -32,7 +32,7 @@ public class User {
     private String email;
 
     @DateTime(isCanNull = false, hasDefault = true)
-    private Date regTime;
+    private Date regTime = new Date();
 
     @com.duanbn.mydao.annotation.Timestamp
     private Timestamp updateTime;

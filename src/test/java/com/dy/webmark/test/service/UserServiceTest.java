@@ -1,5 +1,7 @@
 package com.dy.webmark.test.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import junit.framework.Assert;
@@ -35,20 +37,25 @@ public class UserServiceTest {
     }
 
     @Test
+    public void testGetUserByIds() throws BizException {
+        int[] ids = new int[1];
+        ids[0] = 1;
+        List<User> users = userService.getUserByIds(ids);
+        Assert.assertEquals(1, users.size());
+    }
+
+    @Test
     public void testRegUser() throws BizException {
         User user = new User();
-        user.setEmail(EMAIL);
+        user.setEmail("duanbn1@126.com");
         user.setPassword(PASSWORD);
         userService.regUser(user);
 
         try {
             userService.regUser(user);
         } catch (BizException e) {
-            Assert.assertEquals(ErrorCode.BIZ1002, e.getEc());
+            Assert.assertEquals(ErrorCode.BIZ1003, e.getEc());
         }
-
-        user.setEmail("duanbn1@126.com");
-        userService.regUser(user);
     }
 
     @Test

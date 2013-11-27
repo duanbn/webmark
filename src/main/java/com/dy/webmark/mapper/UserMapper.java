@@ -7,14 +7,15 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
 import com.dy.webmark.entity.User;
 
 public interface UserMapper {
 
-    @Select("select * from user where id in (#ids)")
-    public List<User> getUserByIds(@Param("ids") List<Integer> ids);
+    @SelectProvider(type = UserSql.class, method = "selectByIds")
+    public List<User> getUserByIds(@Param("ids") int[] ids);
 
     @Select("select email from user where email=#{email}")
     public String getEmail(@Param("email") String email);

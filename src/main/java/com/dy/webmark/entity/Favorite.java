@@ -2,6 +2,7 @@ package com.dy.webmark.entity;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -56,6 +57,9 @@ public class Favorite {
     @Field(hasDefault = true)
     private boolean isTop; // 置顶
 
+    @Field(hasDefault = true)
+    private boolean isReprint; // 是否是转录的
+
     @Field(isCanNull = false, hasDefault = true)
     private int howManyPopularity; // 人气
 
@@ -70,6 +74,8 @@ public class Favorite {
 
     @com.duanbn.mydao.annotation.Timestamp
     private Timestamp updateTime; // 修改时间戳
+
+    private List<User> reprintUserList;
 
     public int getId() {
         return id;
@@ -143,6 +149,14 @@ public class Favorite {
         this.isTop = isTop;
     }
 
+    public boolean isReprint() {
+        return isReprint;
+    }
+
+    public void setReprint(boolean isReprint) {
+        this.isReprint = isReprint;
+    }
+
     public int getHowManyPopularity() {
         return howManyPopularity;
     }
@@ -181,6 +195,14 @@ public class Favorite {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public List<User> getReprintUserList() {
+        return reprintUserList;
+    }
+
+    public void setReprintUserList(List<User> reprintUserList) {
+        this.reprintUserList = reprintUserList;
     }
 
     @Override

@@ -1,23 +1,26 @@
 package com.dy.webmark.entity;
 
 import com.duanbn.mydao.annotation.Field;
+import com.duanbn.mydao.annotation.Index;
+import com.duanbn.mydao.annotation.Indexes;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 
 /**
- * 转录表
+ * 转录信息表
  * 
  * @author duanbn
  * 
  */
 @Table
+@Indexes({ @Index(field = "favoId, userId") })
 public class FavoriteReprint {
 
     @PrimaryKey(autoIncrement = true)
     private int id; // 主键
 
     @Field(isCanNull = false)
-    private int fromFavoId; // 被转录的收录id
+    private int favoId; // 被转录的收录id
 
     @Field(isCanNull = false)
     private int userId; // 转录人的id
@@ -33,12 +36,12 @@ public class FavoriteReprint {
         this.id = id;
     }
 
-    public int getFromFavoId() {
-        return fromFavoId;
+    public int getFavoId() {
+        return favoId;
     }
 
-    public void setFromFavoId(int fromFavoId) {
-        this.fromFavoId = fromFavoId;
+    public void setFavoId(int favoId) {
+        this.favoId = favoId;
     }
 
     public int getUserId() {

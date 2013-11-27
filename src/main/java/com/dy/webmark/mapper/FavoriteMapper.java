@@ -17,9 +17,9 @@ public interface FavoriteMapper {
 
     @Update("update favorite set howManyPopularity = howManyPopularity + 1 where id=#{favoId}")
     public void incrPopluar(@Param("favoId") int favoId);
-
-    @Insert("INSERT INTO favorite(userId, title, description, keyword, url, clipId, highLight, isTop, createTime) "
-            + "VALUES(#{userId}, #{title}, #{description}, #{keyword}, #{url}, #{clipId}, #{highLight}, #{isTop}, #{createTime})")
+    
+    @Insert("INSERT INTO favorite(userId, title, description, keyword, url, clipId, highLight, isTop, createTime, isReprint) "
+            + "VALUES(#{userId}, #{title}, #{description}, #{keyword}, #{url}, #{clipId}, #{highLight}, #{isTop}, #{createTime}, #{isReprint})")
     public void insertFavorite(Favorite favorite);
 
     @Select("SELECT * FROM favorite where id=#{favoId}")

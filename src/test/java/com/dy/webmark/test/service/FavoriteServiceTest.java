@@ -35,6 +35,14 @@ public class FavoriteServiceTest {
     }
 
     @Test
+    public void testReprintFavorite() throws Exception {
+        int favoId = 1;
+        int userId = 2;
+        int clipId = 1;
+        favoService.reprintFavorite(favoId, userId, clipId);
+    }
+
+    @Test
     public void testIncrLike() throws Exception {
         int favoId = 1;
         Favorite favo = favoService.getFavoriteById(favoId);
@@ -63,9 +71,8 @@ public class FavoriteServiceTest {
 
     @Test
     public void testGetFavoriteById() throws Exception {
-        Favorite favo = favoService.getFavoriteById(1);
-        Assert.assertNotNull(favo);
-        Assert.assertEquals("爱收藏", favo.getTitle());
+        Favorite favo = favoService.getFavoriteById(1, true);
+        LOG.info(favo);
     }
 
 }
