@@ -40,7 +40,7 @@ public interface IFavoriteService {
      * @return
      * @throws BizException
      */
-    public Favorite getFavoriteById(int favoId, boolean isReprintList) throws BizException;
+    public Favorite getFavoriteById(int favoId, boolean isReprintList, boolean isCnt) throws BizException;
 
     /**
      * 人气加1

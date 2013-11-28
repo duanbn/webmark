@@ -60,15 +60,6 @@ public class Favorite {
     @Field(hasDefault = true)
     private boolean isReprint; // 是否是转录的
 
-    @Field(isCanNull = false, hasDefault = true)
-    private int howManyPopularity; // 人气
-
-    @Field(isCanNull = false, hasDefault = true)
-    private int howManyLike; // 喜欢
-
-    @Field(isCanNull = false, hasDefault = true)
-    private int howManyReprint; // 转录
-
     @DateTime
     private Date createTime = new Date(); // 收录时间
 
@@ -76,6 +67,8 @@ public class Favorite {
     private Timestamp updateTime; // 修改时间戳
 
     private List<User> reprintUserList;
+
+    private FavoriteCnt cnt;
 
     public int getId() {
         return id;
@@ -157,30 +150,6 @@ public class Favorite {
         this.isReprint = isReprint;
     }
 
-    public int getHowManyPopularity() {
-        return howManyPopularity;
-    }
-
-    public void setHowManyPopularity(int howManyPopularity) {
-        this.howManyPopularity = howManyPopularity;
-    }
-
-    public int getHowManyLike() {
-        return howManyLike;
-    }
-
-    public void setHowManyLike(int howManyLike) {
-        this.howManyLike = howManyLike;
-    }
-
-    public int getHowManyReprint() {
-        return howManyReprint;
-    }
-
-    public void setHowManyReprint(int howManyReprint) {
-        this.howManyReprint = howManyReprint;
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -203,6 +172,14 @@ public class Favorite {
 
     public void setReprintUserList(List<User> reprintUserList) {
         this.reprintUserList = reprintUserList;
+    }
+
+    public FavoriteCnt getCnt() {
+        return cnt;
+    }
+
+    public void setCnt(FavoriteCnt cnt) {
+        this.cnt = cnt;
     }
 
     @Override

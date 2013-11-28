@@ -25,7 +25,7 @@ public class FavoriteServiceTest {
     @Test
     public void testAddFavorite() throws Exception {
         Favorite favo = new Favorite();
-        favo.setTitle("爱收藏");
+        favo.setTitle("爱收藏1");
         favo.setKeyword("收藏，最爱");
         favo.setDescription("收藏你喜欢的url");
         favo.setUrl("http://www.ishoucang.com");
@@ -36,42 +36,49 @@ public class FavoriteServiceTest {
 
     @Test
     public void testReprintFavorite() throws Exception {
-        int favoId = 1;
+        int favoId = 8;
         int userId = 2;
         int clipId = 1;
         favoService.reprintFavorite(favoId, userId, clipId);
     }
 
     @Test
+    public void testReprintList() throws Exception {
+        int favoId = 8;
+        Favorite favo = favoService.getFavoriteById(favoId, true, true);
+        LOG.info(favo.getReprintUserList());
+    }
+
+    @Test
     public void testIncrLike() throws Exception {
-        int favoId = 1;
-        Favorite favo = favoService.getFavoriteById(favoId);
+        int favoId = 8;
+        Favorite favo = favoService.getFavoriteById(favoId, false, true);
         favoService.incrLike(favoId);
-        Favorite favo1 = favoService.getFavoriteById(favoId);
-        Assert.assertEquals(favo.getHowManyLike() + 1, favo1.getHowManyLike());
+        Favorite favo1 = favoService.getFavoriteById(favoId, false, true);
+        Assert.assertEquals(favo.getCnt().getHowManyLike() + 1, favo1.getCnt().getHowManyLike());
     }
 
     @Test
     public void testIncrReprint() throws Exception {
-        int favoId = 1;
-        Favorite favo = favoService.getFavoriteById(favoId);
+        int favoId = 8;
+        Favorite favo = favoService.getFavoriteById(favoId, false, true);
         favoService.incrReprint(favoId);
-        Favorite favo1 = favoService.getFavoriteById(favoId);
-        Assert.assertEquals(favo.getHowManyReprint() + 1, favo1.getHowManyReprint());
+        Favorite favo1 = favoService.getFavoriteById(favoId, false, true);
+        Assert.assertEquals(favo.getCnt().getHowManyReprint() + 1, favo1.getCnt().getHowManyReprint());
     }
 
     @Test
     public void testIncrPopluar() throws Exception {
-        int favoId = 1;
-        Favorite favo = favoService.getFavoriteById(favoId);
+        int favoId = 8;
+        Favorite favo = favoService.getFavoriteById(favoId, false, true);
         favoService.incrPopluar(favoId);
-        Favorite favo1 = favoService.getFavoriteById(favoId);
-        Assert.assertEquals(favo.getHowManyPopularity() + 1, favo1.getHowManyPopularity());
+        Favorite favo1 = favoService.getFavoriteById(favoId, false, true);
+        Assert.assertEquals(favo.getCnt().getHowManyPopularity() + 1, favo1.getCnt().getHowManyPopularity());
     }
 
     @Test
     public void testGetFavoriteById() throws Exception {
-        Favorite favo = favoService.getFavoriteById(1, true);
+        Favorite favo = favoService.getFavoriteById(1, true, true);
         LOG.info(favo);
     }
 

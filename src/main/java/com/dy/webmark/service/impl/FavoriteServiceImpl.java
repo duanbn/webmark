@@ -10,9 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.Favorite;
+import com.dy.webmark.entity.FavoriteCnt;
 import com.dy.webmark.entity.FavoriteReprint;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
+import com.dy.webmark.mapper.FavoriteCntMapper;
 import com.dy.webmark.mapper.FavoriteMapper;
 import com.dy.webmark.mapper.FavoriteReprintMapper;
 import com.dy.webmark.service.IFavoriteService;
@@ -24,10 +26,11 @@ public class FavoriteServiceImpl implements IFavoriteService {
     public static final Logger LOG = Logger.getLogger(FavoriteServiceImpl.class);
 
     @Resource
-    private FavoriteMapper favoriteMapper;
-
+    private FavoriteMapper favoMapper;
     @Resource
-    private FavoriteReprintMapper favoriteReprintMapper;
+    private FavoriteReprintMapper favoReprintMapper;
+    @Resource
+    private FavoriteCntMapper favoCntMapper;
 
     @Resource
     private IUserService userService;
@@ -35,7 +38,10 @@ public class FavoriteServiceImpl implements IFavoriteService {
     @Override
     public void addFavorite(Favorite favo) throws BizException {
         try {
-            favoriteMapper.insertFavorite(favo);
+            favoMapper.insertFavorite(favo);
+            FavoriteCnt cnt = new FavoriteCnt();
+            cnt.setFavoId(favo.getId());
+            favoCntMapper.addFavoriteCnt(cnt);
 
             if (LOG.isDebugEnabled()) {
                 LOG.debug("add favorite done, " + favo);
@@ -47,7 +53,7 @@ public class FavoriteServiceImpl implements IFavoriteService {
 
     @Override
     public void reprintFavorite(int favoId, int userId, int clipId) throws BizException {
-        FavoriteReprint fr = favoriteReprintMapper.getFavoriteReprint(favoId, userId);
+        FavoriteReprint fr = favoReprintMapper.getFavoriteReprint(favoId, userId);
         if (fr != null) {
             throw new BizException(ErrorCode.BIZ6002);
         }
@@ -63,14 +69,14 @@ public class FavoriteServiceImpl implements IFavoriteService {
         reprintFavo.setKeyword(favo.getKeyword());
         reprintFavo.setTitle(favo.getTitle());
         reprintFavo.setUrl(favo.getUrl());
-        favoriteMapper.insertFavorite(reprintFavo);
+        addFavorite(reprintFavo);
 
         // 添加转录信息
         fr = new FavoriteReprint();
         fr.setClipId(clipId);
         fr.setFavoId(favoId);
         fr.setUserId(userId);
-        favoriteReprintMapper.insertFavoriteReprint(fr);
+        favoReprintMapper.insertFavoriteReprint(fr);
 
         // 被转录的收录数加1
         incrReprint(favoId);
@@ -78,27 +84,36 @@ public class FavoriteServiceImpl implements IFavoriteService {
 
     @Override
     public Favorite getFavoriteById(int favoId) throws BizException {
-        return getFavoriteById(favoId, false);
+        return getFavoriteById(favoId, false, false);
     }
 
     @Override
-    public Favorite getFavoriteById(int favoId, boolean isReprintList) throws BizException {
-        Favorite favo = favoriteMapper.getFavoriteById(favoId);
+    public Favorite getFavoriteById(int favoId, boolean isReprintList, boolean isCnt) throws BizException {
+        Favorite favo = favoMapper.getFavoriteById(favoId);
 
         if (favo == null) {
             throw new BizException(ErrorCode.BIZ2002);
         }
 
-        List<FavoriteReprint> reprints = favoriteReprintMapper.getFavoriteReprintList(favoId);
-        if (reprints != null && !reprints.isEmpty()) {
-            int[] userIds = new int[reprints.size()];
-            for (int i = 0; i < reprints.size(); i++) {
-                userIds[i] = reprints.get(i).getUserId();
+        if (isReprintList) {
+            List<FavoriteReprint> reprints = favoReprintMapper.getFavoriteReprintList(favoId);
+            if (reprints != null && !reprints.isEmpty()) {
+                int[] userIds = new int[reprints.size()];
+                for (int i = 0; i < reprints.size(); i++) {
+                    userIds[i] = reprints.get(i).getUserId();
+                }
+
+                List<User> users = userService.getUserByIds(userIds);
+
+                favo.setReprintUserList(users);
+            } else {
+                favo.setReprintUserList(new ArrayList<User>());
             }
-            List<User> users = userService.getUserByIds(userIds);
-            favo.setReprintUserList(users);
-        } else {
-            favo.setReprintUserList(new ArrayList<User>());
+        }
+
+        if (isCnt) {
+            FavoriteCnt favoCnt = favoCntMapper.get(favoId);
+            favo.setCnt(favoCnt);
         }
 
         return favo;
@@ -107,7 +122,7 @@ public class FavoriteServiceImpl implements IFavoriteService {
     @Override
     public void incrPopluar(int favoId) throws BizException {
         try {
-            favoriteMapper.incrPopluar(favoId);
+            favoCntMapper.incrPopluar(favoId);
         } catch (Exception e) {
             throw new BizException(ErrorCode.BIZ2004, e);
         }
@@ -116,7 +131,7 @@ public class FavoriteServiceImpl implements IFavoriteService {
     @Override
     public void incrLike(int favoId) throws BizException {
         try {
-            favoriteMapper.incrLike(favoId);
+            favoCntMapper.incrLike(favoId);
         } catch (Exception e) {
             throw new BizException(ErrorCode.BIZ2003, e);
         }
@@ -125,7 +140,7 @@ public class FavoriteServiceImpl implements IFavoriteService {
     @Override
     public void incrReprint(int favoId) throws BizException {
         try {
-            favoriteMapper.incrReprint(favoId);
+            favoCntMapper.incrReprint(favoId);
         } catch (Exception e) {
             throw new BizException(ErrorCode.BIZ2005, e);
         }
