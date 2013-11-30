@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.duanbn.validation.Validate;
+import com.dy.webmark.common.ValidateRule;
 import com.dy.webmark.entity.Favorite;
 import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
@@ -39,6 +40,9 @@ public class FavoriteController extends BaseController {
         String desc = req.getParameter("desc");
         String keyword = req.getParameter("keyword");
         String url = req.getParameter("url");
+        String screenshot = req.getParameter("screenshot");
+
+        Validate.check(screenshot, ValidateRule.fileNameRule);
 
         Favorite favo = new Favorite();
         favo.setUserId(user.getId());
@@ -46,6 +50,7 @@ public class FavoriteController extends BaseController {
         favo.setKeyword(keyword);
         favo.setTitle(title);
         favo.setUrl(url);
+        favo.setScreenshot(screenshot);
         favo.setClipId(clip.getId());
 
         Validate.check(favo);

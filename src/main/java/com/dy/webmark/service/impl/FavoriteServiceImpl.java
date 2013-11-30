@@ -1,13 +1,17 @@
 package com.dy.webmark.service.impl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
+import com.dy.webmark.common.Const;
 import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.Favorite;
 import com.dy.webmark.entity.FavoriteCnt;
@@ -25,6 +29,8 @@ public class FavoriteServiceImpl implements IFavoriteService {
 
     public static final Logger LOG = Logger.getLogger(FavoriteServiceImpl.class);
 
+    public static final Runtime rt = Runtime.getRuntime();
+
     @Resource
     private FavoriteMapper favoMapper;
     @Resource
@@ -36,16 +42,63 @@ public class FavoriteServiceImpl implements IFavoriteService {
     private IUserService userService;
 
     @Override
+    public String genSreentshot(String url) throws BizException {
+        // 检查此url是否已经有截图
+        String fileName = favoMapper.getByUrl(url);
+        if (fileName != null) {
+            return "image/" + fileName;
+        }
+
+        fileName = UUID.randomUUID().toString() + ".jpg";
+
+        String target = Const.SCREEN_TEMP_PATH + "/" + fileName;
+        StringBuilder cmd = new StringBuilder();
+        cmd.append(Const.TOOL).append(" ");
+        cmd.append(Const.TOOL_JS).append(" ");
+        cmd.append(url).append(" ");
+        cmd.append(target).append(" ");
+        cmd.append(Const.SCREEN_TIMEOUT);
+        Process p;
+        int code = 0;
+        try {
+            p = rt.exec(cmd.toString());
+            code = p.waitFor();
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.BIZ2007, e);
+        }
+
+        if (code == 1) {
+            throw new BizException(ErrorCode.BIZ2007);
+        }
+
+        return "image_temp/" + fileName;
+    }
+
+    @Override
     public void addFavorite(Favorite favo) throws BizException {
+        // 检查收录是否存在
+        Favorite f = favoMapper.getByURL(favo.getUserId(), favo.getUrl());
+        if (f != null) {
+            throw new BizException(ErrorCode.BIZ2006);
+        }
+
         try {
             favoMapper.insertFavorite(favo);
+
+            // 初始化收录计数
             FavoriteCnt cnt = new FavoriteCnt();
             cnt.setFavoId(favo.getId());
             favoCntMapper.addFavoriteCnt(cnt);
 
-            if (LOG.isDebugEnabled()) {
-                LOG.debug("add favorite done, " + favo);
+            // 将网页截图放入正式目录
+            if (!favo.getScreenshot().equals(Const.NOSCREEN)
+                    && FileUtils.getFile(Const.SCREEN_PATH, favo.getScreenshot()) == null) {
+                String destFilePath = Const.SCREEN_PATH + "/" + favo.getScreenshot();
+                File srcFile = new File(Const.SCREEN_TEMP_PATH + "/" + favo.getScreenshot());
+                File destFile = new File(destFilePath);
+                FileUtils.moveFile(srcFile, destFile);
             }
+
         } catch (Exception e) {
             throw new BizException(ErrorCode.BIZ2001, e);
         }
@@ -69,12 +122,17 @@ public class FavoriteServiceImpl implements IFavoriteService {
         reprintFavo.setKeyword(favo.getKeyword());
         reprintFavo.setTitle(favo.getTitle());
         reprintFavo.setUrl(favo.getUrl());
-        addFavorite(reprintFavo);
+        reprintFavo.setScreenshot(favo.getScreenshot());
+        favoMapper.insertFavorite(reprintFavo);
+        // 初始化收录计数
+        FavoriteCnt cnt = new FavoriteCnt();
+        cnt.setFavoId(reprintFavo.getId());
+        favoCntMapper.addFavoriteCnt(cnt);
 
         // 添加转录信息
-        fr = new FavoriteReprint();
+        fr = new FavoriteReprint(reprintFavo.getId());
         fr.setClipId(clipId);
-        fr.setFavoId(favoId);
+        fr.setFromFavoId(favoId);
         fr.setUserId(userId);
         favoReprintMapper.insertFavoriteReprint(fr);
 

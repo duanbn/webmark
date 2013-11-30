@@ -14,6 +14,7 @@ import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 import com.duanbn.validation.annotation.CheckNumber;
 import com.duanbn.validation.annotation.CheckPOJO;
+import com.duanbn.validation.annotation.CheckString;
 import com.duanbn.validation.annotation.CheckURL;
 
 /**
@@ -23,7 +24,7 @@ import com.duanbn.validation.annotation.CheckURL;
  * 
  */
 @Table
-@Indexes({ @Index(field = "userId,clipId"), @Index(field = "clipId") })
+@Indexes({ @Index(field = "userId,clipId"), @Index(field = "url"), @Index(field = "userId,url", isUnique = true) })
 @CheckPOJO
 public class Favorite {
 
@@ -65,6 +66,10 @@ public class Favorite {
 
     @com.duanbn.mydao.annotation.Timestamp
     private Timestamp updateTime; // 修改时间戳
+
+    @Field(isCanNull = false, hasDefault = true)
+    @CheckString(isNull = false)
+    private String screenshot;
 
     private List<User> reprintUserList;
 
@@ -162,8 +167,19 @@ public class Favorite {
         return updateTime;
     }
 
+    /**
+     * @param updateTime
+     */
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getScreenshot() {
+        return screenshot;
+    }
+
+    public void setScreenshot(String screenshot) {
+        this.screenshot = screenshot;
     }
 
     public List<User> getReprintUserList() {

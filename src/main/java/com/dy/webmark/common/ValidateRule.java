@@ -18,11 +18,16 @@ public class ValidateRule {
 
     public static final Rule clipNameRule;
 
+    public static final Rule urlRule;
+    
+    public static final Rule fileNameRule;
+
     static {
         userIdRule = RuleBuilder.build().addValidator(NumberValidator.class).length(0, Opt.GT);
         emailRule = RuleBuilder.build().addValidator(EmailValidator.class).isNull(false);
-
         clipNameRule = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
+        urlRule = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
+        fileNameRule = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
     }
 
 }

@@ -23,20 +23,32 @@ public class FavoriteServiceTest {
     private IFavoriteService favoService;
 
     @Test
+    public void testGenSreentshot() throws Exception {
+        String url = "http://huaban.com";
+        String fileName = favoService.genSreentshot(url);
+        LOG.info(fileName);
+    }
+
+    @Test
     public void testAddFavorite() throws Exception {
+        String url = "http://www.lietou.com";
+        String fileName = favoService.genSreentshot(url);
+
         Favorite favo = new Favorite();
-        favo.setTitle("爱收藏1");
-        favo.setKeyword("收藏，最爱");
-        favo.setDescription("收藏你喜欢的url");
-        favo.setUrl("http://www.ishoucang.com");
         favo.setClipId(1);
+        favo.setDescription("猎聘网为中高端人才提供超过500万条高薪职位信息,70000多位猎头在线为您服务,覆盖40多个行业,发布世界500强企业最新招聘信息。找猎头上猎聘,你就是精英！");
+        favo.setKeyword("猎头网,猎聘猎头网,找猎头,找工作,猎聘网,高端招聘");
+        favo.setTitle("猎聘网 - 中高端人才求职、找工作，首选招聘平台！");
+        favo.setUrl(url);
         favo.setUserId(1);
+        favo.setScreenshot(fileName);
+
         favoService.addFavorite(favo);
     }
 
     @Test
     public void testReprintFavorite() throws Exception {
-        int favoId = 8;
+        int favoId = 12;
         int userId = 2;
         int clipId = 1;
         favoService.reprintFavorite(favoId, userId, clipId);
@@ -44,7 +56,7 @@ public class FavoriteServiceTest {
 
     @Test
     public void testReprintList() throws Exception {
-        int favoId = 8;
+        int favoId = 12;
         Favorite favo = favoService.getFavoriteById(favoId, true, true);
         LOG.info(favo.getReprintUserList());
     }

@@ -31,7 +31,7 @@ $(document).ready(function(){
     });
 
     /**
-	 * 显示优夹里表
+	 * 显示优夹列表
 	 */
     $('.youjiabox').hide();
     $('.input-youjia').click(function(){
@@ -147,6 +147,7 @@ $(document).ready(function(){
 	 * 添加收录
 	 */
     $('#btn-shoulu').click(function() {
+        var screenshot = $('#screenshot').attr('screenshot');
         var clipName = $('.input-youjia').text();
         var url = $('#input-url').val();
         var title = $('#input-tit').val();
@@ -161,7 +162,7 @@ $(document).ready(function(){
             return;
         }
 
-        var param = {"clipName":clipName, "title":title, "url":url, "desc":desc};
+        var param = {"clipName":clipName, "title":title, "url":url, "desc":desc, "screenshot":screenshot};
         $.post('/favorite/add.json', param, function(resp) {
             if (resp.status == 'ok') {
                 alert("收录成功 :)");
@@ -173,7 +174,7 @@ $(document).ready(function(){
     });
     
     /**
-	 * 收录工具登录操作.
+	 * 收录框登录操作.
 	 */
     $('#btn-login').click(function () {
         var email = $('#login-email').val();
@@ -204,6 +205,9 @@ $(document).ready(function(){
         }, 'json');
     });
 
+    /**
+     * 收录框注册
+     */
     $('#btn-reg').click(function() {
         var email = $.trim($("#reg-email").val());
         if (email == "") {

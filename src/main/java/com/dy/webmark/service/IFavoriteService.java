@@ -6,6 +6,14 @@ import com.dy.webmark.exception.BizException;
 public interface IFavoriteService {
 
     /**
+     * 生成网页缩略图
+     * 
+     * @return
+     * @throws BizException
+     */
+    public String genSreentshot(String url) throws BizException;
+
+    /**
      * 添加收录
      * 
      * @param favo

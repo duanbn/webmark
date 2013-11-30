@@ -10,13 +10,13 @@ import com.dy.webmark.entity.FavoriteReprint;
 
 public interface FavoriteReprintMapper {
 
-    @Select("select * from favoritereprint where favoId = #{favoId}")
-    public List<FavoriteReprint> getFavoriteReprintList(@Param("favoId") int favoId);
+    @Select("select * from favoritereprint where fromFavoId = #{fromFavoId}")
+    public List<FavoriteReprint> getFavoriteReprintList(@Param("fromFavoId") int fromFavoId);
 
-    @Select("select * from favoritereprint where favoId = #{favoId} and userId = #{userId}")
-    public FavoriteReprint getFavoriteReprint(@Param("favoId") int favoId, @Param("userId") int userId);
+    @Select("select * from favoritereprint where fromFavoId = #{fromFavoId} and userId = #{userId}")
+    public FavoriteReprint getFavoriteReprint(@Param("fromFavoId") int fromFavoId, @Param("userId") int userId);
 
-    @Insert("insert into favoritereprint(favoId, userId, clipId) values(#{favoId}, #{userId}, #{clipId})")
+    @Insert("insert into favoritereprint(id, fromFavoId, userId, clipId) values(#{id}, #{fromFavoId}, #{userId}, #{clipId})")
     public void insertFavoriteReprint(FavoriteReprint fr);
 
 }

@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.duanbn.validation.Validate;
 import com.dy.webmark.common.Const;
+import com.dy.webmark.common.ValidateRule;
 import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
+import com.dy.webmark.service.IFavoriteService;
 import com.dy.webmark.service.IUserLoginService;
 import com.dy.webmark.service.IUserService;
 
@@ -33,6 +35,8 @@ public class MarkController extends BaseController {
     private IUserService userService;
     @Resource
     private IUserLoginService userLoginService;
+    @Resource
+    private IFavoriteService favoService;
 
     @RequestMapping("/showdlg.do")
     public String showMarkDialog(HttpServletRequest req, HttpServletResponse resp) {
@@ -47,6 +51,16 @@ public class MarkController extends BaseController {
         req.setAttribute(Const.DESC, desc);
 
         return "shoulu";
+    }
+
+    @RequestMapping("/genscreenshot.json")
+    public void genScreenshot(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        String url = req.getParameter("url");
+        Validate.check(url, ValidateRule.urlRule);
+
+        // 生成网页缩略图
+        String fileName = favoService.genSreentshot(url);
+        returnData(req, fileName);
     }
 
     @RequestMapping("/dologin.json")

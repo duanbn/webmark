@@ -13,20 +13,27 @@ import com.duanbn.mydao.annotation.Table;
  * 
  */
 @Table
-@Indexes({ @Index(field = "favoId, userId") })
+@Indexes({ @Index(field = "fromFavoId, userId") })
 public class FavoriteReprint {
 
-    @PrimaryKey(autoIncrement = true)
+    @PrimaryKey(autoIncrement = false)
     private int id; // 主键
 
     @Field(isCanNull = false)
-    private int favoId; // 被转录的收录id
+    private int fromFavoId; // 被转录的收录id
 
     @Field(isCanNull = false)
     private int userId; // 转录人的id
 
     @Field(isCanNull = false)
     private int clipId; // 转录到优夹id
+
+    public FavoriteReprint() {
+    }
+
+    public FavoriteReprint(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;
@@ -36,12 +43,12 @@ public class FavoriteReprint {
         this.id = id;
     }
 
-    public int getFavoId() {
-        return favoId;
+    public int getFromFavoId() {
+        return fromFavoId;
     }
 
-    public void setFavoId(int favoId) {
-        this.favoId = favoId;
+    public void setFromFavoId(int fromFavoId) {
+        this.fromFavoId = fromFavoId;
     }
 
     public int getUserId() {
