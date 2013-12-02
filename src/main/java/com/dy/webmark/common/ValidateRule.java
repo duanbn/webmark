@@ -19,8 +19,11 @@ public class ValidateRule {
     public static final Rule clipNameRule;
 
     public static final Rule urlRule;
-    
+
     public static final Rule fileNameRule;
+
+    public static final Rule startRule;
+    public static final Rule limitRule;
 
     static {
         userIdRule = RuleBuilder.build().addValidator(NumberValidator.class).length(0, Opt.GT);
@@ -28,6 +31,9 @@ public class ValidateRule {
         clipNameRule = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
         urlRule = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
         fileNameRule = RuleBuilder.build().addValidator(StringValidator.class).isNull(false);
+
+        startRule = RuleBuilder.build().addValidator(NumberValidator.class).range(0, Opt.GTE);
+        limitRule = RuleBuilder.build().addValidator(NumberValidator.class).range(0, Opt.GT);
     }
 
 }

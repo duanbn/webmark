@@ -8,6 +8,14 @@ import com.dy.webmark.exception.BizException;
 public interface IFavoriteClipService {
 
     /**
+     * 优夹的收录数加1
+     * 
+     * @param favoClipId
+     * @throws BizException
+     */
+    public void incrFavoCnt(int favoClipId) throws BizException;
+
+    /**
      * 根据优夹名称的前缀查找优夹列表
      * 
      * @param userId
@@ -34,12 +42,14 @@ public interface IFavoriteClipService {
      */
     public void addFavoriteClip(FavoriteClip clip) throws BizException;
 
+    public FavoriteClip getById(int clipId) throws BizException;
+
     /**
      * 返回用户的所有优夹
      * 
      * @param userId
      * @return
      */
-    public List<FavoriteClip> getFavoriteClip(int userId);
+    public List<FavoriteClip> getFavoriteClip(int userId, int start, int limit);
 
 }

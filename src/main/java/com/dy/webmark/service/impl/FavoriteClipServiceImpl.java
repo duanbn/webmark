@@ -22,6 +22,15 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
     private static final List<FavoriteClip> EMPTY = new ArrayList<FavoriteClip>();
 
     @Override
+    public void incrFavoCnt(int favoClipId) throws BizException {
+        try {
+            favoriteClipMapper.incrFavoCnt(favoClipId);
+        } catch (Exception e) {
+            throw new BizException(ErrorCode.BIZ5003);
+        }
+    }
+
+    @Override
     public List<FavoriteClip> getByNamePrefix(int userId, String clipNamePrefix) {
         List<FavoriteClip> clips = favoriteClipMapper.selectByNamePrefix(userId, clipNamePrefix);
 
@@ -57,8 +66,17 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
     }
 
     @Override
-    public List<FavoriteClip> getFavoriteClip(int userId) {
-        List<FavoriteClip> clips = favoriteClipMapper.selectByUserId(userId);
+    public FavoriteClip getById(int clipId) throws BizException {
+        FavoriteClip clip = favoriteClipMapper.selectById(clipId);
+        if (clip == null) {
+            throw new BizException(ErrorCode.BIZ4002);
+        }
+        return clip;
+    }
+
+    @Override
+    public List<FavoriteClip> getFavoriteClip(int userId, int start, int limit) {
+        List<FavoriteClip> clips = favoriteClipMapper.selectByUserId(userId, start, limit);
 
         if (clips != null) {
             return clips;

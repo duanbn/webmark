@@ -29,6 +29,9 @@ public class FavoriteClip {
 
     @Field
     private boolean isDefault;
+    
+    @Field(hasDefault = true)
+    private int favoCnt;
 
     public int getId() {
         return id;
@@ -60,6 +63,14 @@ public class FavoriteClip {
 
     public void setDefault(boolean isDefault) {
         this.isDefault = isDefault;
+    }
+
+    public int getFavoCnt() {
+        return favoCnt;
+    }
+
+    public void setFavoCnt(int favoCnt) {
+        this.favoCnt = favoCnt;
     }
 
     @Override

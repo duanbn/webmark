@@ -1,5 +1,7 @@
 package com.dy.webmark.test.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import junit.framework.Assert;
@@ -23,10 +25,13 @@ public class FavoriteServiceTest {
     private IFavoriteService favoService;
 
     @Test
-    public void testGenSreentshot() throws Exception {
-        String url = "http://huaban.com";
-        String fileName = favoService.genSreentshot(url);
-        LOG.info(fileName);
+    public void testGetFavoriteByClip() {
+        int userId = 1;
+        int clipId = 1;
+        int start = 0;
+        int limit = 30;
+        List<Favorite> rst = favoService.getByClip(userId, clipId, false, start, limit);
+        LOG.info(rst);
     }
 
     @Test

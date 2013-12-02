@@ -12,6 +12,9 @@ import com.dy.webmark.entity.FavoriteClip;
 
 public interface FavoriteClipMapper {
 
+    @Update("update favoriteclip set favoCnt = favoCnt + 1 where id=#{favoClipId}")
+    public void incrFavoCnt(@Param("favoClipId") int favoClipId);
+
     @Select("select * from favoriteclip where userId=#{userId} and name like '${name}%'")
     public List<FavoriteClip> selectByNamePrefix(@Param("userId") int userId, @Param("name") String name);
 
@@ -21,8 +24,9 @@ public interface FavoriteClipMapper {
     @Select("select * from favoriteclip where id=#{id}")
     public FavoriteClip selectById(@Param("id") int id);
 
-    @Select("select * from favoriteclip where userId=#{userId}")
-    public List<FavoriteClip> selectByUserId(@Param("userId") int userId);
+    @Select("select * from favoriteclip where userId=#{userId} limit #{start},#{limit}")
+    public List<FavoriteClip> selectByUserId(@Param("userId") int userId, @Param("start") int start,
+            @Param("limit") int limit);
 
     @Select("select * from favoriteclip where userId=#{userId} and name=#{name}")
     public FavoriteClip selectByName(@Param("userId") int userId, @Param("name") String name);

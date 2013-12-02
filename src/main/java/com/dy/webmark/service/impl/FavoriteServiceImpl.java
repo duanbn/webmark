@@ -1,11 +1,19 @@
 package com.dy.webmark.service.impl;
 
+import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+
+import magick.ImageInfo;
+import magick.MagickException;
+import magick.MagickImage;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -21,6 +29,7 @@ import com.dy.webmark.exception.BizException;
 import com.dy.webmark.mapper.FavoriteCntMapper;
 import com.dy.webmark.mapper.FavoriteMapper;
 import com.dy.webmark.mapper.FavoriteReprintMapper;
+import com.dy.webmark.service.IFavoriteClipService;
 import com.dy.webmark.service.IFavoriteService;
 import com.dy.webmark.service.IUserService;
 
@@ -41,6 +50,43 @@ public class FavoriteServiceImpl implements IFavoriteService {
     @Resource
     private IUserService userService;
 
+    @Resource
+    private IFavoriteClipService clipService;
+
+    @Override
+    public List<Favorite> getByClip(int userId, int clipId, int start, int limit) {
+        return getByClip(userId, clipId, false, start, limit);
+    }
+
+    @Override
+    public List<Favorite> getByClip(int userId, int clipId, boolean hasCnt, int start, int limit) {
+        List<Favorite> rst = favoMapper.selectByClip(userId, clipId, start, limit);
+        if (rst == null || rst.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        if (hasCnt) {
+            List<Integer> ids = new ArrayList<Integer>();
+            Map<Integer, Favorite> map = new HashMap<Integer, Favorite>();
+            for (Favorite favo : rst) {
+                ids.add(favo.getId());
+                map.put(favo.getId(), favo);
+            }
+            List<FavoriteCnt> cnts = favoCntMapper.selectByFavoIds(ids);
+
+            Favorite favo = null;
+            for (FavoriteCnt cnt : cnts) {
+                favo = map.get(cnt.getFavoId());
+                if (favo != null) {
+                    favo.setCnt(cnt);
+                }
+            }
+            return new ArrayList<Favorite>(map.values());
+        }
+
+        return rst;
+    }
+
     @Override
     public String genSreentshot(String url) throws BizException {
         // 检查此url是否已经有截图
@@ -49,9 +95,13 @@ public class FavoriteServiceImpl implements IFavoriteService {
             return "image/" + fileName;
         }
 
-        fileName = UUID.randomUUID().toString() + ".jpg";
-
+        // 生成截图
+        String name = UUID.randomUUID().toString();
+        fileName = name + ".jpg";
+        String thumFileName = name + "_thum.jpg";
         String target = Const.SCREEN_TEMP_PATH + "/" + fileName;
+        String thumFile = Const.SCREEN_TEMP_PATH + "/" + thumFileName;
+
         StringBuilder cmd = new StringBuilder();
         cmd.append(Const.TOOL).append(" ");
         cmd.append(Const.TOOL_JS).append(" ");
@@ -63,10 +113,12 @@ public class FavoriteServiceImpl implements IFavoriteService {
         try {
             p = rt.exec(cmd.toString());
             code = p.waitFor();
+            if (code == 0) {
+                handleThum(target, thumFile, Const.THUM_WIDTH, Const.THUM_MAXHEIGHT);
+            }
         } catch (Exception e) {
             throw new BizException(ErrorCode.BIZ2007, e);
         }
-
         if (code == 1) {
             throw new BizException(ErrorCode.BIZ2007);
         }
@@ -83,6 +135,8 @@ public class FavoriteServiceImpl implements IFavoriteService {
         }
 
         try {
+            // 添加收录
+            favo.setScreenshot(favo.getScreenshot().substring(favo.getScreenshot().indexOf("/") + 1));
             favoMapper.insertFavorite(favo);
 
             // 初始化收录计数
@@ -90,13 +144,24 @@ public class FavoriteServiceImpl implements IFavoriteService {
             cnt.setFavoId(favo.getId());
             favoCntMapper.addFavoriteCnt(cnt);
 
+            // 修改优夹计数
+            clipService.incrFavoCnt(favo.getClipId());
+
             // 将网页截图放入正式目录
-            if (!favo.getScreenshot().equals(Const.NOSCREEN)
-                    && FileUtils.getFile(Const.SCREEN_PATH, favo.getScreenshot()) == null) {
-                String destFilePath = Const.SCREEN_PATH + "/" + favo.getScreenshot();
+            String fileName = favo.getScreenshot();
+            String thumFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_thum.jpg";
+            if (!fileName.equals(Const.NOSCREEN) && !FileUtils.getFile(Const.SCREEN_PATH, fileName).exists()) {
+                // 生成图片
+                String destFilePath = Const.SCREEN_PATH + "/" + fileName;
+                String srcFilePath = Const.SCREEN_TEMP_PATH + "/" + fileName;
+                handleThum(srcFilePath, destFilePath, Const.IMAGE_WIDTH, Const.IMAGE_MAXHEIGHT);
+                // 将缩略图移动到image目录
+                File srcThumFile = new File(Const.SCREEN_TEMP_PATH + "/" + thumFileName);
+                File destThumFile = new File(Const.SCREEN_PATH + "/" + thumFileName);
+                FileUtils.moveFile(srcThumFile, destThumFile);
+
                 File srcFile = new File(Const.SCREEN_TEMP_PATH + "/" + favo.getScreenshot());
-                File destFile = new File(destFilePath);
-                FileUtils.moveFile(srcFile, destFile);
+                FileUtils.deleteQuietly(srcFile);
             }
 
         } catch (Exception e) {
@@ -202,6 +267,31 @@ public class FavoriteServiceImpl implements IFavoriteService {
         } catch (Exception e) {
             throw new BizException(ErrorCode.BIZ2005, e);
         }
+    }
+
+    private void handleThum(String srcPath, String tarPath, int width, int maxHeigth) throws MagickException {
+        // 生成缩略图
+        ImageInfo srcImageInfo = new ImageInfo(srcPath);
+        MagickImage srcImage = new MagickImage(srcImageInfo);
+        double w = srcImage.getDimension().getWidth();
+        double h = srcImage.getDimension().getHeight();
+
+        // 缩略图
+        int HEIGHT = (int) (h * width / w);
+        MagickImage thumImage = srcImage.scaleImage(width, HEIGHT);
+        w = thumImage.getDimension().getWidth();
+        h = thumImage.getDimension().getHeight();
+
+        // 剪切
+        if (h > maxHeigth) {
+            Rectangle r = new Rectangle((int) w, maxHeigth);
+            thumImage = thumImage.cropImage(r);
+        }
+
+        // 锐化
+        thumImage = thumImage.sharpenImage(1, 1);
+        thumImage.setFileName(tarPath);
+        thumImage.writeImage(srcImageInfo);
     }
 
 }

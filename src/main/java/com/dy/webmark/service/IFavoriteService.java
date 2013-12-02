@@ -1,9 +1,34 @@
 package com.dy.webmark.service;
 
+import java.util.List;
+
 import com.dy.webmark.entity.Favorite;
 import com.dy.webmark.exception.BizException;
 
 public interface IFavoriteService {
+
+    /**
+     * 根据优夹获取收录列表
+     * 
+     * @param userId
+     * @param clipId
+     * @param start
+     * @param limit
+     * @return
+     */
+    public List<Favorite> getByClip(int userId, int clipId, int start, int limit);
+
+    /**
+     * 根据优夹获取收录列表
+     * 
+     * @param userId
+     * @param clipId
+     * @param hasCnt 是否包含收录计数
+     * @param start
+     * @param limit
+     * @return
+     */
+    public List<Favorite> getByClip(int userId, int clipId, boolean hasCnt, int start, int limit);
 
     /**
      * 生成网页缩略图
@@ -48,7 +73,7 @@ public interface IFavoriteService {
      * @return
      * @throws BizException
      */
-    public Favorite getFavoriteById(int favoId, boolean isReprintList, boolean isCnt) throws BizException;
+    public Favorite getFavoriteById(int favoId, boolean hasReprintList, boolean hasCnt) throws BizException;
 
     /**
      * 人气加1

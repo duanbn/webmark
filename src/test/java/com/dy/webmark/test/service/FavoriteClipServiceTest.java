@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.dy.webmark.entity.FavoriteClip;
+import com.dy.webmark.exception.BizException;
 import com.dy.webmark.service.IFavoriteClipService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,6 +22,12 @@ public class FavoriteClipServiceTest {
 
     @Resource
     private IFavoriteClipService clipService;
+
+    @Test
+    public void testIncrFavoriteCnt() throws Exception {
+        int clipId = 1;
+        clipService.incrFavoCnt(clipId);
+    }
 
     @Test
     public void testAdd() throws Exception {
@@ -36,6 +43,13 @@ public class FavoriteClipServiceTest {
         for (FavoriteClip clip : clips) {
             LOG.info(clip);
         }
+    }
+
+    @Test
+    public void testGetFavoriteClip() throws BizException {
+        int clipId = 1;
+        FavoriteClip clip = clipService.getById(clipId);
+        LOG.info(clip);
     }
 
 }

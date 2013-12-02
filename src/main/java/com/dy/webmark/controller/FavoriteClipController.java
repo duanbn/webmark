@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.duanbn.mydao.util.StringUtil;
 import com.duanbn.validation.Validate;
 import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.common.ValidateRule;
@@ -61,10 +62,16 @@ public class FavoriteClipController extends BaseController {
 
     @RequestMapping("/getFavoriteClip.json")
     public void getFavoriteClip(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        int userId = StringUtil.converToInt(req.getParameter("userId"), 0);
+        Validate.check(userId, ValidateRule.userIdRule);
 
-        User user = getUserInSession(req);
+        int start = StringUtil.converToInt(req.getParameter("start"), 0);
+        Validate.check(start, ValidateRule.startRule);
 
-        List<FavoriteClip> clips = favoriteClipService.getFavoriteClip(user.getId());
+        int limit = StringUtil.converToInt(req.getParameter("limit"), 10);
+        Validate.check(limit, ValidateRule.limitRule);
+
+        List<FavoriteClip> clips = favoriteClipService.getFavoriteClip(userId, start, limit);
 
         returnData(req, clips);
     }

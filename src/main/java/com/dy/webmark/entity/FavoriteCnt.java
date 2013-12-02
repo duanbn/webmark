@@ -1,5 +1,7 @@
 package com.dy.webmark.entity;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.duanbn.mydao.annotation.Field;
 import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
@@ -49,6 +51,11 @@ public class FavoriteCnt {
 
     public void setHowManyReprint(int howManyReprint) {
         this.howManyReprint = howManyReprint;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
 }
