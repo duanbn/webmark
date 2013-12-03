@@ -3,6 +3,11 @@ package com.dy.webmark.common;
 public enum ErrorCode {
 
     /**
+     * 人脉相关
+     */
+    BIZ7001("B7001", "已经关注过此人"),
+
+    /**
      * 转录相关错误
      */
     BIZ6001("B6001", "保存转录信息失败"), BIZ6002("B6002", "已经转录过此收录"),

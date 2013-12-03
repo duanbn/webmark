@@ -20,6 +20,14 @@
 		</property>
 	</bean>
 
+	<!-- thread pool -->
+	<bean id="threadpool" class="com.duanbn.common.util.ThreadPool">
+		<constructor-arg index="0" value="webmarkthreadpool" />
+		<constructor-arg index="1" value="${threadpool.minThread}" />
+		<constructor-arg index="2" value="${threadpool.maxThread}" />
+		<constructor-arg index="3" value="${threadpool.waitTime}" />
+	</bean>
+
 	<!-- Mysql Config -->
 	<bean id="webmark.rw" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
