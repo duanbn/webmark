@@ -2,12 +2,12 @@ package com.dy.webmark.service.impl;
 
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -15,6 +15,7 @@ import magick.ImageInfo;
 import magick.MagickException;
 import magick.MagickImage;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -96,7 +97,12 @@ public class FavoriteServiceImpl implements IFavoriteService {
         }
 
         // 生成截图
-        String name = UUID.randomUUID().toString();
+        String name = null;
+        try {
+            name = DigestUtils.md5Hex(url.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e1) {
+            throw new BizException(ErrorCode.BIZ2007);
+        }
         fileName = name + ".jpg";
         String thumFileName = name + "_thum.jpg";
         String target = Const.SCREEN_TEMP_PATH + "/" + fileName;
