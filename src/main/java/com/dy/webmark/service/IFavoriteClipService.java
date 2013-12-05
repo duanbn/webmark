@@ -8,6 +8,14 @@ import com.dy.webmark.exception.BizException;
 public interface IFavoriteClipService {
 
     /**
+     * 根据id获取优夹
+     * 
+     * @param clipIds
+     * @return
+     */
+    public List<FavoriteClip> getClipByIds(int[] clipIds);
+
+    /**
      * 优夹的收录数加1
      * 
      * @param favoClipId

@@ -10,7 +10,7 @@ import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 
 @Table
-@Indexes({ @Index(field = "userId"), @Index(field = "followingClipId") })
+@Indexes({ @Index(field = "userId") })
 public class UserFollowingClip {
 
     @PrimaryKey(autoIncrement = true)
@@ -23,7 +23,7 @@ public class UserFollowingClip {
     private int followingClipId;
 
     @DateTime(hasDefault = true, isCanNull = false)
-    private Date followTime;
+    private Date followTime = new Date();
 
     public int getId() {
         return id;

@@ -1,6 +1,7 @@
 package com.dy.webmark.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,6 +21,17 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
     private FavoriteClipMapper favoriteClipMapper;
 
     private static final List<FavoriteClip> EMPTY = new ArrayList<FavoriteClip>();
+
+    @Override
+    public List<FavoriteClip> getClipByIds(int[] clipIds) {
+        List<FavoriteClip> clips = favoriteClipMapper.selectByIds(clipIds);
+
+        if (clips == null) {
+            return Collections.emptyList();
+        }
+
+        return clips;
+    }
 
     @Override
     public void incrFavoCnt(int favoClipId) throws BizException {

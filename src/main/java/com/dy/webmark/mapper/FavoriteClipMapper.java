@@ -6,11 +6,15 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.Update;
 
 import com.dy.webmark.entity.FavoriteClip;
 
 public interface FavoriteClipMapper {
+
+    @SelectProvider(type = FavoriteClipSql.class, method = "selectByIds")
+    public List<FavoriteClip> selectByIds(@Param("ids") int[] ids);
 
     @Update("update favoriteclip set favoCnt = favoCnt + 1 where id=#{favoClipId}")
     public void incrFavoCnt(@Param("favoClipId") int favoClipId);
