@@ -8,6 +8,11 @@ import com.dy.webmark.exception.BizException;
 public interface IUserService {
 
     /**
+     * 获取用户信息
+     */
+    public User getById(int userId, boolean hasDetail) throws BizException;
+
+    /**
      * 根据邮箱查找用户
      * 
      * @param email

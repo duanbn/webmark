@@ -13,7 +13,7 @@ import com.duanbn.mydao.annotation.Table;
  * 
  */
 @Table
-@Indexes({ @Index(field = "fromFavoId, userId") })
+@Indexes({ @Index(field = "fr_fromfavoid, fr_userid") })
 public class FavoriteReprint {
 
     @PrimaryKey(autoIncrement = false)

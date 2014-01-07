@@ -22,7 +22,7 @@ public interface UserMapper {
     @Select("select * from user where u_email=#{u_email}")
     public User getUserByEmail(@Param("u_email") String u_email);
 
-    @Insert("INSERT INTO user(u_password, u_email, regTime) VALUES(#{u_password}, #{u_email}, #{regTime})")
+    @Insert("INSERT INTO user(u_password, u_email, u_regtime) VALUES(#{u_password}, #{u_email}, #{u_regtime})")
     @Options(useGeneratedKeys = true, keyProperty = "u_id")
     public void insertUser(User user);
 

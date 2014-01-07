@@ -10,7 +10,7 @@ import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 
 @Table
-@Indexes({ @Index(field = "userId") })
+@Indexes({ @Index(field = "ufc_userid") })
 public class UserFollowingClip {
 
     @PrimaryKey(autoIncrement = true)

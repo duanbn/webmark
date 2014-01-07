@@ -41,12 +41,12 @@ $(document).ready(function(){
                 $('#youjia-list-item').empty();
                 $.each(resp.data, function(i, clip) {
                     var item = '<li class="youjia-li';
-                    if (clip.default) {
+                    if (clip.fc_isdefault) {
                         item += ' youjia-li-on">';
                     } else {
                         item += '">';
                     }
-                    item += clip.name + '</li>';
+                    item += clip.fc_name + '</li>';
                     $('#youjia-list-item').append(item);
                 });
                 $('#youjia-list-item li').click(function() {
@@ -88,12 +88,12 @@ $(document).ready(function(){
                     $('#youjia-list-item').empty();
                     $.each(resp.data, function(i, clip) {
                         var item = '<li class="youjia-li';
-                        if (clip.default) {
+                        if (clip.fc_isdefault) {
                             item += ' youjia-li-on">';
                         } else {
                             item += '">';
                         }
-                        item += clip.name + '</li>';
+                        item += clip.fc_name + '</li>';
                         $('#youjia-list-item').append(item);
                     });
                     $('#youjia-list-item li').click(function() {
@@ -105,17 +105,17 @@ $(document).ready(function(){
                 }
             }, 'json');
         } else {
-            $('#youjia-list-item').empty();
             $.post('/favoriteclip/getFavoriteClip.json', function(resp) {
             if (resp.status == 'ok') {
+                $('#youjia-list-item').empty();
                 $.each(resp.data, function(i, clip) {
                     var item = '<li class="youjia-li';
-                    if (clip.default) {
+                    if (clip.fc_isdefault) {
                         item += ' youjia-li-on">';
                     } else {
                         item += '">';
                     }
-                    item += clip.name + '</li>';
+                    item += clip.fc_name + '</li>';
                     $('#youjia-list-item').append(item);
                 });
                 $('#youjia-list-item li').click(function() {

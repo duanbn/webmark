@@ -14,7 +14,9 @@ import org.springframework.stereotype.Service;
 import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
+import com.dy.webmark.entity.UserDetail;
 import com.dy.webmark.exception.BizException;
+import com.dy.webmark.mapper.UserDetailMapper;
 import com.dy.webmark.mapper.UserMapper;
 import com.dy.webmark.service.IFavoriteClipService;
 import com.dy.webmark.service.IUserService;
@@ -28,7 +30,25 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Resource
+    private UserDetailMapper userDetailMapper;
+
+    @Resource
     private IFavoriteClipService clipService;
+
+    @Override
+    public User getById(int userId, boolean hasDetail) throws BizException {
+        User user = userMapper.getUserById(userId);
+        if (user == null) {
+            throw new BizException(ErrorCode.BIZ1002);
+        }
+
+        if (hasDetail) {
+            UserDetail detail = userDetailMapper.selectByUserId(userId);
+            user.setDetail(detail);
+        }
+
+        return user;
+    }
 
     @Override
     public User get(String email) throws BizException {

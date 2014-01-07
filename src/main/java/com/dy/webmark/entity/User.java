@@ -33,6 +33,8 @@ public class User {
     @com.duanbn.mydao.annotation.Timestamp
     private Timestamp u_updatetime; // 最后更新时间
 
+    private UserDetail detail; // 用户详细信息
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
@@ -76,5 +78,13 @@ public class User {
     
     public void setU_updatetime(Timestamp u_updatetime) {
         this.u_updatetime = u_updatetime;
+    }
+    
+    public UserDetail getDetail() {
+        return detail;
+    }
+    
+    public void setDetail(UserDetail detail) {
+        this.detail = detail;
     }
 }

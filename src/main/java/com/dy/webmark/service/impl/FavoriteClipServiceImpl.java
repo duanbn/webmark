@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.dy.webmark.common.ErrorCode;
@@ -16,6 +17,8 @@ import com.dy.webmark.service.IFavoriteClipService;
 
 @Service
 public class FavoriteClipServiceImpl implements IFavoriteClipService {
+
+    public static final Logger LOG = Logger.getLogger(FavoriteClipServiceImpl.class);
 
     @Resource
     private FavoriteClipMapper favoriteClipMapper;
@@ -78,6 +81,7 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
         try {
             favoriteClipMapper.insert(clip);
         } catch (Exception e) {
+            LOG.error(e.getMessage(), e);
             throw new BizException(ErrorCode.BIZ4001);
         }
     }
@@ -89,6 +93,17 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
             throw new BizException(ErrorCode.BIZ4002);
         }
         return clip;
+    }
+
+    @Override
+    public List<FavoriteClip> getFavoriteClip(int userId) {
+        List<FavoriteClip> clips = favoriteClipMapper.selectByUserId2(userId);
+
+        if (clips != null) {
+            return clips;
+        }
+
+        return EMPTY;
     }
 
     @Override

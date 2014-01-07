@@ -10,7 +10,7 @@ import com.duanbn.mydao.annotation.PrimaryKey;
 import com.duanbn.mydao.annotation.Table;
 
 @Table
-@Indexes({ @Index(field = "userId, isRead"), @Index(field = "userId, followingId"), @Index(field = "followingId") })
+@Indexes({ @Index(field = "uf_userid, uf_isread"), @Index(field = "uf_userid, uf_followingid"), @Index(field = "uf_followingid") })
 public class UserFollowing {
 
     @PrimaryKey(autoIncrement = true)

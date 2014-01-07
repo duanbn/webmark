@@ -64,5 +64,7 @@ public interface IFavoriteClipService {
      * @return
      */
     public List<FavoriteClip> getFavoriteClip(int userId, int start, int limit);
+    
+    public List<FavoriteClip> getFavoriteClip(int userId);
 
 }

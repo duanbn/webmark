@@ -55,17 +55,17 @@
     	<div class="user-photo"><a href="#" class="a-img1"><img src="img/user2.jpg" width="140" height="140" /></a></div>
         <div class="user-info">
         	<ul>
-                <li class="user-info-1">${user.nickname}</li>
+                <li class="user-info-1">${userdetail.ud_nickname}</li>
                 <li class="user-info-2">
-                <#if user.sex == '男'>
-                <div><span class="userinfo-icon-f"></span>${user.sex}</div>
+                <#if userdetail.ud_sex == '男'>
+                <div><span class="userinfo-icon-f"></span>${userdetail.ud_sex}</div>
                 <#else>
-                <div><span class="userinfo-icon-m"></span>${user.sex}</div>
+                <div><span class="userinfo-icon-m"></span>${userdetail.ud_sex}</div>
                 </#if>
-                <div><span class="userinfo-icon-a"></span>来自${user.comefrom}</div>
-                <div><span class="userinfo-icon-w"></span>${user.job}</div>
+                <div><span class="userinfo-icon-a"></span>来自${userdetail.ud_comefrom}</div>
+                <div><span class="userinfo-icon-w"></span>${userdetail.ud_job}</div>
                 </li>
-                <li class="user-info-3">${user.sign}</li>
+                <li class="user-info-3">${userdetail.ud_sign}</li>
                 <li class="user-info-4">
                 	<a href="#" class="a-btn1 followuser">关注</a><a href="#" class="a-btn2">发私信</a>
                 </li>
@@ -113,90 +113,97 @@
                 <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
             </div>
             <div class="yjboard-con">
-                <div class="yjboard-con-tit"><a href="#" class="a-tit1">${clip.name}&nbsp;<span>(${clip.favoCnt}收录)</span></a></div>
-                <div class="yjboard-con-dy">${clip.description}</div>
+                <div class="yjboard-con-tit"><a href="#" class="a-tit1">${clip.fc_name}&nbsp;<span>(${clip.fc_favocnt}收录)</span></a></div>
+                <div class="yjboard-con-dy">${clip.fc_desc}</div>
                 <a class="followyj a-btn4">关注</a>
             </div>
             <div class="clear"></div>
         </div>
     </#list>
-        <!--
-    	<div class="yjboard">
-        	<div class="yjboard-pic">
-            	<a class="yjboard-pic-1"></a>
-                <a class="yjboard-pic-2"></a>
-                <a class="yjboard-pic-3"></a>
-                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
-                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
-                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
-            </div>
-            <div class="yjboard-con">
-            	<div class="yjboard-con-tit"><a href="#" class="a-tit1">时尚街拍网站推荐时尚街拍网站推荐&nbsp;<span>(43收录)</span></a></div>
-                <div class="yjboard-con-dy">高质量时尚街拍网站汇总，时尚必备网站！</div>
-                <a class="followyj a-btn4">关注</a>
-            </div>
-            <div class="clear"></div>
-        </div>
-        
-		<div class="yjboard">
-        	<div class="yjboard-pic">
-            	<a class="yjboard-pic-1"></a>
-                <a class="yjboard-pic-2"></a>
-                <a class="yjboard-pic-3"></a>
-                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
-                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
-                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
-            </div>
-            <div class="yjboard-con">
-            	<div class="yjboard-con-tit"><a href="#" class="a-tit1">时尚街拍网站推荐时尚街拍网站推荐&nbsp;<span>(43收录)</span></a></div>
-                <div class="yjboard-con-dy">高质量时尚街拍网站汇总，时尚必备网站！</div>
-                <a class="followyj a-btn4">关注</a>
-            </div>
-            <div class="clear"></div>
-        </div>
-    
-		<div class="yjboard">
-        	<div class="yjboard-pic">
-            	<a class="yjboard-pic-1"></a>
-                <a class="yjboard-pic-2"></a>
-                <a class="yjboard-pic-3"></a>
-                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
-                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
-                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
-            </div>
-            <div class="yjboard-con">
-            	<div class="yjboard-con-tit"><a href="#" class="a-tit1">时尚街拍网站推荐时尚街拍网站推荐&nbsp;<span>(43收录)</span></a></div>
-                <div class="yjboard-con-dy">高质量时尚街拍网站汇总，时尚必备网站！</div>
-                <a class="followyj a-btn4">关注</a>
-            </div>
-            <div class="clear"></div>
-        </div>
-
-		<div class="yjboard">
-        	<div class="yjboard-pic">
-            	<a class="yjboard-pic-1"></a>
-                <a class="yjboard-pic-2"></a>
-                <a class="yjboard-pic-3"></a>
-                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
-                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
-                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
-            </div>
-            <div class="yjboard-con">
-            	<div class="yjboard-con-tit"><a href="#" class="a-tit1">时尚街拍网站推荐时尚街拍网站推荐&nbsp;<span>(43收录)</span></a></div>
-                <div class="yjboard-con-dy">高质量时尚街拍网站汇总，时尚必备网站！</div>
-                <a class="edit a-btn3">编辑</a>
-            </div>
-            <div class="clear"></div>
-        </div>
-    
-    	<div class="clear"></div>
-        
-        <div class="nowloading"><span>正在加载&nbsp;…</span></div>
-        <div class="nownomore">没有更多了</div>
-        -->
     </div>
+    <div class="clear"></div>
+    <div id="loaderCircle" class="nowloading"><span>正在加载&nbsp;…</span></div>
+    <div id="nomore" class="nownomore">没有更多了</div>
     
 </div>
+<script type="text/javascript">
+(function ($) {   
+  var page = 1, isLoading = false;
+  var totalPage = ${totalPage};
+  $('#loaderCircle').hide();
 
+  /**
+   * When scrolled all the way to the bottom, add more tiles.
+   */
+  function onScroll(event) {
+    // Only check when we're not still waiting for data.
+    if(!isLoading) {
+      // Check if we're within 100 pixels of the bottom edge of the broser window.
+      var closeToBottom = ($(window).scrollTop() + $(window).height() > $(document).height() - 1);
+      if(closeToBottom) {
+          if (page < totalPage) {
+              loadData();
+          } else {
+              $(window).unbind('scroll', onScroll);
+              $('#nomore').show();
+          }
+      }
+    }
+  };
+
+  /**
+   * Loads data from the API.
+   */
+  function loadData() {
+    isLoading = true;
+    $('#loaderCircle').show(); 
+    setTimeout(function() {
+        $.ajax({
+          type:'post',
+          url: '/favoriteclip/clipList.json',
+          dataType: 'json',
+          data: {page: page}, // Page parameter to make sure we load new data
+          success: onLoadData
+        });
+    }, 1000);
+    
+  };
+
+  /**
+   * Receives data from the API, creates HTML for images and updates the layout
+   */
+  function onLoadData(data) {
+      $('#loaderCircle').hide();
+    // Create HTML for the images.
+    
+    var i=0, length=data.data.length, clip;
+    for(; i<length; i++) {
+      var html = '';
+      clip = data.data[i];
+      html += '<div class="yjboard">';
+        html += '<div class="yjboard-pic">';
+            html += '<a class="yjboard-pic-1"></a>';
+            html += '<a class="yjboard-pic-2"></a>';
+            html += '<a class="yjboard-pic-3"></a>';
+            html += '<img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />';
+            html += '<img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />';
+            html += '<img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />';
+        html += '</div>';
+        html += '<div class="yjboard-con">';
+            html += '<div class="yjboard-con-tit"><a href="#" class="a-tit1">' + clip.fc_name + '&nbsp;<span>(' + clip.fc_favocnt + '收录)</span></a></div>';
+            html += '<div class="yjboard-con-dy">' + clip.fc_desc + '</div>';
+            html += '<a class="followyj a-btn4">关注</a>';
+        html += '</div>';
+      html += '<div class="clear"></div>';
+      html += '</div>';
+      $('#container-clip').append(html);
+    }
+    isLoading = false;
+    page++;
+  };
+  $(window).bind('scroll', onScroll);
+  
+})(jQuery);
+</script>
 </body>
 </html>

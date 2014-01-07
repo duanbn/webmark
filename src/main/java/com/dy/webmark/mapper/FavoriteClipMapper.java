@@ -25,7 +25,7 @@ public interface FavoriteClipMapper {
     @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid} and fc_name like '${fc_name}%'")
     public List<FavoriteClip> selectByNamePrefix(@Param("fc_userid") int fc_userid, @Param("fc_name") String fc_name);
 
-    @Insert("INSERT into favoriteclip(fc_name, fc_userid, isDefault, description) values(#{fc_name}, #{fc_userid}, #{isDefault}, #{description})")
+    @Insert("INSERT INTO favoriteclip(fc_name, fc_userid, fc_isdefault, fc_desc) values(#{fc_name}, #{fc_userid}, #{fc_isdefault}, #{fc_desc})")
     public void insert(FavoriteClip clip);
 
     @Select("SELECT * FROM favoriteclip WHERE fc_id=#{fc_id}")
@@ -34,6 +34,9 @@ public interface FavoriteClipMapper {
     @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid} limit #{start},#{limit}")
     public List<FavoriteClip> selectByUserId(@Param("fc_userid") int fc_userid, @Param("start") int start,
             @Param("limit") int limit);
+
+    @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid}")
+    public List<FavoriteClip> selectByUserId2(@Param("fc_userid") int fc_userid);
 
     @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid} and fc_name=#{fc_name}")
     public FavoriteClip selectByName(@Param("fc_userid") int fc_userid, @Param("fc_name") String fc_name);

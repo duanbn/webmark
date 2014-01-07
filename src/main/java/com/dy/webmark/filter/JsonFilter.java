@@ -57,6 +57,7 @@ public class JsonFilter implements Filter {
         }
 
         String json = jsonMapper.writeValueAsString(map);
+        LOG.info("output - " + json);
         response.setCharacterEncoding("UTF-8");
         PrintWriter writer = response.getWriter();
         writer.write(json);

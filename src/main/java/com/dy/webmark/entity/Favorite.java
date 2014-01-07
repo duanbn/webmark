@@ -24,7 +24,7 @@ import com.duanbn.validation.annotation.CheckURL;
  * 
  */
 @Table
-@Indexes({ @Index(field = "userId,clipId"), @Index(field = "url"), @Index(field = "userId,url", isUnique = true) })
+@Indexes({ @Index(field = "f_userid,f_clipid"), @Index(field = "f_url"), @Index(field = "f_userid,f_url", isUnique = true) })
 @CheckPOJO
 public class Favorite {
 

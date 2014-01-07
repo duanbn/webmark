@@ -5,7 +5,7 @@ import javax.servlet.http.HttpSession;
 
 public class WebConst {
 
-    public static final int DEFAULT_CLIP_PAGESIZE = 10;
+    public static final int DEFAULT_CLIP_PAGESIZE = 4;
 
     public static final String OUTPUT_DATA = "output_data";
     public static final String OUTPUT_ERROR = "output_error";
@@ -14,11 +14,11 @@ public class WebConst {
     public static final String REQ_INPUTURL = "inputurl";
     public static final String REQ_INPUTEMAIL = "inputemail";
 
-    public static final String SESSION_USER = "user";
-    public static final String SESSION_ERRORINFO = "errorinfo";
+    public static final String SESSION_USER = "session.user";
+    public static final String SESSION_ERRORINFO = "session.errorinfo";
 
-    public static final String COOKIE_EMAIL = "email";
-    public static final String COOKIE_SESSIONID = "sessionid";
+    public static final String COOKIE_EMAIL = "cookie.email";
+    public static final String COOKIE_SESSIONID = "cookie.sessionid";
 
     public static final int AUTOLOGIN = 60 * 60 * 24 * 14;
 

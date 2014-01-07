@@ -12,7 +12,7 @@ import com.duanbn.validation.annotation.CheckPOJO;
 import com.duanbn.validation.annotation.CheckString;
 
 @Table
-@Indexes({ @Index(field = "userId") })
+@Indexes({ @Index(field = "fc_userid") })
 @CheckPOJO
 public class FavoriteClip {
 
@@ -33,7 +33,7 @@ public class FavoriteClip {
     @Field(hasDefault = true)
     private int fc_favocnt; // 包含的收录数
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field(isCanNull = true, hasDefault = true)
     private String fc_desc; // 优夹描述
 
     @Override

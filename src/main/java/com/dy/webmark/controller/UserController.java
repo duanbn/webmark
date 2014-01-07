@@ -20,6 +20,7 @@ import com.dy.webmark.common.ValidateRule;
 import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
+import com.dy.webmark.entity.UserDetail;
 import com.dy.webmark.exception.BizException;
 import com.dy.webmark.service.IFavoriteClipService;
 import com.dy.webmark.service.IFavoriteService;
@@ -44,22 +45,16 @@ public class UserController extends BaseController {
     @Resource
     private IUserFollowingService followingService;
 
-    @RequestMapping("/clipList.json")
-    public void clipList(HttpServletRequest req, HttpServletResponse resp) throws BizException {
-        int start = Integer.parseInt(req.getParameter("start"));
-        int limit = Integer.parseInt(req.getParameter("limit"));
-
-        User user = getUserInSession(req);
-        List<FavoriteClip> clipList = clipService.getFavoriteClip(user.getU_id(), start, limit);
-        returnData(req, clipList);
-    }
-
     @RequestMapping("/main.do")
     public String index(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         User user = getUserInSession(req);
 
+        // 获取用户详细信息
+        UserDetail userDetail = userService.getById(user.getU_id(), true).getDetail();
         // 获取用户优夹数
         long clipCnt = clipService.getClipCnt(user.getU_id());
+        long totalPage = clipCnt % WebConst.DEFAULT_CLIP_PAGESIZE == 0 ? clipCnt / WebConst.DEFAULT_CLIP_PAGESIZE
+                : clipCnt / WebConst.DEFAULT_CLIP_PAGESIZE + 1;
         // 获取用户收录数
         long favoCnt = favoService.getFavoCnt(user.getU_id());
         // 获取用户喜欢数
@@ -75,6 +70,8 @@ public class UserController extends BaseController {
                     + ", followercnt=" + followerCnt);
         }
 
+        req.setAttribute("totalPage", totalPage);
+        req.setAttribute("userdetail", userDetail);
         req.setAttribute("clipcnt", clipCnt);
         req.setAttribute("favocnt", favoCnt);
         req.setAttribute("followingcnt", followingCnt);
