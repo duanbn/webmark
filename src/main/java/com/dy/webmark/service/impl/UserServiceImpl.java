@@ -88,7 +88,9 @@ public class UserServiceImpl implements IUserService {
             // 加密用户密码
             user.setU_password(_md5(user.getU_password()));
 
+            // 创建用户
             userMapper.insertUser(user);
+            userDetailMapper.insertUserDetail(new UserDetail(user.getU_id()));
             // 创建默认的优夹
             FavoriteClip defaultClip = new FavoriteClip();
             defaultClip.setFc_name("默认");

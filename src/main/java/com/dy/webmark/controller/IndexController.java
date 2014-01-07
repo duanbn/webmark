@@ -36,7 +36,7 @@ public class IndexController extends BaseController {
     public String login(HttpServletRequest req, HttpServletResponse resp) throws BizException {
         User user = getUserInSession(req);
         if (user != null) {
-            return "redirect:/favorite/main.do";
+            return "redirect:/user/main.do";
         }
 
         Cookie emailCookie = WebUtils.getCookie(req, WebConst.COOKIE_EMAIL);
@@ -59,7 +59,7 @@ public class IndexController extends BaseController {
                 }
                 session.setAttribute(WebConst.SESSION_USER, user);
 
-                return "redirect:/favorite/main.do";
+                return "redirect:/user/main.do";
             } else {
                 return "login";
             }

@@ -130,7 +130,7 @@ function doReg() {
 
     $.post('/user/reg.json', {"email":email, "password":password}, function(data) {
         if (data.status == 'ok') {
-            window.location.href = "/favorite/main.do";
+            window.location.href = "/user/main.do";
         } else if (data.code == 'b1003') {
             $("#corrent_img").hide();
             $("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip2).show();
