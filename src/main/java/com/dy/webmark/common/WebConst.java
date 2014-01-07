@@ -5,6 +5,8 @@ import javax.servlet.http.HttpSession;
 
 public class WebConst {
 
+    public static final int DEFAULT_CLIP_PAGESIZE = 10;
+
     public static final String OUTPUT_DATA = "output_data";
     public static final String OUTPUT_ERROR = "output_error";
     public static final String OUTPUT_MESSAGE = "output_message";

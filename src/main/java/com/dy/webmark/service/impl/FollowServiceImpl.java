@@ -39,7 +39,7 @@ public class FollowServiceImpl implements IFollowService {
         List<UserFollowing> followingList = userFollowingService.getFollowingList(userId, start, limit);
         List<Integer> userIds = new ArrayList<Integer>();
         for (UserFollowing userFollowing : followingList) {
-            userIds.add(userFollowing.getFollowingId());
+            userIds.add(userFollowing.getUf_followingid());
         }
 
         List<User> users = userService
@@ -52,7 +52,7 @@ public class FollowServiceImpl implements IFollowService {
         List<UserFollowingClip> followingClips = followingClipService.getFollowingClips(userId, start, limit);
         List<Integer> clipIds = new ArrayList<Integer>();
         for (UserFollowingClip followingClip : followingClips) {
-            clipIds.add(followingClip.getFollowingClipId());
+            clipIds.add(followingClip.getUfc_followingclipid());
         }
 
         List<FavoriteClip> clips = clipService.getClipByIds(ArrayUtils.toPrimitive(clipIds.toArray(new Integer[clipIds

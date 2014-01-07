@@ -17,54 +17,55 @@ import com.duanbn.mydao.annotation.Table;
 public class FavoriteReprint {
 
     @PrimaryKey(autoIncrement = false)
-    private int id; // 主键
+    private int fr_id; // 主键
 
     @Field(isCanNull = false)
-    private int fromFavoId; // 被转录的收录id
+    private int fr_fromfavoid; // 被转录的收录id
 
     @Field(isCanNull = false)
-    private int userId; // 转录人的id
+    private int fr_userid; // 转录人的id
 
     @Field(isCanNull = false)
-    private int clipId; // 转录到优夹id
+    private int fr_clipid; // 转录到优夹id
 
     public FavoriteReprint() {
+
     }
 
-    public FavoriteReprint(int id) {
-        this.id = id;
+    public FavoriteReprint(int favoId) {
+        this.fr_fromfavoid = favoId;
     }
 
-    public int getId() {
-        return id;
+    public int getFr_id() {
+        return fr_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setFr_id(int fr_id) {
+        this.fr_id = fr_id;
     }
 
-    public int getFromFavoId() {
-        return fromFavoId;
+    public int getFr_fromfavoid() {
+        return fr_fromfavoid;
     }
 
-    public void setFromFavoId(int fromFavoId) {
-        this.fromFavoId = fromFavoId;
+    public void setFr_fromfavoid(int fr_fromfavoid) {
+        this.fr_fromfavoid = fr_fromfavoid;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getFr_userid() {
+        return fr_userid;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setFr_userid(int fr_userid) {
+        this.fr_userid = fr_userid;
     }
 
-    public int getClipId() {
-        return clipId;
+    public int getFr_clipid() {
+        return fr_clipid;
     }
 
-    public void setClipId(int clipId) {
-        this.clipId = clipId;
+    public void setFr_clipid(int fr_clipid) {
+        this.fr_clipid = fr_clipid;
     }
 
 }

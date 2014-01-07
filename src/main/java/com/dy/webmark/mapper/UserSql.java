@@ -7,7 +7,7 @@ public class UserSql {
     public String selectByIds(Map<String, Object> param) {
         int[] ids = (int[]) param.get("ids");
 
-        StringBuilder sql = new StringBuilder("select * from user where id in (");
+        StringBuilder sql = new StringBuilder("select * from user where u_id in (");
         for (int id : ids) {
             sql.append(id).append(",");
         }

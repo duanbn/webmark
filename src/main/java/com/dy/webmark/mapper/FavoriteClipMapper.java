@@ -13,32 +13,35 @@ import com.dy.webmark.entity.FavoriteClip;
 
 public interface FavoriteClipMapper {
 
+    @Select("SELECT count(fc_id) from favoriteclip where fc_userid=#{fc_userid}")
+    public long selectCnt(@Param("fc_userid") int fc_userid);
+
     @SelectProvider(type = FavoriteClipSql.class, method = "selectByIds")
     public List<FavoriteClip> selectByIds(@Param("ids") int[] ids);
 
-    @Update("update favoriteclip set favoCnt = favoCnt + 1 where id=#{favoClipId}")
+    @Update("UPDATE favoriteclip set fc_favocnt = fc_favocnt + 1 WHERE fc_id=#{favoClipId}")
     public void incrFavoCnt(@Param("favoClipId") int favoClipId);
 
-    @Select("select * from favoriteclip where userId=#{userId} and name like '${name}%'")
-    public List<FavoriteClip> selectByNamePrefix(@Param("userId") int userId, @Param("name") String name);
+    @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid} and fc_name like '${fc_name}%'")
+    public List<FavoriteClip> selectByNamePrefix(@Param("fc_userid") int fc_userid, @Param("fc_name") String fc_name);
 
-    @Insert("insert into favoriteclip(name, userId, isDefault) values(#{name}, #{userId}, #{isDefault})")
+    @Insert("INSERT into favoriteclip(fc_name, fc_userid, isDefault, description) values(#{fc_name}, #{fc_userid}, #{isDefault}, #{description})")
     public void insert(FavoriteClip clip);
 
-    @Select("select * from favoriteclip where id=#{id}")
-    public FavoriteClip selectById(@Param("id") int id);
+    @Select("SELECT * FROM favoriteclip WHERE fc_id=#{fc_id}")
+    public FavoriteClip selectById(@Param("fc_id") int fc_id);
 
-    @Select("select * from favoriteclip where userId=#{userId} limit #{start},#{limit}")
-    public List<FavoriteClip> selectByUserId(@Param("userId") int userId, @Param("start") int start,
+    @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid} limit #{start},#{limit}")
+    public List<FavoriteClip> selectByUserId(@Param("fc_userid") int fc_userid, @Param("start") int start,
             @Param("limit") int limit);
 
-    @Select("select * from favoriteclip where userId=#{userId} and name=#{name}")
-    public FavoriteClip selectByName(@Param("userId") int userId, @Param("name") String name);
+    @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid} and fc_name=#{fc_name}")
+    public FavoriteClip selectByName(@Param("fc_userid") int fc_userid, @Param("fc_name") String fc_name);
 
-    @Update("update favoriteclip set name=#{name} where id=#{id}")
+    @Update("UPDATE favoriteclip set fc_name=#{fc_name} WHERE fc_id=#{fc_id}")
     public void update(FavoriteClip clip);
 
-    @Delete("delete from favoriteclip where id=#{id}")
-    public void deleteById(@Param("id") int id);
+    @Delete("DELETE FROM favoriteclip WHERE fc_id=#{fc_id}")
+    public void deleteById(@Param("fc_id") int fc_id);
 
 }

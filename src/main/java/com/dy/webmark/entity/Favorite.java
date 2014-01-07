@@ -29,157 +29,159 @@ import com.duanbn.validation.annotation.CheckURL;
 public class Favorite {
 
     @PrimaryKey(autoIncrement = true)
-    private int id; // 主键
+    private int f_id; // 主键
 
     @Field(isCanNull = false, hasDefault = true)
     @CheckNumber(isNull = false, range = "(0,*]")
-    private int userId; // 收录人id
+    private int f_userid; // 收录人id
 
     @Field(hasDefault = true)
-    private String title; // 收录标题
+    private String f_title; // 收录标题
 
     @Field(hasDefault = true)
-    private String description; // 收录描述
+    private String f_desc; // 收录描述
 
     @Field(hasDefault = true)
-    private String keyword; // 收录的关键字，从被收录的网页获取
+    private String f_keyword; // 收录的关键字，从被收录的网页获取
 
     @Field(isCanNull = false, hasDefault = true)
     @CheckURL(isNull = false, message = "请填写有效的url地址")
-    private String url; // 收录的网页地址
+    private String f_url; // 收录的网页地址
 
     @Field(isCanNull = false)
     @CheckNumber(isNull = false, range = "(0,*]")
-    private int clipId; // 优夹id
+    private int f_clipid; // 优夹id
 
     @Field(hasDefault = true)
-    private boolean highLight; // 高亮
+    private boolean f_highlight; // 高亮
 
     @Field(hasDefault = true)
-    private boolean isTop; // 置顶
+    private boolean f_istop; // 置顶
 
     @Field(hasDefault = true)
-    private boolean isReprint; // 是否是转录的
+    private boolean f_isreprint; // 是否是转录的
 
     @DateTime
-    private Date createTime = new Date(); // 收录时间
+    private Date f_createtime = new Date(); // 收录时间
 
     @com.duanbn.mydao.annotation.Timestamp
-    private Timestamp updateTime; // 修改时间戳
+    private Timestamp f_updatetime; // 修改时间戳
 
     @Field(isCanNull = false, hasDefault = true)
     @CheckString(isNull = false)
-    private String screenshot;
+    private String f_screenshot;
 
     private List<User> reprintUserList;
 
     private FavoriteCnt cnt;
 
-    public int getId() {
-        return id;
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getF_id() {
+        return f_id;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setF_id(int f_id) {
+        this.f_id = f_id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public int getF_userid() {
+        return f_userid;
     }
 
-    public String getTitle() {
-        return title;
+    public void setF_userid(int f_userid) {
+        this.f_userid = f_userid;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public String getF_title() {
+        return f_title;
     }
 
-    public String getDescription() {
-        return description;
+    public void setF_title(String f_title) {
+        this.f_title = f_title;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public String getF_desc() {
+        return f_desc;
     }
 
-    public String getKeyword() {
-        return keyword;
+    public void setF_desc(String f_desc) {
+        this.f_desc = f_desc;
     }
 
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public String getF_keyword() {
+        return f_keyword;
     }
 
-    public int getClipId() {
-        return clipId;
+    public void setF_keyword(String f_keyword) {
+        this.f_keyword = f_keyword;
     }
 
-    public void setClipId(int clipId) {
-        this.clipId = clipId;
+    public String getF_url() {
+        return f_url;
     }
 
-    public String getUrl() {
-        return url;
+    public void setF_url(String f_url) {
+        this.f_url = f_url;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public int getF_clipid() {
+        return f_clipid;
     }
 
-    public boolean isHighLight() {
-        return highLight;
+    public void setF_clipid(int f_clipid) {
+        this.f_clipid = f_clipid;
     }
 
-    public void setHighLight(boolean highLight) {
-        this.highLight = highLight;
+    public boolean isF_highlight() {
+        return f_highlight;
     }
 
-    public boolean isTop() {
-        return isTop;
+    public void setF_highlight(boolean f_highlight) {
+        this.f_highlight = f_highlight;
     }
 
-    public void setTop(boolean isTop) {
-        this.isTop = isTop;
+    public boolean isF_istop() {
+        return f_istop;
     }
 
-    public boolean isReprint() {
-        return isReprint;
+    public void setF_istop(boolean f_istop) {
+        this.f_istop = f_istop;
     }
 
-    public void setReprint(boolean isReprint) {
-        this.isReprint = isReprint;
+    public boolean isF_isreprint() {
+        return f_isreprint;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public void setF_isreprint(boolean f_isreprint) {
+        this.f_isreprint = f_isreprint;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public Date getF_createtime() {
+        return f_createtime;
     }
 
-    public Timestamp getUpdateTime() {
-        return updateTime;
+    public void setF_createtime(Date f_createtime) {
+        this.f_createtime = f_createtime;
     }
 
-    /**
-     * @param updateTime
-     */
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
+    public Timestamp getF_updatetime() {
+        return f_updatetime;
     }
 
-    public String getScreenshot() {
-        return screenshot;
+    public void setF_updatetime(Timestamp f_updatetime) {
+        this.f_updatetime = f_updatetime;
     }
 
-    public void setScreenshot(String screenshot) {
-        this.screenshot = screenshot;
+    public String getF_screenshot() {
+        return f_screenshot;
+    }
+
+    public void setF_screenshot(String f_screenshot) {
+        this.f_screenshot = f_screenshot;
     }
 
     public List<User> getReprintUserList() {
@@ -196,11 +198,6 @@ public class Favorite {
 
     public void setCnt(FavoriteCnt cnt) {
         this.cnt = cnt;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 
 }

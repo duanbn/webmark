@@ -106,9 +106,9 @@ public class MarkController extends BaseController {
         User user = new User();
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setRegTime(new Timestamp(System.currentTimeMillis()));
+        user.setU_email(email);
+        user.setU_password(password);
+        user.setU_regtime(new Timestamp(System.currentTimeMillis()));
 
         Validate.check(user);
 

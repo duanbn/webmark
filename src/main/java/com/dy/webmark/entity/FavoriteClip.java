@@ -17,65 +17,75 @@ import com.duanbn.validation.annotation.CheckString;
 public class FavoriteClip {
 
     @PrimaryKey(autoIncrement = true)
-    private int id;
+    private int fc_id; // 主键
 
     @Field(isCanNull = false, hasDefault = true, length = 45)
     @CheckString(isNull = false, message = "优夹名称不能为空")
-    private String name;
+    private String fc_name; // 优夹名称
 
     @Field(isCanNull = false)
     @CheckNumber(isNull = false, range = "(0,*]")
-    private int userId;
+    private int fc_userid; // 所属用户id
 
     @Field
-    private boolean isDefault;
-    
+    private boolean fc_isdefault; // 是否是默认优夹
+
     @Field(hasDefault = true)
-    private int favoCnt;
+    private int fc_favocnt; // 包含的收录数
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public boolean isDefault() {
-        return isDefault;
-    }
-
-    public void setDefault(boolean isDefault) {
-        this.isDefault = isDefault;
-    }
-
-    public int getFavoCnt() {
-        return favoCnt;
-    }
-
-    public void setFavoCnt(int favoCnt) {
-        this.favoCnt = favoCnt;
-    }
+    @Field(isCanNull = false, hasDefault = true)
+    private String fc_desc; // 优夹描述
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
     }
 
+    public int getFc_id() {
+        return fc_id;
+    }
+
+    public void setFc_id(int fc_id) {
+        this.fc_id = fc_id;
+    }
+
+    public String getFc_name() {
+        return fc_name;
+    }
+
+    public void setFc_name(String fc_name) {
+        this.fc_name = fc_name;
+    }
+
+    public int getFc_userid() {
+        return fc_userid;
+    }
+
+    public void setFc_userid(int fc_userid) {
+        this.fc_userid = fc_userid;
+    }
+
+    public boolean isFc_isdefault() {
+        return fc_isdefault;
+    }
+
+    public void setFc_isdefault(boolean fc_isdefault) {
+        this.fc_isdefault = fc_isdefault;
+    }
+
+    public int getFc_favocnt() {
+        return fc_favocnt;
+    }
+
+    public void setFc_favocnt(int fc_favocnt) {
+        this.fc_favocnt = fc_favocnt;
+    }
+
+    public String getFc_desc() {
+        return fc_desc;
+    }
+
+    public void setFc_desc(String fc_desc) {
+        this.fc_desc = fc_desc;
+    }
 }

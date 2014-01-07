@@ -52,8 +52,8 @@ public class AuthFilter implements Filter {
 
             String uri = req.getRequestURI();
 
-            if (!uri.endsWith("reg.json") && !uri.endsWith("checkemail.json") && !uri.endsWith("login.html") && !uri.endsWith("dologin.json")
-                    && (uri.endsWith(".json") || uri.endsWith(".do")) && !auth(req)) {
+            if (!uri.endsWith("reg.json") && !uri.endsWith("checkemail.json") && !uri.endsWith("login.html")
+                    && !uri.endsWith("dologin.json") && (uri.endsWith(".json") || uri.endsWith(".do")) && !auth(req)) {
                 if (uri.endsWith("showdlg.do")) {
                     WebConst.saveFavoriteInSession(req);
                     resp.sendRedirect(req.getContextPath() + "/view/shoulu-login.html");
@@ -88,7 +88,7 @@ public class AuthFilter implements Filter {
             String email = emailCookie.getValue();
             String sessionId = sessionsIdCookie.getValue();
             UserLogin userLogin = userLoginService.getUserLogin(email, sessionId);
-            if (userLogin == null || !userLogin.isAutoLogin() || isExpired(userLogin.getLoginTime())) {
+            if (userLogin == null || !userLogin.isUl_isautologin() || isExpired(userLogin.getUl_logintime())) {
                 return false;
             }
 

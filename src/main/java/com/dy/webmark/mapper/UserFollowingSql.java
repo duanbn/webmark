@@ -9,7 +9,7 @@ public class UserFollowingSql {
         int userId = (Integer) param.get("userId");
         List<Integer> followerIds = (List<Integer>) param.get("followerIds");
 
-        StringBuilder sql = new StringBuilder("update userfollowing set isRead=1 where followingId=");
+        StringBuilder sql = new StringBuilder("update userfollowing set uf_isread=1 where uf_followingid=");
         sql.append(userId).append(" and userId in (");
         for (Integer id : followerIds) {
             sql.append(id).append(",");

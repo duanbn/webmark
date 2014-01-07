@@ -15,7 +15,7 @@ public class FavoriteCntSql {
     public String selectByIds(Map<String, Object> param) {
         List<Integer> ids = (List<Integer>) param.get("ids");
 
-        StringBuilder sql = new StringBuilder("select * from favoritecnt where favoId in (");
+        StringBuilder sql = new StringBuilder("select * from favoritecnt where f_favoid in (");
         for (int id : ids) {
             sql.append(id).append(",");
         }

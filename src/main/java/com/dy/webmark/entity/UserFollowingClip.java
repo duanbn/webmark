@@ -14,47 +14,47 @@ import com.duanbn.mydao.annotation.Table;
 public class UserFollowingClip {
 
     @PrimaryKey(autoIncrement = true)
-    private int id;
+    private int ufc_id;
 
     @Field(isCanNull = false, hasDefault = true)
-    private int userId;
+    private int ufc_userid;
 
     @Field(isCanNull = false, hasDefault = true)
-    private int followingClipId;
+    private int ufc_followingclipid;
 
     @DateTime(hasDefault = true, isCanNull = false)
-    private Date followTime = new Date();
+    private Date ufc_followtime = new Date();
 
-    public int getId() {
-        return id;
+    public int getUfc_id() {
+        return ufc_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUfc_id(int ufc_id) {
+        this.ufc_id = ufc_id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUfc_userid() {
+        return ufc_userid;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUfc_userid(int ufc_userid) {
+        this.ufc_userid = ufc_userid;
     }
 
-    public int getFollowingClipId() {
-        return followingClipId;
+    public int getUfc_followingclipid() {
+        return ufc_followingclipid;
     }
 
-    public void setFollowingClipId(int followingClipId) {
-        this.followingClipId = followingClipId;
+    public void setUfc_followingclipid(int ufc_followingclipid) {
+        this.ufc_followingclipid = ufc_followingclipid;
     }
 
-    public Date getFollowTime() {
-        return followTime;
+    public Date getUfc_followtime() {
+        return ufc_followtime;
     }
 
-    public void setFollowTime(Date followTime) {
-        this.followTime = followTime;
+    public void setUfc_followtime(Date ufc_followtime) {
+        this.ufc_followtime = ufc_followtime;
     }
 
 }

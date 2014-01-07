@@ -14,58 +14,58 @@ import com.duanbn.mydao.annotation.Table;
 public class UserFollowing {
 
     @PrimaryKey(autoIncrement = true)
-    private int id;
+    private int uf_id;
 
     @Field(isCanNull = false, hasDefault = true)
-    private int userId;
+    private int uf_userid;
 
     @Field(isCanNull = false, hasDefault = true)
-    private int followingId;
+    private int uf_followingid;
 
     @Field(isCanNull = false, hasDefault = true)
-    private boolean isRead;
+    private boolean uf_isread;
 
     @DateTime(isCanNull = false, hasDefault = true)
-    private Date followTime = new Date();
+    private Date uf_followtime = new Date();
 
-    public int getId() {
-        return id;
+    public int getUf_id() {
+        return uf_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUf_id(int uf_id) {
+        this.uf_id = uf_id;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getUf_userid() {
+        return uf_userid;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUf_userid(int uf_userid) {
+        this.uf_userid = uf_userid;
     }
 
-    public int getFollowingId() {
-        return followingId;
+    public int getUf_followingid() {
+        return uf_followingid;
     }
 
-    public void setFollowingId(int followingId) {
-        this.followingId = followingId;
+    public void setUf_followingid(int uf_followingid) {
+        this.uf_followingid = uf_followingid;
     }
 
-    public boolean isRead() {
-        return isRead;
+    public boolean isUf_isread() {
+        return uf_isread;
     }
 
-    public void setRead(boolean isRead) {
-        this.isRead = isRead;
+    public void setUf_isread(boolean uf_isread) {
+        this.uf_isread = uf_isread;
     }
 
-    public Date getFollowTime() {
-        return followTime;
+    public Date getUf_followtime() {
+        return uf_followtime;
     }
 
-    public void setFollowTime(Date followTime) {
-        this.followTime = followTime;
+    public void setUf_followtime(Date uf_followtime) {
+        this.uf_followtime = uf_followtime;
     }
 
 }

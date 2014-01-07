@@ -13,21 +13,21 @@ import com.dy.webmark.entity.FavoriteCnt;
 public interface FavoriteCntMapper {
 
     @SelectProvider(type = FavoriteCntSql.class, method = "selectByIds")
-    public List<FavoriteCnt> selectByFavoIds(@Param("ids") List<Integer> favoIds);
+    public List<FavoriteCnt> selectByFavoIds(@Param("ids") List<Integer> f_favoids);
 
-    @Insert("insert into favoritecnt values(#{favoId}, #{howManyPopularity}, #{howManyLike}, #{howManyReprint})")
+    @Insert("insert into favoritecnt values(#{f_favoid}, #{f_howmanypopularity}, #{f_howmanylike}, #{f_howmanyreprint})")
     public void addFavoriteCnt(FavoriteCnt cnt);
 
-    @Select("select * from favoritecnt where favoId=#{favoId}")
-    public FavoriteCnt get(@Param("favoId") int favoId);
+    @Select("select * from favoritecnt where f_favoid=#{f_favoid}")
+    public FavoriteCnt get(@Param("f_favoid") int f_favoid);
 
-    @Update("update favoritecnt set howManyReprint = howManyReprint + 1 where favoId=#{favoId}")
-    public void incrReprint(@Param("favoId") int favoId);
+    @Update("update favoritecnt set f_howmanyreprint = f_howmanyreprint + 1 where f_favoid=#{f_favoid}")
+    public void incrReprint(@Param("f_favoid") int f_favoid);
 
-    @Update("update favoritecnt set howManyLike = howManyLike + 1 where favoId=#{favoId}")
-    public void incrLike(@Param("favoId") int favoId);
+    @Update("update favoritecnt set f_howmanylike = f_howmanylike + 1 where f_favoid=#{f_favoid}")
+    public void incrLike(@Param("f_favoid") int f_favoid);
 
-    @Update("update favoritecnt set howManyPopularity = howManyPopularity + 1 where favoId=#{favoId}")
-    public void incrPopluar(@Param("favoId") int favoId);
+    @Update("update favoritecnt set f_howmanypopularity = f_howmanypopularity + 1 where f_favoid=#{f_favoid}")
+    public void incrPopluar(@Param("f_favoid") int f_favoid);
 
 }

@@ -1,6 +1,7 @@
 package com.dy.webmark.controller;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -17,8 +18,12 @@ import org.springframework.web.util.WebUtils;
 import com.duanbn.validation.Validate;
 import com.dy.webmark.common.ValidateRule;
 import com.dy.webmark.common.WebConst;
+import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
+import com.dy.webmark.service.IFavoriteClipService;
+import com.dy.webmark.service.IFavoriteService;
+import com.dy.webmark.service.IUserFollowingService;
 import com.dy.webmark.service.IUserLoginService;
 import com.dy.webmark.service.IUserService;
 
@@ -32,11 +37,51 @@ public class UserController extends BaseController {
     private IUserService userService;
     @Resource
     private IUserLoginService userLoginService;
+    @Resource
+    private IFavoriteClipService clipService;
+    @Resource
+    private IFavoriteService favoService;
+    @Resource
+    private IUserFollowingService followingService;
 
-    // @RequestMapping("/login.do")
-    // public String login() {
-    // return "login";
-    // }
+    @RequestMapping("/clipList.json")
+    public void clipList(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        int start = Integer.parseInt(req.getParameter("start"));
+        int limit = Integer.parseInt(req.getParameter("limit"));
+
+        User user = getUserInSession(req);
+        List<FavoriteClip> clipList = clipService.getFavoriteClip(user.getU_id(), start, limit);
+        returnData(req, clipList);
+    }
+
+    @RequestMapping("/main.do")
+    public String index(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        User user = getUserInSession(req);
+
+        // 获取用户优夹数
+        long clipCnt = clipService.getClipCnt(user.getU_id());
+        // 获取用户收录数
+        long favoCnt = favoService.getFavoCnt(user.getU_id());
+        // 获取用户喜欢数
+        // TODO
+        // 获取用户关注数
+        long followingCnt = followingService.getFollowingCnt(user.getU_id());
+        // 获取用户粉丝数
+        long followerCnt = followingService.getFollowerCnt(user.getU_id());
+        List<FavoriteClip> clipList = clipService.getFavoriteClip(user.getU_id(), 0, WebConst.DEFAULT_CLIP_PAGESIZE);
+
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("clipcnt=" + clipCnt + ", favocnt=" + favoCnt + ", followingcnt=" + followingCnt
+                    + ", followercnt=" + followerCnt);
+        }
+
+        req.setAttribute("clipcnt", clipCnt);
+        req.setAttribute("favocnt", favoCnt);
+        req.setAttribute("followingcnt", followingCnt);
+        req.setAttribute("followercnt", followerCnt);
+        req.setAttribute("clipList", clipList);
+        return "main";
+    }
 
     @RequestMapping("/checkemail.json")
     public void checkEmail(HttpServletRequest req, HttpServletResponse resp) {
@@ -54,9 +99,9 @@ public class UserController extends BaseController {
         User user = new User();
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setRegTime(new Timestamp(System.currentTimeMillis()));
+        user.setU_email(email);
+        user.setU_password(password);
+        user.setU_regtime(new Timestamp(System.currentTimeMillis()));
 
         Validate.check(user);
 

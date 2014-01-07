@@ -36,8 +36,8 @@ public class UserFollowingServiceImpl implements IUserFollowingService {
 
         try {
             userFollowing = new UserFollowing();
-            userFollowing.setUserId(userId);
-            userFollowing.setFollowingId(followingId);
+            userFollowing.setUf_userid(userId);
+            userFollowing.setUf_followingid(followingId);
             userFollowingMapper.insert(userFollowing);
         } catch (Exception e) {
             throw new BizException(ErrorCode.BIZ5003);
@@ -91,7 +91,7 @@ public class UserFollowingServiceImpl implements IUserFollowingService {
         // 异步设置为已读
         final List<Integer> followerIds = new ArrayList<Integer>(rst.size());
         for (UserFollowing following : rst) {
-            followerIds.add(following.getUserId());
+            followerIds.add(following.getUf_followingid());
         }
         threadPool.submit(new Runnable() {
             @Override

@@ -8,6 +8,11 @@ import com.dy.webmark.exception.BizException;
 public interface IFavoriteClipService {
 
     /**
+     * 获取用户的优夹数量.
+     */
+    public long getClipCnt(int userId);
+
+    /**
      * 根据id获取优夹
      * 
      * @param clipIds

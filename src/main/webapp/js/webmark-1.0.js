@@ -32,7 +32,7 @@ function doLogin() {
     var autoLogin = $('#autologin').attr("checked") ? "on" : "off";
     $.post('/user/dologin.json', {"email":email, "password":pwd, "autologin":autoLogin}, function(data) {
         if (data.status == 'ok') {
-            window.location.href="/favorite/main.do";
+            window.location.href="/user/main.do";
         } else {
             if (data.code == 'b1006') {
                 $('#password_tip').addClass('span2-error').html(data.message);

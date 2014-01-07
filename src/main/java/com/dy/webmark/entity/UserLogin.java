@@ -14,63 +14,63 @@ import com.duanbn.mydao.annotation.Table;
 public class UserLogin {
 
     @PrimaryKey(autoIncrement = false)
-    private String email;
+    private String ul_email;
 
     @Field(isCanNull = false, hasDefault = false)
-    private String sessionId;
+    private String ul_sessionid;
 
     @DateTime(isCanNull = false, hasDefault = true)
-    private Date loginTime = new Date();
+    private Date ul_logintime = new Date();
 
     @Field(hasDefault = true)
-    private boolean isAutoLogin;
+    private boolean ul_isautologin;
 
     @com.duanbn.mydao.annotation.Timestamp
-    private Timestamp updateTime;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public Date getLoginTime() {
-        return loginTime;
-    }
-
-    public void setLoginTime(Date loginTime) {
-        this.loginTime = loginTime;
-    }
-
-    public boolean isAutoLogin() {
-        return isAutoLogin;
-    }
-
-    public void setAutoLogin(boolean isAutoLogin) {
-        this.isAutoLogin = isAutoLogin;
-    }
-
-    public Timestamp getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Timestamp updateTime) {
-        this.updateTime = updateTime;
-    }
+    private Timestamp ul_updatetime;
 
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    public String getUl_email() {
+        return ul_email;
+    }
+
+    public void setUl_email(String ul_email) {
+        this.ul_email = ul_email;
+    }
+
+    public String getUl_sessionid() {
+        return ul_sessionid;
+    }
+
+    public void setUl_sessionid(String ul_sessionid) {
+        this.ul_sessionid = ul_sessionid;
+    }
+
+    public Date getUl_logintime() {
+        return ul_logintime;
+    }
+
+    public void setUl_logintime(Date ul_logintime) {
+        this.ul_logintime = ul_logintime;
+    }
+
+    public boolean isUl_isautologin() {
+        return ul_isautologin;
+    }
+
+    public void setUl_isautologin(boolean ul_isautologin) {
+        this.ul_isautologin = ul_isautologin;
+    }
+
+    public Timestamp getUl_updatetime() {
+        return ul_updatetime;
+    }
+
+    public void setUl_updatetime(Timestamp ul_updatetime) {
+        this.ul_updatetime = ul_updatetime;
     }
 
 }

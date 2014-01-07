@@ -38,7 +38,7 @@ public class IndexController extends BaseController {
         if (user != null) {
             return "redirect:/favorite/main.do";
         }
-        
+
         Cookie emailCookie = WebUtils.getCookie(req, WebConst.COOKIE_EMAIL);
         Cookie sessionsIdCookie = WebUtils.getCookie(req, WebConst.COOKIE_SESSIONID);
         if (user == null && emailCookie != null && sessionsIdCookie != null) {
@@ -48,7 +48,7 @@ public class IndexController extends BaseController {
 
             if (userLogin != null) {
                 HttpSession session = getSession(req);
-                if (!userLogin.isAutoLogin() || isExpired(userLogin.getLoginTime())) {
+                if (!userLogin.isUl_isautologin() || isExpired(userLogin.getUl_logintime())) {
                     return "login";
                 }
 

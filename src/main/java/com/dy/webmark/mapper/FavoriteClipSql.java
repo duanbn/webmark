@@ -7,7 +7,7 @@ public class FavoriteClipSql {
     public String selectByIds(Map<String, Object> param) {
         int[] ids = (int[]) param.get("ids");
 
-        StringBuilder sql = new StringBuilder("select * from favoriteclip where id in (");
+        StringBuilder sql = new StringBuilder("select * from favoriteclip where fc_id in (");
         for (int id : ids) {
             sql.append(id).append(",");
         }

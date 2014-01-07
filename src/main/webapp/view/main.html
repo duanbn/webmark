@@ -1,11 +1,202 @@
+<!DOCTYPE HTML>
 <html>
-    <head>
-        <script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="/js/webmark-1.0.js"></script>
-    </head>
-    <body>
-        <a href='javascript:void((function(){var script = document.createElement("script");script.setAttribute("type", "text/javascript");script.setAttribute("charset", "UTF-8");script.setAttribute("src", "http://localhost:8080/js/marktool.js");document.body.appendChild(script);})());' title="拖拽我到您的工具栏收藏夹">我的收录</a>
-        <p/> 
-        <a href="javascript:doLogout();">退出</a>
-    </body>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>优藏夹 - 一个简洁的网页收藏夹</title>
+<link rel="stylesheet" href="/css/index.css">
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/js/jquery.lavalamp.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/webmark-1.0.js"></script>
+<!--[if lt IE 7]>
+    <script type="Text/Javascript" src="js/pngfix.js"></script>
+    <script type="text/javascript">  
+		DD_belatedPNG.fix('img,a,div,span, li');
+	</script>
+<![endif]-->
+</head>
+
+<body>
+
+<div class="header">
+	<div class="wrapper1">
+		<div class="header-logo"><a href="#"></a></div>
+        <div class="header-nav">
+        	<a href="#" class="header-nav-add header-nav-s"><span class="add-icon"></span></a>
+        	<a href="#" class="header-nav-mail header-nav-s"><span class="mail-icon"></span><span class="mail-dot"></span></a>
+        	<a href="#" class="header-nav-user header-nav-s"><img src="/img/user1.jpg" width="20" height="20" /><span class="mail-more"></span></a>
+        	<div class="nav-add-menu">
+            	<ul>
+                	<li class="arrow"></li>
+                    <li class="add-group"><a href="#"><span class="upload"></span>上传网址收录</a></li>
+                    <li class="add-group add-group-line"><a href="#"><span class="addboard"></span>添加优夹</a></li>
+                    <li class="add-group"><a href="#"><span class="goodies"></span>安装采集工具</a></li>
+                </ul>
+            </div>
+            <div class="nav-user-menu">
+            	<ul>
+                    <li class="user-group add-group-line"><a href="#"><span class="mine"></span>我的优夹</a></li>
+                    <li class="user-group"><a href="#"><span class="followingu"></span>我关注的人</a></li>
+                    <li class="user-group"><a href="#"><span class="followingb"></span>我关注的优夹</a></li>
+                    <li class="user-group add-group-line"><a href="#"><span class="follower"></span>我的粉丝</a></li>
+                    <li class="user-group"><a href="#"><span class="setting"></span>账号设置</a></li>
+                    <li class="user-group"><a href="javascript:doLogout();"><span class="logout"></span>退出登录</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+<div class="page">
+	<div class="user-card">
+    	<div class="user-photo"><a href="#" class="a-img1"><img src="img/user2.jpg" width="140" height="140" /></a></div>
+        <div class="user-info">
+        	<ul>
+                <li class="user-info-1">${user.nickname}</li>
+                <li class="user-info-2">
+                <#if user.sex == '男'>
+                <div><span class="userinfo-icon-f"></span>${user.sex}</div>
+                <#else>
+                <div><span class="userinfo-icon-m"></span>${user.sex}</div>
+                </#if>
+                <div><span class="userinfo-icon-a"></span>来自${user.comefrom}</div>
+                <div><span class="userinfo-icon-w"></span>${user.job}</div>
+                </li>
+                <li class="user-info-3">${user.sign}</li>
+                <li class="user-info-4">
+                	<a href="#" class="a-btn1 followuser">关注</a><a href="#" class="a-btn2">发私信</a>
+                </li>
+            </ul>
+        </div>
+        <div class="user-num">
+            <div class="user-num-follow"><a href="#" class="a-tit1">${followingcnt}<span><br />关注</span></a></div>
+            <div class="user-num-fan"><a href="#" class="a-tit1">${followercnt}<span><br />粉丝</span></a></div>
+        </div>
+        <div class="wrapper2" style="display:none;">
+        	<a href="#" class="report-user" title="举报用户"></a>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div class="tabs">
+        <ul class="topmenu" id="topmenu">
+            <li><a href="#">${clipcnt}优夹</a></li>
+            <li><a href="#">${favocnt}收录</a></li>
+            <!--<li><a href="#">26喜欢</a></li>-->
+		</ul>
+        <div class="tabs-set">
+      		<a href="#" class="a-btn3">优夹排序</a>
+        </div>
+        <div class="wrapper3">
+        	<div class="search">
+            	<form method="post">
+            		<input id="search-txt" class="search-txt" type="text" maxlength="60" value="搜索TA的收录">
+                    <input id="search-btn" class="search-btn" type="submit" title="搜索" value="">
+        		</form>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    
+    <div id="container-clip" class="yjlist">
+    <#list clipList as clip>
+        <div class="yjboard">
+        	<div class="yjboard-pic">
+            	<a class="yjboard-pic-1"></a>
+                <a class="yjboard-pic-2"></a>
+                <a class="yjboard-pic-3"></a>
+                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
+                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
+                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
+            </div>
+            <div class="yjboard-con">
+                <div class="yjboard-con-tit"><a href="#" class="a-tit1">${clip.name}&nbsp;<span>(${clip.favoCnt}收录)</span></a></div>
+                <div class="yjboard-con-dy">${clip.description}</div>
+                <a class="followyj a-btn4">关注</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </#list>
+        <!--
+    	<div class="yjboard">
+        	<div class="yjboard-pic">
+            	<a class="yjboard-pic-1"></a>
+                <a class="yjboard-pic-2"></a>
+                <a class="yjboard-pic-3"></a>
+                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
+                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
+                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
+            </div>
+            <div class="yjboard-con">
+            	<div class="yjboard-con-tit"><a href="#" class="a-tit1">时尚街拍网站推荐时尚街拍网站推荐&nbsp;<span>(43收录)</span></a></div>
+                <div class="yjboard-con-dy">高质量时尚街拍网站汇总，时尚必备网站！</div>
+                <a class="followyj a-btn4">关注</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+        
+		<div class="yjboard">
+        	<div class="yjboard-pic">
+            	<a class="yjboard-pic-1"></a>
+                <a class="yjboard-pic-2"></a>
+                <a class="yjboard-pic-3"></a>
+                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
+                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
+                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
+            </div>
+            <div class="yjboard-con">
+            	<div class="yjboard-con-tit"><a href="#" class="a-tit1">时尚街拍网站推荐时尚街拍网站推荐&nbsp;<span>(43收录)</span></a></div>
+                <div class="yjboard-con-dy">高质量时尚街拍网站汇总，时尚必备网站！</div>
+                <a class="followyj a-btn4">关注</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    
+		<div class="yjboard">
+        	<div class="yjboard-pic">
+            	<a class="yjboard-pic-1"></a>
+                <a class="yjboard-pic-2"></a>
+                <a class="yjboard-pic-3"></a>
+                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
+                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
+                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
+            </div>
+            <div class="yjboard-con">
+            	<div class="yjboard-con-tit"><a href="#" class="a-tit1">时尚街拍网站推荐时尚街拍网站推荐&nbsp;<span>(43收录)</span></a></div>
+                <div class="yjboard-con-dy">高质量时尚街拍网站汇总，时尚必备网站！</div>
+                <a class="followyj a-btn4">关注</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+		<div class="yjboard">
+        	<div class="yjboard-pic">
+            	<a class="yjboard-pic-1"></a>
+                <a class="yjboard-pic-2"></a>
+                <a class="yjboard-pic-3"></a>
+                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
+                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
+                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
+            </div>
+            <div class="yjboard-con">
+            	<div class="yjboard-con-tit"><a href="#" class="a-tit1">时尚街拍网站推荐时尚街拍网站推荐&nbsp;<span>(43收录)</span></a></div>
+                <div class="yjboard-con-dy">高质量时尚街拍网站汇总，时尚必备网站！</div>
+                <a class="edit a-btn3">编辑</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    
+    	<div class="clear"></div>
+        
+        <div class="nowloading"><span>正在加载&nbsp;…</span></div>
+        <div class="nownomore">没有更多了</div>
+        -->
+    </div>
+    
+</div>
+
+</body>
 </html>

@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.UserFollowingClip;
 import com.dy.webmark.exception.BizException;
-import com.dy.webmark.mapper.FollowingClipMapper;
+import com.dy.webmark.mapper.UserFollowingClipMapper;
 import com.dy.webmark.service.IFollowingClipService;
 
 @Service
 public class FollowingClipServiceImpl implements IFollowingClipService {
 
     @Resource
-    private FollowingClipMapper followingClipMapper;
+    private UserFollowingClipMapper followingClipMapper;
 
     @Override
     public List<UserFollowingClip> getFollowingClips(int userId, int start, int limit) {
@@ -34,8 +34,8 @@ public class FollowingClipServiceImpl implements IFollowingClipService {
     public void followClip(int userId, int clipId) throws BizException {
         try {
             UserFollowingClip followingClip = new UserFollowingClip();
-            followingClip.setFollowingClipId(clipId);
-            followingClip.setUserId(userId);
+            followingClip.setUfc_followingclipid(clipId);
+            followingClip.setUfc_userid(userId);
 
             followingClipMapper.insert(followingClip);
         } catch (Exception e) {

@@ -55,6 +55,11 @@ public class FavoriteServiceImpl implements IFavoriteService {
     private IFavoriteClipService clipService;
 
     @Override
+    public long getFavoCnt(int userId) {
+        return favoMapper.selectCnt(userId);
+    }
+
+    @Override
     public List<Favorite> getByClip(int userId, int clipId, int start, int limit) {
         return getByClip(userId, clipId, false, start, limit);
     }
@@ -70,14 +75,14 @@ public class FavoriteServiceImpl implements IFavoriteService {
             List<Integer> ids = new ArrayList<Integer>();
             Map<Integer, Favorite> map = new HashMap<Integer, Favorite>();
             for (Favorite favo : rst) {
-                ids.add(favo.getId());
-                map.put(favo.getId(), favo);
+                ids.add(favo.getF_id());
+                map.put(favo.getF_id(), favo);
             }
             List<FavoriteCnt> cnts = favoCntMapper.selectByFavoIds(ids);
 
             Favorite favo = null;
             for (FavoriteCnt cnt : cnts) {
-                favo = map.get(cnt.getFavoId());
+                favo = map.get(cnt.getF_favoid());
                 if (favo != null) {
                     favo.setCnt(cnt);
                 }
@@ -135,26 +140,26 @@ public class FavoriteServiceImpl implements IFavoriteService {
     @Override
     public void addFavorite(Favorite favo) throws BizException {
         // 检查收录是否存在
-        Favorite f = favoMapper.getByURL(favo.getUserId(), favo.getUrl());
+        Favorite f = favoMapper.getByURL(favo.getF_userid(), favo.getF_url());
         if (f != null) {
             throw new BizException(ErrorCode.BIZ2006);
         }
 
         try {
             // 添加收录
-            favo.setScreenshot(favo.getScreenshot().substring(favo.getScreenshot().indexOf("/") + 1));
+            favo.setF_screenshot(favo.getF_screenshot().substring(favo.getF_screenshot().indexOf("/") + 1));
             favoMapper.insertFavorite(favo);
 
             // 初始化收录计数
             FavoriteCnt cnt = new FavoriteCnt();
-            cnt.setFavoId(favo.getId());
+            cnt.setF_favoid(favo.getF_id());
             favoCntMapper.addFavoriteCnt(cnt);
 
             // 修改优夹计数
-            clipService.incrFavoCnt(favo.getClipId());
+            clipService.incrFavoCnt(favo.getF_clipid());
 
             // 将网页截图放入正式目录
-            String fileName = favo.getScreenshot();
+            String fileName = favo.getF_screenshot();
             String thumFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_thum.jpg";
             if (!fileName.equals(Const.NOSCREEN) && !FileUtils.getFile(Const.SCREEN_PATH, fileName).exists()) {
                 // 生成图片
@@ -166,7 +171,7 @@ public class FavoriteServiceImpl implements IFavoriteService {
                 File destThumFile = new File(Const.SCREEN_PATH + "/" + thumFileName);
                 FileUtils.moveFile(srcThumFile, destThumFile);
 
-                File srcFile = new File(Const.SCREEN_TEMP_PATH + "/" + favo.getScreenshot());
+                File srcFile = new File(Const.SCREEN_TEMP_PATH + "/" + favo.getF_screenshot());
                 FileUtils.deleteQuietly(srcFile);
             }
 
@@ -186,25 +191,25 @@ public class FavoriteServiceImpl implements IFavoriteService {
 
         // 添加转录
         Favorite reprintFavo = new Favorite();
-        reprintFavo.setReprint(true);
-        reprintFavo.setClipId(clipId);
-        reprintFavo.setUserId(userId);
-        reprintFavo.setDescription(favo.getDescription());
-        reprintFavo.setKeyword(favo.getKeyword());
-        reprintFavo.setTitle(favo.getTitle());
-        reprintFavo.setUrl(favo.getUrl());
-        reprintFavo.setScreenshot(favo.getScreenshot());
+        reprintFavo.setF_isreprint(true);
+        reprintFavo.setF_clipid(clipId);
+        reprintFavo.setF_userid(userId);
+        reprintFavo.setF_desc(favo.getF_desc());
+        reprintFavo.setF_keyword(favo.getF_keyword());
+        reprintFavo.setF_title(favo.getF_title());
+        reprintFavo.setF_url(favo.getF_url());
+        reprintFavo.setF_screenshot(favo.getF_screenshot());
         favoMapper.insertFavorite(reprintFavo);
         // 初始化收录计数
         FavoriteCnt cnt = new FavoriteCnt();
-        cnt.setFavoId(reprintFavo.getId());
+        cnt.setF_favoid(reprintFavo.getF_id());
         favoCntMapper.addFavoriteCnt(cnt);
 
         // 添加转录信息
-        fr = new FavoriteReprint(reprintFavo.getId());
-        fr.setClipId(clipId);
-        fr.setFromFavoId(favoId);
-        fr.setUserId(userId);
+        fr = new FavoriteReprint(reprintFavo.getF_id());
+        fr.setFr_clipid(clipId);
+        fr.setFr_fromfavoid(favoId);
+        fr.setFr_userid(userId);
         favoReprintMapper.insertFavoriteReprint(fr);
 
         // 被转录的收录数加1
@@ -229,7 +234,7 @@ public class FavoriteServiceImpl implements IFavoriteService {
             if (reprints != null && !reprints.isEmpty()) {
                 int[] userIds = new int[reprints.size()];
                 for (int i = 0; i < reprints.size(); i++) {
-                    userIds[i] = reprints.get(i).getUserId();
+                    userIds[i] = reprints.get(i).getFr_userid();
                 }
 
                 List<User> users = userService.getUserByIds(userIds);

@@ -34,14 +34,14 @@ public class UserLoginServiceImpl implements IUserLoginService {
             UserLogin login = userLoginMapper.getByEmail(email);
             if (login == null) {
                 login = new UserLogin();
-                login.setEmail(email);
-                login.setSessionId(sessionId);
-                login.setAutoLogin(isAutoLogin);
+                login.setUl_email(email);
+                login.setUl_sessionid(sessionId);
+                login.setUl_isautologin(isAutoLogin);
                 userLoginMapper.insert(login);
             } else {
-                login.setSessionId(sessionId);
-                login.setAutoLogin(isAutoLogin);
-                login.setLoginTime(new Timestamp(System.currentTimeMillis()));
+                login.setUl_sessionid(sessionId);
+                login.setUl_isautologin(isAutoLogin);
+                login.setUl_logintime(new Timestamp(System.currentTimeMillis()));
                 userLoginMapper.update(login);
             }
         } catch (Exception e) {

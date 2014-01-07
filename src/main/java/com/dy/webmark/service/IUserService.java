@@ -49,14 +49,6 @@ public interface IUserService {
     public User login(String email, String password) throws BizException;
 
     /**
-     * 设置用户昵称，此昵称必须是不存在的.
-     * 
-     * @param nickname
-     * @throws BizException
-     */
-    public void setNickName(int id, String nickname) throws BizException;
-
-    /**
      * 注销用户
      * 
      * @param id

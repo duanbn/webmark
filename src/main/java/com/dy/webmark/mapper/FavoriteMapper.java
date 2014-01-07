@@ -11,22 +11,25 @@ import com.dy.webmark.entity.Favorite;
 
 public interface FavoriteMapper {
 
-    @Select("select * from favorite where userId=#{userId} and clipId=#{clipId} limit #{start}, #{limit}")
-    public List<Favorite> selectByClip(@Param("userId") int userId, @Param("clipId") int clipId,
+    @Select("SELECT count(f_id) from favorite where f_userid=#{f_userid}")
+    public long selectCnt(int f_userid);
+
+    @Select("select * from favorite where f_userid=#{f_userid} and f_clipid=#{f_clipid} limit #{start}, #{limit}")
+    public List<Favorite> selectByClip(@Param("f_userid") int f_userid, @Param("f_clipid") int f_clipid,
             @Param("start") int start, @Param("limit") int limit);
 
-    @Select("select screenshot from favorite where url=#{url} limit 0, 1")
-    public String getByUrl(@Param("url") String url);
+    @Select("select f_screenshot from favorite where f_url=#{f_url} limit 0, 1")
+    public String getByUrl(@Param("f_url") String f_url);
 
-    @Select("select * from favorite where userId = #{userId} and url = #{url}")
-    public Favorite getByURL(@Param("userId") int userId, @Param("url") String url);
+    @Select("select * from favorite where f_userid = #{f_userid} and f_url = #{f_url}")
+    public Favorite getByURL(@Param("f_userid") int f_userid, @Param("f_url") String f_url);
 
-    @Insert("INSERT INTO favorite(userId, title, description, keyword, url, clipId, highLight, isTop, createTime, isReprint, screenshot) "
-            + "VALUES(#{userId}, #{title}, #{description}, #{keyword}, #{url}, #{clipId}, #{highLight}, #{isTop}, #{createTime}, #{isReprint}, #{screenshot})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Insert("INSERT INTO favorite(f_userid, f_title, f_desc, f_keyword, f_url, f_clipid, f_highlight, f_istop, f_createtime, f_isreprint, f_screenshot) "
+            + "VALUES(#{f_userid}, #{f_title}, #{f_desc}, #{f_keyword}, #{f_url}, #{f_clipid}, #{f_highlight}, #{f_istop}, #{f_createtime}, #{f_isreprint}, #{f_screenshot})")
+    @Options(useGeneratedKeys = true, keyProperty = "f_id")
     public void insertFavorite(Favorite favorite);
 
-    @Select("SELECT * FROM favorite where id=#{favoId}")
+    @Select("SELECT * FROM favorite where f_id=#{favoId}")
     public Favorite getFavoriteById(@Param("favoId") int favoId);
 
 }

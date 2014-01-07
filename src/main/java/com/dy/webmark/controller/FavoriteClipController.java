@@ -37,11 +37,11 @@ public class FavoriteClipController extends BaseController {
         if (user == null) {
             throw new BizException(ErrorCode.BIZ1002);
         }
-        int userId = user.getId();
+        int userId = user.getU_id();
 
         FavoriteClip clip = new FavoriteClip();
-        clip.setName(name);
-        clip.setUserId(userId);
+        clip.setFc_name(name);
+        clip.setFc_userid(userId);
 
         Validate.check(clip);
 
@@ -55,7 +55,7 @@ public class FavoriteClipController extends BaseController {
 
         User user = getUserInSession(req);
 
-        List<FavoriteClip> clips = favoriteClipService.getByNamePrefix(user.getId(), name);
+        List<FavoriteClip> clips = favoriteClipService.getByNamePrefix(user.getU_id(), name);
 
         returnData(req, clips);
     }

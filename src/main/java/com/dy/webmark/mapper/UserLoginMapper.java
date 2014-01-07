@@ -10,19 +10,19 @@ import com.dy.webmark.entity.UserLogin;
 
 public interface UserLoginMapper {
 
-    @Update("update userlogin set sessionId=#{sessionId}, loginTime=#{loginTime}, isAutoLogin=#{isAutoLogin} where email=#{email}")
+    @Update("update userlogin set ul_sessionid=#{ul_sessionid}, ul_logintime=#{ul_logintime}, ul_isautologin=#{ul_isautologin} where ul_email=#{ul_email}")
     public void update(UserLogin login);
 
-    @Insert("insert into userlogin(email, sessionId, loginTime, isAutoLogin) value(#{email}, #{sessionId}, #{loginTime}, #{isAutoLogin})")
+    @Insert("insert into userlogin(ul_email, ul_sessionid, ul_logintime, ul_isautologin) value(#{ul_email}, #{ul_sessionid}, #{ul_logintime}, #{ul_isautologin})")
     public void insert(UserLogin login);
 
-    @Select("select * from userlogin where email=#{email} AND sessionId=#{sessionId}")
-    public UserLogin getByEmailSessionId(@Param("email") String email, @Param("sessionId") String sessionId);
+    @Select("select * from userlogin where ul_email=#{ul_email} AND ul_sessionid=#{ul_sessionid}")
+    public UserLogin getByEmailSessionId(@Param("ul_email") String ul_email, @Param("ul_sessionid") String ul_sessionid);
 
-    @Select("select * from userlogin where email=#{email}")
-    public UserLogin getByEmail(@Param("email") String email);
+    @Select("select * from userlogin where ul_email=#{ul_email}")
+    public UserLogin getByEmail(@Param("ul_email") String ul_email);
 
-    @Delete("delete from userlogin where email=#{email}")
-    public void delete(@Param("email") String email);
+    @Delete("delete from userlogin where ul_email=#{ul_email}")
+    public void delete(@Param("ul_email") String ul_email);
 
 }

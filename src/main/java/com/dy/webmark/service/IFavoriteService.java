@@ -8,6 +8,11 @@ import com.dy.webmark.exception.BizException;
 public interface IFavoriteService {
 
     /**
+     * 获取用户的收录数
+     */
+    public long getFavoCnt(int userId);
+
+    /**
      * 根据优夹获取收录列表
      * 
      * @param userId

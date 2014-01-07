@@ -34,7 +34,7 @@ public class FavoriteController extends BaseController {
         User user = getUserInSession(req);
 
         String clipName = req.getParameter("clipName");
-        FavoriteClip clip = clipService.getByName(user.getId(), clipName);
+        FavoriteClip clip = clipService.getByName(user.getU_id(), clipName);
 
         String title = req.getParameter("title");
         String desc = req.getParameter("desc");
@@ -45,13 +45,13 @@ public class FavoriteController extends BaseController {
         Validate.check(screenshot, ValidateRule.fileNameRule);
 
         Favorite favo = new Favorite();
-        favo.setUserId(user.getId());
-        favo.setDescription(desc);
-        favo.setKeyword(keyword);
-        favo.setTitle(title);
-        favo.setUrl(url);
-        favo.setScreenshot(screenshot);
-        favo.setClipId(clip.getId());
+        favo.setF_userid(user.getU_id());
+        favo.setF_desc(desc);
+        favo.setF_keyword(keyword);
+        favo.setF_title(title);
+        favo.setF_url(url);
+        favo.setF_screenshot(screenshot);
+        favo.setF_clipid(clip.getFc_id());
 
         Validate.check(favo);
 

@@ -60,20 +60,20 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void regUser(User user) throws BizException {
         // 判断邮箱是否已经注册
-        if (userMapper.getUserByEmail(user.getEmail()) != null) {
+        if (userMapper.getUserByEmail(user.getU_email()) != null) {
             throw new BizException(ErrorCode.BIZ1003);
         }
 
         try {
             // 加密用户密码
-            user.setPassword(_md5(user.getPassword()));
+            user.setU_password(_md5(user.getU_password()));
 
             userMapper.insertUser(user);
             // 创建默认的优夹
             FavoriteClip defaultClip = new FavoriteClip();
-            defaultClip.setName("默认");
-            defaultClip.setUserId(user.getId());
-            defaultClip.setDefault(true);
+            defaultClip.setFc_name("默认");
+            defaultClip.setFc_userid(user.getU_id());
+            defaultClip.setFc_isdefault(true);
             clipService.addFavoriteClip(defaultClip);
 
             if (LOG.isDebugEnabled()) {
@@ -91,21 +91,11 @@ public class UserServiceImpl implements IUserService {
             throw new BizException(ErrorCode.BIZ1005);
         }
 
-        if (!user.getPassword().equals(_md5(password))) {
+        if (!user.getU_password().equals(_md5(password))) {
             throw new BizException(ErrorCode.BIZ1006);
         }
 
         return user;
-    }
-
-    @Override
-    public void setNickName(int id, String nickname) throws BizException {
-        User user = userMapper.getUserByNickName(nickname);
-        if (user != null) {
-            throw new BizException(ErrorCode.BIZ1004);
-        }
-
-        userMapper.updateNickName(id, nickname);
     }
 
     @Override

@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectProvider;
-import org.apache.ibatis.annotations.Update;
 
 import com.dy.webmark.entity.User;
 
@@ -17,26 +16,20 @@ public interface UserMapper {
     @SelectProvider(type = UserSql.class, method = "selectByIds")
     public List<User> getUserByIds(@Param("ids") int[] ids);
 
-    @Select("select email from user where email=#{email}")
-    public String getEmail(@Param("email") String email);
+    @Select("select u_email from user where u_email=#{u_email}")
+    public String getEmail(@Param("u_email") String u_email);
 
-    @Select("select * from user where nickname=#{nickname}")
-    public User getUserByNickName(@Param("nickname") String nickname);
+    @Select("select * from user where u_email=#{u_email}")
+    public User getUserByEmail(@Param("u_email") String u_email);
 
-    @Select("select * from user where email=#{email}")
-    public User getUserByEmail(@Param("email") String email);
-
-    @Insert("INSERT INTO user(password, email, regTime) VALUES(#{password}, #{email}, #{regTime})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Insert("INSERT INTO user(u_password, u_email, regTime) VALUES(#{u_password}, #{u_email}, #{regTime})")
+    @Options(useGeneratedKeys = true, keyProperty = "u_id")
     public void insertUser(User user);
 
-    @Select("SELECT * FROM user where id=#{id}")
-    public User getUserById(@Param("id") int id);
+    @Select("SELECT * FROM user where u_id=#{u_id}")
+    public User getUserById(@Param("u_id") int u_id);
 
-    @Update("update user set nickname=#{nickname} where id=#{id}")
-    public void updateNickName(@Param("id") int id, @Param("nickname") String name);
-
-    @Delete("delete form user where id=#{id} and password=#{password}")
-    public void deleteUserById(@Param("id") int id, @Param("password") String password);
+    @Delete("delete form user where u_id=#{u_id} and u_password=#{u_password}")
+    public void deleteUserById(@Param("u_id") int u_id, @Param("u_password") String u_password);
 
 }
