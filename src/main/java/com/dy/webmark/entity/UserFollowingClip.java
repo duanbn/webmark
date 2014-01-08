@@ -16,13 +16,13 @@ public class UserFollowingClip {
     @PrimaryKey(autoIncrement = true)
     private int ufc_id;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     private int ufc_userid;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     private int ufc_followingclipid;
 
-    @DateTime(hasDefault = true, isCanNull = false)
+    @DateTime
     private Date ufc_followtime = new Date();
 
     public int getUfc_id() {

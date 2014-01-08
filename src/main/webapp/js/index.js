@@ -19,16 +19,16 @@ $(document).ready(function(){
 			return false;       
 		}  
 	});  
-	$('.nav-add-menu').click(function() {
-		return false;  
-	});
 	
 // 头部导航用户按钮
 	$('.header-nav-user').hover(function(){
 		$('.nav-user-menu').show();	
 	});
-	$('.nav-user-menu').mouseleave(function(){
-		$(this).hide();	
+	$('.header-nav').mouseleave(function(){
+		$('.nav-user-menu').hide();
+	});
+	$('.header-nav-add').hover(function(){
+		$('.nav-user-menu').hide();
 	});
 
 // 关注人&取消关注人
@@ -86,6 +86,48 @@ $(document).ready(function(){
 		$(_this).addClass('a-btn4');
 		$(_this).text('关注');
 	});
+	
+	$('.followyj2').toggle(function(){
+		var _this = $(this);
+		$(_this).removeClass('a-btn4');
+		$(_this).addClass('a-btn3');
+		$(_this).text('取消关注');
+	},function(){
+		var _this = $(this);
+		$(_this).removeClass('a-btn3');
+		$(_this).addClass('a-btn4');
+		$(_this).text('关注');
+	});
+	
+// 在收录列表页，悬停在图片上显示按钮
+
+	$('.pin-img').hover(function(){
+		$('.pin-btn').show();
+	},function(){
+		$('.pin-btn').hide();
+	});
+	
+// ----------------------------------------登录页
+// txt框的效果
+
+	$('.login-username').focus(function(){
+		$(this).addClass('login-txt-on');
+	});
+	$('.login-username').blur(function(){
+		$(this).removeClass('login-txt-on');
+	});
+	
+	$('.login-pwd').focus(function(){
+		$(this).addClass('login-txt-on');
+	});
+	$('.login-pwd').blur(function(){
+		$(this).removeClass('login-txt-on');
+	});
+	
+
+
+
+
 
 
 });

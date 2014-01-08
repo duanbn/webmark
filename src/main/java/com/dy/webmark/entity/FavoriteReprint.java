@@ -19,13 +19,13 @@ public class FavoriteReprint {
     @PrimaryKey(autoIncrement = false)
     private int fr_id; // 主键
 
-    @Field(isCanNull = false)
+    @Field(hasDefault = false)
     private int fr_fromfavoid; // 被转录的收录id
 
-    @Field(isCanNull = false)
+    @Field(hasDefault = false)
     private int fr_userid; // 转录人的id
 
-    @Field(isCanNull = false)
+    @Field(hasDefault = false)
     private int fr_clipid; // 转录到优夹id
 
     public FavoriteReprint() {

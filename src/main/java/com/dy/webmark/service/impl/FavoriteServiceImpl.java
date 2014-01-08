@@ -55,18 +55,27 @@ public class FavoriteServiceImpl implements IFavoriteService {
     private IFavoriteClipService clipService;
 
     @Override
+    public List<String> getScreenshot(int clipId) {
+        List<String> rst = favoMapper.selectScreenshot(clipId);
+        if (rst == null) {
+            return Collections.emptyList();
+        }
+        return rst;
+    }
+
+    @Override
     public long getFavoCnt(int userId) {
         return favoMapper.selectCnt(userId);
     }
 
     @Override
-    public List<Favorite> getByClip(int userId, int clipId, int start, int limit) {
-        return getByClip(userId, clipId, false, start, limit);
+    public List<Favorite> getByClip(int clipId, int start, int limit) {
+        return getByClip(clipId, false, start, limit);
     }
 
     @Override
-    public List<Favorite> getByClip(int userId, int clipId, boolean hasCnt, int start, int limit) {
-        List<Favorite> rst = favoMapper.selectByClip(userId, clipId, start, limit);
+    public List<Favorite> getByClip(int clipId, boolean hasCnt, int start, int limit) {
+        List<Favorite> rst = favoMapper.selectByClip(clipId, start, limit);
         if (rst == null || rst.isEmpty()) {
             return Collections.emptyList();
         }

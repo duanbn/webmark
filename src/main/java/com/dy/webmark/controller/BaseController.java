@@ -34,4 +34,12 @@ public class BaseController {
         return session;
     }
 
+    protected String getParam(HttpServletRequest req, String name) {
+        String value = req.getParameter(name);
+        if (value == null) {
+            return "";
+        }
+        return value;
+    }
+
 }

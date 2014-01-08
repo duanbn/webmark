@@ -20,25 +20,22 @@ function doLogout() {
 function doLogin() {
     var email = $('#login-email').val();
     if ($.trim(email) == '') {
-        $('#email_tip').addClass('span2-error').html(email_tip);
-        return;
+        alert(email_tip);
+        return false;
     }
     var pwd = $('#login-pwd').val();
     if ($.trim(pwd) == '') {
-        $('#password_tip').addClass('span2-error').html(pwd1_tip);
-        return;
+        alert(pwd1_tip);
+        return false;
     }
 
-    var autoLogin = $('#autologin').attr("checked") ? "on" : "off";
-    $.post('/user/dologin.json', {"email":email, "password":pwd, "autologin":autoLogin}, function(data) {
+    $('#login-btn').text('登录中...');
+    $.post('/user/dologin.json', {"email":email, "password":pwd, "autologin":'on'}, function(data) {
         if (data.status == 'ok') {
             window.location.href="/user/main.do";
         } else {
-            if (data.code == 'b1006') {
-                $('#password_tip').addClass('span2-error').html(data.message);
-            } else if (data.code == 'b1005') {
-                $('#email_tip').addClass('span2-error').html(data.message);
-            }
+            alert(data.message);
+            $('#login-btn').text('登录');
         }
     }, 'json');
 }
@@ -48,12 +45,12 @@ function doLogin() {
  */
 function checkEmail(email, opt) {
 	if ($.trim(email) == '') {
-		$("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip);
+        alert(email_tip);
 		return;
 	} else {
 		var reg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
 		if (!reg.test(email)) {
-			$("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip3);
+            alert(email_tip3);
 			return;
 		}
 	}
@@ -63,7 +60,7 @@ function checkEmail(email, opt) {
 	}, function(resp) {
 		if (resp.status == 'ok' && !resp.data) {
 			if (opt == 'login') {
-				$("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip1);
+                alert(email_tip1);
 			}
 			if (opt == 'reg') {
 				$("#corrent_img").show();
@@ -75,7 +72,7 @@ function checkEmail(email, opt) {
 			}
 			if (opt == 'reg') {
 				$("#corrent_img").hide();
-				$("#email_tip").removeClass("span2").addClass("span2-error").text(email_tip2).show();
+                alert(email_tip2);
 			}
 		}
 	}, "json");

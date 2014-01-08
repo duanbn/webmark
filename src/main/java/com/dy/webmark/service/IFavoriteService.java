@@ -6,6 +6,8 @@ import com.dy.webmark.entity.Favorite;
 import com.dy.webmark.exception.BizException;
 
 public interface IFavoriteService {
+    
+    public List<String> getScreenshot(int clipId);
 
     /**
      * 获取用户的收录数
@@ -15,25 +17,23 @@ public interface IFavoriteService {
     /**
      * 根据优夹获取收录列表
      * 
-     * @param userId
      * @param clipId
      * @param start
      * @param limit
      * @return
      */
-    public List<Favorite> getByClip(int userId, int clipId, int start, int limit);
+    public List<Favorite> getByClip(int clipId, int start, int limit);
 
     /**
      * 根据优夹获取收录列表
      * 
-     * @param userId
      * @param clipId
      * @param hasCnt 是否包含收录计数
      * @param start
      * @param limit
      * @return
      */
-    public List<Favorite> getByClip(int userId, int clipId, boolean hasCnt, int start, int limit);
+    public List<Favorite> getByClip(int clipId, boolean hasCnt, int start, int limit);
 
     /**
      * 生成网页缩略图

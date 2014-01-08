@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +15,15 @@ import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.exception.BizException;
 import com.dy.webmark.mapper.FavoriteClipMapper;
 import com.dy.webmark.service.IFavoriteClipService;
+import com.dy.webmark.service.IFavoriteService;
 
 @Service
 public class FavoriteClipServiceImpl implements IFavoriteClipService {
 
     public static final Logger LOG = Logger.getLogger(FavoriteClipServiceImpl.class);
+
+    @Resource
+    private IFavoriteService favoService;
 
     @Resource
     private FavoriteClipMapper favoriteClipMapper;
@@ -97,7 +102,7 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
 
     @Override
     public List<FavoriteClip> getFavoriteClip(int userId) {
-        List<FavoriteClip> clips = favoriteClipMapper.selectByUserId2(userId);
+        List<FavoriteClip> clips = favoriteClipMapper.selectByUserId(userId, 0, Integer.MAX_VALUE);
 
         if (clips != null) {
             return clips;
@@ -107,10 +112,20 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
     }
 
     @Override
-    public List<FavoriteClip> getFavoriteClip(int userId, int start, int limit) {
+    public List<FavoriteClip> getFavoriteClip(int userId, boolean hasTitlePage, int start, int limit) {
         List<FavoriteClip> clips = favoriteClipMapper.selectByUserId(userId, start, limit);
-
         if (clips != null) {
+            if (hasTitlePage) {
+                for (FavoriteClip clip : clips) {
+                    List<String> titlepages = new ArrayList<String>();
+                    for (String titlepage : favoService.getScreenshot(clip.getFc_id())) {
+                        if (StringUtils.isNotBlank(titlepage)) {
+                            titlepages.add(titlepage.substring(0, titlepage.lastIndexOf(".")) + "_thum.jpg");
+                        }
+                    }
+                    clip.setFc_titlepage(titlepages);
+                }
+            }
             return clips;
         }
 

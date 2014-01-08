@@ -14,15 +14,15 @@ import com.duanbn.mydao.annotation.Table;
 public class UserLogin {
 
     @PrimaryKey(autoIncrement = false)
-    private String ul_email;
+    private String ul_email = "";
 
-    @Field(isCanNull = false, hasDefault = false)
-    private String ul_sessionid;
+    @Field
+    private String ul_sessionid = "";
 
-    @DateTime(isCanNull = false, hasDefault = true)
+    @DateTime
     private Date ul_logintime = new Date();
 
-    @Field(hasDefault = true)
+    @Field
     private boolean ul_isautologin;
 
     @com.duanbn.mydao.annotation.Timestamp

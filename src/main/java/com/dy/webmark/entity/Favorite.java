@@ -24,41 +24,42 @@ import com.duanbn.validation.annotation.CheckURL;
  * 
  */
 @Table
-@Indexes({ @Index(field = "f_userid,f_clipid"), @Index(field = "f_url"), @Index(field = "f_userid,f_url", isUnique = true) })
+@Indexes({ @Index(field = "f_userid,f_clipid"), @Index(field = "f_url"),
+        @Index(field = "f_userid,f_url", isUnique = true) })
 @CheckPOJO
 public class Favorite {
 
     @PrimaryKey(autoIncrement = true)
     private int f_id; // 主键
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field(hasDefault = false)
     @CheckNumber(isNull = false, range = "(0,*]")
     private int f_userid; // 收录人id
 
-    @Field(hasDefault = true)
-    private String f_title; // 收录标题
+    @Field(hasDefault = false)
+    private String f_title = ""; // 收录标题
+
+    @Field
+    private String f_desc = ""; // 收录描述
 
     @Field(hasDefault = true)
-    private String f_desc; // 收录描述
+    private String f_keyword = ""; // 收录的关键字，从被收录的网页获取
 
-    @Field(hasDefault = true)
-    private String f_keyword; // 收录的关键字，从被收录的网页获取
-
-    @Field(isCanNull = false, hasDefault = true)
+    @Field(hasDefault = false)
     @CheckURL(isNull = false, message = "请填写有效的url地址")
     private String f_url; // 收录的网页地址
 
-    @Field(isCanNull = false)
+    @Field(hasDefault = false)
     @CheckNumber(isNull = false, range = "(0,*]")
     private int f_clipid; // 优夹id
 
-    @Field(hasDefault = true)
+    @Field
     private boolean f_highlight; // 高亮
 
-    @Field(hasDefault = true)
+    @Field
     private boolean f_istop; // 置顶
 
-    @Field(hasDefault = true)
+    @Field
     private boolean f_isreprint; // 是否是转录的
 
     @DateTime
@@ -67,9 +68,9 @@ public class Favorite {
     @com.duanbn.mydao.annotation.Timestamp
     private Timestamp f_updatetime; // 修改时间戳
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     @CheckString(isNull = false)
-    private String f_screenshot;
+    private String f_screenshot = "";
 
     private List<User> reprintUserList;
 

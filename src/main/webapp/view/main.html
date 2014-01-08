@@ -93,7 +93,7 @@
         <div class="wrapper3">
         	<div class="search">
             	<form method="post">
-            		<input id="search-txt" class="search-txt" type="text" maxlength="60" value="搜索TA的收录">
+            		<input id="search-txt" class="search-txt" type="text" maxlength="60" placeholder="搜索TA的收录">
                     <input id="search-btn" class="search-btn" type="submit" title="搜索" value="">
         		</form>
             </div>
@@ -101,26 +101,7 @@
         <div class="clear"></div>
     </div>
     
-    <div id="container-clip" class="yjlist">
-    <#list clipList as clip>
-        <div class="yjboard">
-        	<div class="yjboard-pic">
-            	<a class="yjboard-pic-1"></a>
-                <a class="yjboard-pic-2"></a>
-                <a class="yjboard-pic-3"></a>
-                <img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />
-                <img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />
-                <img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />
-            </div>
-            <div class="yjboard-con">
-                <div class="yjboard-con-tit"><a href="#" class="a-tit1">${clip.fc_name}&nbsp;<span>(${clip.fc_favocnt}收录)</span></a></div>
-                <div class="yjboard-con-dy">${clip.fc_desc}</div>
-                <a class="followyj a-btn4">关注</a>
-            </div>
-            <div class="clear"></div>
-        </div>
-    </#list>
-    </div>
+    <div id="container-clip" class="yjlist"></div>
     <div class="clear"></div>
     <div id="loaderCircle" class="nowloading"><span>正在加载&nbsp;…</span></div>
     <div id="nomore" class="nownomore">没有更多了</div>
@@ -128,9 +109,10 @@
 </div>
 <script type="text/javascript">
 (function ($) {   
-  var page = 1, isLoading = false;
+  var page = 0, isLoading = false;
   var totalPage = ${totalPage};
   $('#loaderCircle').hide();
+  loadData();
 
   /**
    * When scrolled all the way to the bottom, add more tiles.
@@ -182,12 +164,16 @@
       clip = data.data[i];
       html += '<div class="yjboard">';
         html += '<div class="yjboard-pic">';
-            html += '<a class="yjboard-pic-1"></a>';
-            html += '<a class="yjboard-pic-2"></a>';
-            html += '<a class="yjboard-pic-3"></a>';
-            html += '<img src="img/img1.jpg" width="241" height="179" class="yjboard-pic-1" />';
-            html += '<img src="img/img2.jpg" width="117" height="87" class="yjboard-pic-2" />';
-            html += '<img src="img/img3.jpg" width="117" height="87" class="yjboard-pic-3" />';
+            //html += '<a class="yjboard-pic-1"></a>';
+            //html += '<a class="yjboard-pic-2"></a>';
+            //html += '<a class="yjboard-pic-3"></a>';
+            for (var i=0; i<clip.fc_titlepage.length; i++) {
+                if (i == 0) {
+                    html += '<img src="http://localhost/image/' + clip.fc_titlepage[i] + '" width="241" height="179" class="yjboard-pic-1" />';
+                } else {
+                    html += '<img src="http://localhost/image/' + clip.fc_titlepage[i] + '" width="117" height="87" class="yjboard-pic-2" />';
+                }
+            }
         html += '</div>';
         html += '<div class="yjboard-con">';
             html += '<div class="yjboard-con-tit"><a href="#" class="a-tit1">' + clip.fc_name + '&nbsp;<span>(' + clip.fc_favocnt + '收录)</span></a></div>';

@@ -15,24 +15,24 @@ public class UserDetail {
     @PrimaryKey(autoIncrement = false)
     private int ud_userid;
 
-    @Field(isCanNull = true, length = 20, hasDefault = true)
+    @Field(length = 20)
     @CheckString(isNull = true, length = "(0,20]")
-    private String ud_nickname; // 昵称
+    private String ud_nickname = ""; // 昵称
 
-    @Field(isCanNull = true, length = 1, hasDefault = true)
-    private String ud_sex; // 性别
+    @Field(length = 1)
+    private String ud_sex = ""; // 性别
 
-    @Field(isCanNull = true, hasDefault = true)
-    private String ud_comefrom; // 来自
+    @Field
+    private String ud_comefrom = ""; // 来自
 
-    @Field(isCanNull = true, hasDefault = true)
-    private String ud_job; // 职业
+    @Field
+    private String ud_job = ""; // 职业
 
-    @Field(isCanNull = true, length = 45, hasDefault = true)
-    private String ud_sign; // 个人签名
+    @Field(length = 45)
+    private String ud_sign = ""; // 个人签名
 
-    @Field(isCanNull = true, hasDefault = true)
-    private String ud_avatar; // 用户头像
+    @Field
+    private String ud_avatar = ""; // 用户头像
 
     public UserDetail() {
 

@@ -1,7 +1,6 @@
 package com.dy.webmark.controller;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -18,7 +17,6 @@ import org.springframework.web.util.WebUtils;
 import com.duanbn.validation.Validate;
 import com.dy.webmark.common.ValidateRule;
 import com.dy.webmark.common.WebConst;
-import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.entity.UserDetail;
 import com.dy.webmark.exception.BizException;
@@ -63,20 +61,12 @@ public class UserController extends BaseController {
         long followingCnt = followingService.getFollowingCnt(user.getU_id());
         // 获取用户粉丝数
         long followerCnt = followingService.getFollowerCnt(user.getU_id());
-        List<FavoriteClip> clipList = clipService.getFavoriteClip(user.getU_id(), 0, WebConst.DEFAULT_CLIP_PAGESIZE);
-
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("clipcnt=" + clipCnt + ", favocnt=" + favoCnt + ", followingcnt=" + followingCnt
-                    + ", followercnt=" + followerCnt);
-        }
-
         req.setAttribute("totalPage", totalPage);
         req.setAttribute("userdetail", userDetail);
         req.setAttribute("clipcnt", clipCnt);
         req.setAttribute("favocnt", favoCnt);
         req.setAttribute("followingcnt", followingCnt);
         req.setAttribute("followercnt", followerCnt);
-        req.setAttribute("clipList", clipList);
         return "main";
     }
 

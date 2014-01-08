@@ -16,16 +16,16 @@ public class UserFollowing {
     @PrimaryKey(autoIncrement = true)
     private int uf_id;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     private int uf_userid;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     private int uf_followingid;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     private boolean uf_isread;
 
-    @DateTime(isCanNull = false, hasDefault = true)
+    @DateTime
     private Date uf_followtime = new Date();
 
     public int getUf_id() {

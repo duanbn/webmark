@@ -36,11 +36,11 @@ public class FavoriteController extends BaseController {
         String clipName = req.getParameter("clipName");
         FavoriteClip clip = clipService.getByName(user.getU_id(), clipName);
 
-        String title = req.getParameter("title");
-        String desc = req.getParameter("desc");
-        String keyword = req.getParameter("keyword");
-        String url = req.getParameter("url");
-        String screenshot = req.getParameter("screenshot");
+        String title = getParam(req, "title");
+        String desc = getParam(req, "desc");
+        String keyword = getParam(req, "keyword");
+        String url = getParam(req, "url");
+        String screenshot = getParam(req, "screenshot");
 
         Validate.check(screenshot, ValidateRule.fileNameRule);
 
@@ -56,13 +56,6 @@ public class FavoriteController extends BaseController {
         Validate.check(favo);
 
         favoService.addFavorite(favo);
-    }
-
-    @RequestMapping("/main.do")
-    public String index(HttpServletRequest req, HttpServletResponse resp) throws BizException {
-        req.setAttribute("name", "spring freemarker");
-
-        return "main";
     }
 
 }

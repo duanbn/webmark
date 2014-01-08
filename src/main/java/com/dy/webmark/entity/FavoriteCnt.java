@@ -12,13 +12,13 @@ public class FavoriteCnt {
     @PrimaryKey(autoIncrement = false)
     private int f_favoid;
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     private int f_howmanypopularity; // 人气
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     private int f_howmanylike; // 喜欢
 
-    @Field(isCanNull = false, hasDefault = true)
+    @Field
     private int f_howmanyreprint; // 转录
 
     @Override

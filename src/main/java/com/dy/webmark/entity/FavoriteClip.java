@@ -1,5 +1,7 @@
 package com.dy.webmark.entity;
 
+import java.util.List;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.duanbn.mydao.annotation.Field;
@@ -19,22 +21,24 @@ public class FavoriteClip {
     @PrimaryKey(autoIncrement = true)
     private int fc_id; // 主键
 
-    @Field(isCanNull = false, hasDefault = true, length = 45)
+    @Field(hasDefault = false, length = 45)
     @CheckString(isNull = false, message = "优夹名称不能为空")
     private String fc_name; // 优夹名称
 
-    @Field(isCanNull = false)
+    @Field(hasDefault = false)
     @CheckNumber(isNull = false, range = "(0,*]")
     private int fc_userid; // 所属用户id
 
     @Field
     private boolean fc_isdefault; // 是否是默认优夹
 
-    @Field(hasDefault = true)
+    @Field
     private int fc_favocnt; // 包含的收录数
 
-    @Field(isCanNull = true, hasDefault = true)
-    private String fc_desc; // 优夹描述
+    @Field
+    private String fc_desc = ""; // 优夹描述
+
+    private List<String> fc_titlepage; // 优夹封面
 
     @Override
     public String toString() {
@@ -88,4 +92,13 @@ public class FavoriteClip {
     public void setFc_desc(String fc_desc) {
         this.fc_desc = fc_desc;
     }
+
+    public List<String> getFc_titlepage() {
+        return fc_titlepage;
+    }
+
+    public void setFc_titlepage(List<String> fc_titlepage) {
+        this.fc_titlepage = fc_titlepage;
+    }
+
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class UserFollowingSql {
 
+    @SuppressWarnings("unchecked")
     public String updateReadBatch(Map<String, Object> param) {
         int userId = (Integer) param.get("userId");
         List<Integer> followerIds = (List<Integer>) param.get("followerIds");

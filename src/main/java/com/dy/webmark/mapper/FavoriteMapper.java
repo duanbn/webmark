@@ -11,12 +11,15 @@ import com.dy.webmark.entity.Favorite;
 
 public interface FavoriteMapper {
 
+    @Select("SELECT f_screenshot FROM favorite WHERE f_clipid=#{clipId} AND f_screenshot != 'noscreen.jpg'")
+    public List<String> selectScreenshot(@Param("clipId") int clipId);
+
     @Select("SELECT count(f_id) from favorite where f_userid=#{f_userid}")
     public long selectCnt(int f_userid);
 
-    @Select("select * from favorite where f_userid=#{f_userid} and f_clipid=#{f_clipid} limit #{start}, #{limit}")
-    public List<Favorite> selectByClip(@Param("f_userid") int f_userid, @Param("f_clipid") int f_clipid,
-            @Param("start") int start, @Param("limit") int limit);
+    @Select("select * from favorite where f_clipid=#{f_clipid} limit #{start}, #{limit}")
+    public List<Favorite> selectByClip(@Param("f_clipid") int f_clipid, @Param("start") int start,
+            @Param("limit") int limit);
 
     @Select("select f_screenshot from favorite where f_url=#{f_url} limit 0, 1")
     public String getByUrl(@Param("f_url") String f_url);

@@ -17,8 +17,9 @@ public class Const {
     public static final String TOOL_PATH = PropertiesUtil.get("phantomjs.path");
     public static final String TOOL = TOOL_PATH + "/" + "phantomjs";
     public static final String TOOL_JS = TOOL_PATH + "/" + "screenshot.js";
-    public static final String SCREEN_TEMP_PATH = System.getProperty("java.io.tmpdir");
-    public static final String SCREEN_PATH = PropertiesUtil.get("repository.favorite.screenshot");
+    public static final String SCREEN_ROOT = PropertiesUtil.get("repository.favorite.screenshot");
+    public static final String SCREEN_TEMP_PATH = SCREEN_ROOT + "/" + "temp";
+    public static final String SCREEN_PATH = SCREEN_ROOT + "/" + "image";
     public static final String SCREEN_TIMEOUT = PropertiesUtil.get("screenshot.timeout");
     public static final int IMAGE_WIDTH = PropertiesUtil.getInt("image.width");
     public static final int IMAGE_MAXHEIGHT = PropertiesUtil.getInt("image.maxheight");

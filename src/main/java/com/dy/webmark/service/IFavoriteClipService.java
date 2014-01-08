@@ -6,7 +6,7 @@ import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.exception.BizException;
 
 public interface IFavoriteClipService {
-
+    
     /**
      * 获取用户的优夹数量.
      */
@@ -63,7 +63,7 @@ public interface IFavoriteClipService {
      * @param userId
      * @return
      */
-    public List<FavoriteClip> getFavoriteClip(int userId, int start, int limit);
+    public List<FavoriteClip> getFavoriteClip(int userId, boolean hasTitlePage, int start, int limit);
     
     public List<FavoriteClip> getFavoriteClip(int userId);
 

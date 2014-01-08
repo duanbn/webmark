@@ -35,9 +35,6 @@ public interface FavoriteClipMapper {
     public List<FavoriteClip> selectByUserId(@Param("fc_userid") int fc_userid, @Param("start") int start,
             @Param("limit") int limit);
 
-    @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid}")
-    public List<FavoriteClip> selectByUserId2(@Param("fc_userid") int fc_userid);
-
     @Select("SELECT * FROM favoriteclip WHERE fc_userid=#{fc_userid} and fc_name=#{fc_name}")
     public FavoriteClip selectByName(@Param("fc_userid") int fc_userid, @Param("fc_name") String fc_name);
 

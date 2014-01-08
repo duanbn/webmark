@@ -33,8 +33,8 @@ public class FavoriteClipController extends BaseController {
         int page = Integer.parseInt(req.getParameter("page"));
 
         User user = getUserInSession(req);
-        List<FavoriteClip> clipList = clipService.getFavoriteClip(user.getU_id(),
-                page * WebConst.DEFAULT_CLIP_PAGESIZE, WebConst.DEFAULT_CLIP_PAGESIZE);
+        List<FavoriteClip> clipList = clipService.getFavoriteClip(user.getU_id(), true, page
+                * WebConst.DEFAULT_CLIP_PAGESIZE, WebConst.DEFAULT_CLIP_PAGESIZE);
         returnData(req, clipList);
     }
 
