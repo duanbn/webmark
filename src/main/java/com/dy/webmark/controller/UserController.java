@@ -48,7 +48,7 @@ public class UserController extends BaseController {
         User user = getUserInSession(req);
 
         // 获取用户详细信息
-        UserDetail userDetail = userService.getById(user.getU_id(), true).getDetail();
+        UserDetail userDetail = userService.getById(user.getU_id(), true).getU_detail();
         // 获取用户优夹数
         long clipCnt = clipService.getClipCnt(user.getU_id());
         long totalPage = clipCnt % WebConst.DEFAULT_CLIP_PAGESIZE == 0 ? clipCnt / WebConst.DEFAULT_CLIP_PAGESIZE
@@ -105,6 +105,7 @@ public class UserController extends BaseController {
         String autoLogin = req.getParameter("autologin");
 
         User user = userService.login(email, password);
+        user.setU_detail(userService.getUserDetail(user.getU_id()));
 
         HttpSession session = getSession(req);
         session.setAttribute(WebConst.SESSION_USER, user);

@@ -11,6 +11,9 @@ import com.dy.webmark.entity.Favorite;
 
 public interface FavoriteMapper {
 
+    @Select("SELECT count(f_id) FROM favorite WHERE f_clipid=#{f_clipid}")
+    public long selectCntByClipId(@Param("f_clipid") int f_clipid);
+
     @Select("SELECT f_screenshot FROM favorite WHERE f_clipid=#{clipId} AND f_screenshot != 'noscreen.jpg'")
     public List<String> selectScreenshot(@Param("clipId") int clipId);
 

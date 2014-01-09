@@ -36,6 +36,12 @@ public class UserServiceImpl implements IUserService {
     private IFavoriteClipService clipService;
 
     @Override
+    public UserDetail getUserDetail(int userId) {
+        UserDetail ud = userDetailMapper.selectByUserId(userId);
+        return ud;
+    }
+
+    @Override
     public User getById(int userId, boolean hasDetail) throws BizException {
         User user = userMapper.getUserById(userId);
         if (user == null) {
@@ -44,7 +50,7 @@ public class UserServiceImpl implements IUserService {
 
         if (hasDetail) {
             UserDetail detail = userDetailMapper.selectByUserId(userId);
-            user.setDetail(detail);
+            user.setU_detail(detail);
         }
 
         return user;

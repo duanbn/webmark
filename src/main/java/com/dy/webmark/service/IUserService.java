@@ -3,9 +3,17 @@ package com.dy.webmark.service;
 import java.util.List;
 
 import com.dy.webmark.entity.User;
+import com.dy.webmark.entity.UserDetail;
 import com.dy.webmark.exception.BizException;
 
 public interface IUserService {
+    
+    /**
+     * 获取用户详细信息
+     * @param userId
+     * @return
+     */
+    public UserDetail getUserDetail(int userId);
 
     /**
      * 获取用户信息

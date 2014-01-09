@@ -8,7 +8,7 @@ import com.dy.webmark.exception.BizException;
 public interface IFavoriteService {
     
     public List<String> getScreenshot(int clipId);
-
+    
     /**
      * 获取用户的收录数
      */

@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.duanbn.mydao.util.StringUtil;
 import com.duanbn.validation.Validate;
 import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.common.ValidateRule;
@@ -18,6 +19,7 @@ import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.exception.BizException;
 import com.dy.webmark.service.IFavoriteClipService;
+import com.dy.webmark.service.IFavoriteService;
 
 @Controller
 @RequestMapping("/favoriteclip")
@@ -27,10 +29,37 @@ public class FavoriteClipController extends BaseController {
 
     @Resource
     private IFavoriteClipService clipService;
+    @Resource
+    private IFavoriteService favoService;
+
+    @RequestMapping("/clip.do")
+    public String handleClip(HttpServletRequest req, HttpServletResponse resp) throws BizException {
+        int clipId = StringUtil.converToInt(getParam(req, "clipId"), 0);
+        if (clipId == 0) {
+            throw new BizException(ErrorCode.BIZ4004);
+        }
+
+        // 获取优夹
+        FavoriteClip clip = clipService.getById(clipId);
+        // 获取此优夹的收录数并计算总页数
+        long favoCnt = clipService.getFavoCnt(clipId);
+        long totalpage = favoCnt % WebConst.DEFAULT_FAVORITE_PAGESIZE == 0 ? favoCnt
+                / WebConst.DEFAULT_FAVORITE_PAGESIZE : favoCnt / WebConst.DEFAULT_FAVORITE_PAGESIZE + 1;
+        // 获取用户所有的优夹
+        User user = getUserInSession(req);
+        List<FavoriteClip> clipList = clipService.getFavoriteClip(user.getU_id());
+
+        req.setAttribute("user", user);
+        req.setAttribute("clip", clip);
+        req.setAttribute("totalPage", totalpage);
+        req.setAttribute("clipId", clipId);
+        req.setAttribute("cliplist", clipList);
+        return "website";
+    }
 
     @RequestMapping("/clipList.json")
     public void clipList(HttpServletRequest req, HttpServletResponse resp) throws BizException {
-        int page = Integer.parseInt(req.getParameter("page"));
+        int page = StringUtil.converToInt(getParam(req, "page"), 0);
 
         User user = getUserInSession(req);
         List<FavoriteClip> clipList = clipService.getFavoriteClip(user.getU_id(), true, page
@@ -70,14 +99,15 @@ public class FavoriteClipController extends BaseController {
         returnData(req, clips);
     }
 
-    @RequestMapping("/getFavoriteClip.json")
-    public void getFavoriteClip(HttpServletRequest req, HttpServletResponse resp) throws BizException {
-        int userId = getUserInSession(req).getU_id();
-        Validate.check(userId, ValidateRule.userIdRule);
-
-        List<FavoriteClip> clips = clipService.getFavoriteClip(userId);
-
-        returnData(req, clips);
-    }
+    // @RequestMapping("/getFavoriteClip.json")
+    // public void getFavoriteClip(HttpServletRequest req, HttpServletResponse
+    // resp) throws BizException {
+    // int userId = getUserInSession(req).getU_id();
+    // Validate.check(userId, ValidateRule.userIdRule);
+    //
+    // List<FavoriteClip> clips = clipService.getFavoriteClip(userId);
+    //
+    // returnData(req, clips);
+    // }
 
 }

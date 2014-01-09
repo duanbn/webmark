@@ -4,13 +4,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <title>优藏夹 - 一个简洁的网页收藏夹</title>
-<link rel="stylesheet" href="css/index.css">
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
-<script type="text/javascript" src="js/jquery.easing.min.js"></script>
-<script type="text/javascript" src="js/jquery.lavalamp.min.js"></script>
-<script type="text/javascript" src="js/index.js"></script>
+<link rel="stylesheet" href="/css/index.css">
+<script type="text/javascript" src="/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/js/jquery.lavalamp.min.js"></script>
+<script type="text/javascript" src="/js/jquery.grid-a-licious.min.js"></script>
+<script type="text/javascript" src="/js/index.js"></script>
+<script type="text/javascript" src="/js/webmark-1.0.js"></script>
 <!--[if lt IE 7]>
-    <script type="Text/Javascript" src="js/pngfix.js"></script>
+    <script type="Text/Javascript" src="/js/pngfix.js"></script>
     <script type="text/javascript">  
 		DD_belatedPNG.fix('img,a,div,span, li');
 	</script>
@@ -25,7 +27,7 @@
         <div class="header-nav">
         	<a href="#" class="header-nav-add header-nav-s"><span class="add-icon"></span></a>
         	<a href="#" class="header-nav-mail header-nav-s"><span class="mail-icon"></span><span class="mail-dot"></span></a>
-        	<a href="#" class="header-nav-user header-nav-s"><img src="img/user1.jpg" width="20" height="20" /><span class="mail-more"></span></a>
+        	<a href="#" class="header-nav-user header-nav-s"><img src="/img/user1.jpg" width="20" height="20" /><span class="mail-more"></span></a>
         	<div class="nav-add-menu">
             	<ul>
                 	<li class="arrow"></li>
@@ -41,7 +43,7 @@
                     <li class="user-group"><a href="#"><span class="followingb"></span>我关注的优夹</a></li>
                     <li class="user-group add-group-line"><a href="#"><span class="follower"></span>我的粉丝</a></li>
                     <li class="user-group"><a href="#"><span class="setting"></span>账号设置</a></li>
-                    <li class="user-group"><a href="#"><span class="logout"></span>退出登录</a></li>
+                    <li class="user-group"><a href="javascript:doLogout();"><span class="logout"></span>退出登录</a></li>
                 </ul>
             </div>
         </div>
@@ -54,11 +56,11 @@
 		<div class="youjia-card-left">
         	<ul>
             	<li class="youjia-card-left1">
-                	<div class="board-name">国内可穿戴设备/互联网硬件</div>
+                    <div class="board-name">${clip.fc_name}</div>
                     <div class="board-category"><span>所属分类：</span><a href="#" class="a-tit2">UI设计</a></div>
                     <a class="followyj2 a-btn4">关注</a>
                 </li>
-                <li class="youjia-card-left2">又到了天干物燥的季节，你的秀发是不是已经不听话的肆意飞散？脱衣服时享受着噼啪作响的节奏？</li>
+                <li class="youjia-card-left2">${clip.fc_desc}</li>
             </ul>
         </div>
         <div class="youjia-num">
@@ -70,7 +72,7 @@
     
     <div class="tabs">
         <div class="user-unit">
-        	<a href="#" class="a-tit1"><img src="img/user3.jpg" />吃葵花籽的猫</a>
+            <a href="#" class="a-tit1"><img src="/img/user3.jpg" />${user.u_detail.ud_nickname}</a>
         </div>
         <div class="tabs-set">
       		<a href="#" class="a-btn3">编辑优夹</a><a href="#" class="a-btn3">批量管理</a>
@@ -86,46 +88,90 @@
         <div class="clear"></div>
     </div>
     
-    <div class="yjlist">
+    <div id="container" class="yjlist">
 		<div class="pin user_other_boards">
         	<div class="other_boards_title">该用户的其他优夹</div>
             <div class="cst-scrollbar">
-            	<a href="#" class="x">微蜜 - 您的贴心皮肤管家<span>1</span></a>
-            	<a href="#" class="x">国内可穿戴设备/互联...<span>1234</span></a>
-            	<a href="#" class="x">手机应用<span>29</span></a>
-            	<a href="#" class="x">中文CRM管理软件<span>11</span></a>
-            	<a href="#" class="x">字体排版设计欣赏<span>365</span></a>
-            	<a href="#" class="x">网页UI设计PSD资源站...<span>41</span></a>
-            	<a href="#" class="x">手机应用<span>29</span></a>
+                <#list cliplist as clip>
+                <a href="/favoriteclip/clip.do?clipId=${clip.fc_id}" class="x">${clip.fc_name}<span>${clip.fc_favocnt}</span></a>
+                </#list>
             </div>
         </div>
-
-		<div class="pin">
-			<div class="pin-img">
-            	<a href="#" class="a-img1"><img src="pic/pin1.jpg" /></a>
-                <a href="#" class="btn-zl pin-btn">转录</a>
-                <a href="#" class="btn-xh pin-btn">喜欢</a>
-                <a href="#" class="btn-ll pin-btn">浏览</a>
-            </div>
-            <a href="#" class="pin-title a-tit1">让 健 康 发 芽 | 豆芽科技</a>
-			<div class="pin-pro">奇酷网是一个酷品曝光平台，在这里，你可以看到国内外最新的智能设备以及最详细的产品介绍，你也可以与众多极客分享你的想法、创意。</div>
-            <div class="pin-icon">
-            	<span class="pin-icon-1">876</span>
-            	<a href=""# class="pin-icon-2">56</a>
-            	<a href=""# class="pin-icon-3">21</a>                
-            </div>
-        </div>        
-
-
-
-    
-    	<div class="clear"></div>
-        
-        <div class="nowloading"><span>正在加载&nbsp;…</span></div>
-        <div class="nownomore">没有更多了</div>
     </div>
+    <div class="clear"></div>
+    <div id="loaderCircle" class="nowloading"><span>正在加载&nbsp;…</span></div>
+    <div id="nomore" class="nownomore">没有更多了</div>
     
 </div>
+<script type="text/javascript">
+$(function() {
+  var page = 0, isLoading = false;
+  var totalPage = ${totalPage}, clipId=${clipId};
+  $('#loaderCircle').hide();
+  
+  loadData();
 
+  function onScroll(event) {
+    if(!isLoading) {
+      var closeToBottom = ($(window).scrollTop() + $(window).height() > $(document).height() - 1);
+      if(closeToBottom) {
+          if (page < totalPage) {
+              loadData();
+          } else {
+              $(window).unbind('scroll', onScroll);
+              $('#nomore').show();
+          }
+      }
+    }
+  };
+
+  function loadData() {
+    isLoading = true;
+    $('#loaderCircle').show(); 
+    setTimeout(function() {
+        $.ajax({
+          type:'post',
+          url: '/favorite/favolist.json',
+          dataType: 'json',
+          data: {"page": page, "clipId":clipId},
+          success: onLoadData
+        });
+    }, 1000);
+    
+  };
+
+    function onLoadData(data) {
+        $('#loaderCircle').hide();
+        var boxes = new Array;
+        var i=0, length=data.data.length, favo;
+        for(; i<length; i++) {
+            favo = data.data[i];
+            var html = '<div class="pin">';
+            html += '<div class="pin-img">';
+            var imgname = favo.f_screenshot.substring(0, favo.f_screenshot.length - 4) + '_thum.jpg';
+            html += '<a href="' + favo.f_url + '" class="a-img1" target="_blank"><img src="http://localhost/image/' + imgname + '" /></a>';
+            html += '<a href="#" class="btn-zl pin-btn">转录</a>';
+            html += '<a href="#" class="btn-xh pin-btn">喜欢</a>';
+            html += '<a href="#" class="btn-ll pin-btn">浏览</a>';
+            html += '</div>';
+            html += '<a href="' + favo.f_url + '" class="pin-title a-tit1" target="_blank">' + favo.f_title + '</a>';
+            html += '<div class="pin-pro">' + favo.f_desc + '</div>';
+            html += '<div class="pin-icon">';
+            html += '<span class="pin-icon-1">' + favo.cnt.f_howmanypopularity + '</span>';
+            html += '<a href=""# class="pin-icon-2">' + favo.cnt.f_howmanylike + '</a>';
+            html += '<a href=""# class="pin-icon-3">' + favo.cnt.f_howmanyreprint + '</a>';
+            html += '</div>';
+            html += '</div>';
+            boxes.push($(html));
+        }
+        isLoading = false;
+        page++;
+        $("#container").gridalicious({width: 225, selector: '.pin'});
+        $('#container').gridalicious('append', boxes);
+    };
+    $(window).bind('scroll', onScroll);
+  
+});
+</script>
 </body>
 </html>

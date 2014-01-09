@@ -32,7 +32,6 @@ public class AuthFilter implements Filter {
 
     @Resource
     private IUserService userService;
-
     @Resource
     private IUserLoginService userLoginService;
 
@@ -94,6 +93,7 @@ public class AuthFilter implements Filter {
 
             try {
                 user = userService.get(email);
+                user.setU_detail(userService.getUserDetail(user.getU_id()));
             } catch (BizException e) {
                 return false;
             }

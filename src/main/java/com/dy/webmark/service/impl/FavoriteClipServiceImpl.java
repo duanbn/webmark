@@ -14,6 +14,7 @@ import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.entity.FavoriteClip;
 import com.dy.webmark.exception.BizException;
 import com.dy.webmark.mapper.FavoriteClipMapper;
+import com.dy.webmark.mapper.FavoriteMapper;
 import com.dy.webmark.service.IFavoriteClipService;
 import com.dy.webmark.service.IFavoriteService;
 
@@ -24,11 +25,18 @@ public class FavoriteClipServiceImpl implements IFavoriteClipService {
 
     @Resource
     private IFavoriteService favoService;
-
     @Resource
     private FavoriteClipMapper favoriteClipMapper;
 
+    @Resource
+    private FavoriteMapper favoMapper;
+
     private static final List<FavoriteClip> EMPTY = new ArrayList<FavoriteClip>();
+
+    @Override
+    public long getFavoCnt(int clipId) {
+        return favoMapper.selectCntByClipId(clipId);
+    }
 
     @Override
     public long getClipCnt(int userId) {

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 public class WebConst {
 
     public static final int DEFAULT_CLIP_PAGESIZE = 4;
+    public static final int DEFAULT_FAVORITE_PAGESIZE = 10;
 
     public static final String OUTPUT_DATA = "output_data";
     public static final String OUTPUT_ERROR = "output_error";
