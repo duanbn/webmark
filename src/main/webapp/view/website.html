@@ -23,7 +23,7 @@
 
 <div class="header">
 	<div class="wrapper1">
-		<div class="header-logo"><a href="#"></a></div>
+		<div class="header-logo"><a href="/user/main.do"></a></div>
         <div class="header-nav">
         	<a href="#" class="header-nav-add header-nav-s"><span class="add-icon"></span></a>
         	<a href="#" class="header-nav-mail header-nav-s"><span class="mail-icon"></span><span class="mail-dot"></span></a>
@@ -72,7 +72,7 @@
     
     <div class="tabs">
         <div class="user-unit">
-            <a href="#" class="a-tit1"><img src="/img/user3.jpg" />${user.u_detail.ud_nickname}</a>
+            <a href="/user/main.do" class="a-tit1"><img src="/img/user3.jpg" />${user.u_detail.ud_nickname}</a>
         </div>
         <div class="tabs-set">
       		<a href="#" class="a-btn3">编辑优夹</a><a href="#" class="a-btn3">批量管理</a>
@@ -136,7 +136,7 @@ $(function() {
           data: {"page": page, "clipId":clipId},
           success: onLoadData
         });
-    }, 1000);
+    }, 500);
     
   };
 

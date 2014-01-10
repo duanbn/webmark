@@ -22,7 +22,7 @@
 
 <div class="header">
 	<div class="wrapper1">
-		<div class="header-logo"><a href="#"></a></div>
+		<div class="header-logo"><a href="/user/main.do"></a></div>
         <div class="header-nav">
         	<a href="#" class="header-nav-add header-nav-s"><span class="add-icon"></span></a>
         	<a href="#" class="header-nav-mail header-nav-s"><span class="mail-icon"></span><span class="mail-dot"></span></a>
@@ -147,7 +147,7 @@
           data: {page: page}, // Page parameter to make sure we load new data
           success: onLoadData
         });
-    }, 1000);
+    }, 500);
     
   };
 
@@ -158,8 +158,8 @@
       $('#loaderCircle').hide();
     // Create HTML for the images.
     
-    var i=0, length=data.data.length, clip;
-    for(; i<length; i++) {
+    var length=data.data.length, clip;
+    for(var i=0; i<length; i++) {
       var html = '';
       clip = data.data[i];
       html += '<div class="yjboard">';
@@ -167,11 +167,11 @@
             //html += '<a class="yjboard-pic-1"></a>';
             //html += '<a class="yjboard-pic-2"></a>';
             //html += '<a class="yjboard-pic-3"></a>';
-            for (var i=0; i<clip.fc_titlepage.length; i++) {
-                if (i == 0) {
-                    html += '<img src="http://localhost/image/' + clip.fc_titlepage[i] + '" width="241" height="179" class="yjboard-pic-1" />';
+            for (var j=0; j<clip.fc_titlepage.length; j++) {
+                if (j == 0) {
+                    html += '<img src="http://localhost/image/' + clip.fc_titlepage[j] + '" width="241" height="179" class="yjboard-pic-1" />';
                 } else {
-                    html += '<img src="http://localhost/image/' + clip.fc_titlepage[i] + '" width="117" height="87" class="yjboard-pic-2" />';
+                    html += '<img src="http://localhost/image/' + clip.fc_titlepage[j] + '" width="117" height="87" class="yjboard-pic-2" />';
                 }
             }
         html += '</div>';

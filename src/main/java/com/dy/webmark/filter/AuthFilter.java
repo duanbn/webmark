@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.util.WebUtils;
 
 import com.duanbn.common.util.DateUtils;
-import com.duanbn.mydao.util.PropertiesUtil;
+import com.duanbn.common.util.PropertiesUtil;
 import com.dy.webmark.common.WebConst;
 import com.dy.webmark.entity.User;
 import com.dy.webmark.entity.UserLogin;
@@ -93,11 +93,13 @@ public class AuthFilter implements Filter {
 
             try {
                 user = userService.get(email);
-                user.setU_detail(userService.getUserDetail(user.getU_id()));
             } catch (BizException e) {
                 return false;
             }
             session.setAttribute(WebConst.SESSION_USER, user);
+        }
+        if (user.getU_detail() == null) {
+            user.setU_detail(userService.getUserDetail(user.getU_id()));
         }
 
         return true;

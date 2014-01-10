@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.duanbn.mydao.util.StringUtil;
+import com.duanbn.common.util.StringUtil;
 import com.duanbn.validation.Validate;
 import com.dy.webmark.common.ErrorCode;
 import com.dy.webmark.common.ValidateRule;

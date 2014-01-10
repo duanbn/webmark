@@ -1,6 +1,6 @@
 package com.dy.webmark.common;
 
-import com.duanbn.mydao.util.PropertiesUtil;
+import com.duanbn.common.util.PropertiesUtil;
 
 public class Const {
 
